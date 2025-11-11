@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 interface ServiceLayoutProps {
   children: ReactNode;
@@ -17,17 +17,32 @@ interface ServiceLayoutProps {
   fullBleedHero?: boolean;
 }
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0, y: 8 },
-  show: { opacity: 1, y: 0, transition: { staggerChildren: 0.06, when: "beforeChildren" } },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { staggerChildren: 0.06, when: "beforeChildren" },
+  },
 };
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 8 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.45,
+      // use a cubic-bezier array for typed easing instead of a string
+      ease: [0.42, 0, 0.58, 1],
+    },
+  },
 };
 
-export default function ServiceLayout({ children, fullBleedHero = true }: ServiceLayoutProps) {
+export default function ServiceLayout({
+  children,
+  fullBleedHero = true,
+}: ServiceLayoutProps) {
   const childrenArray = React.Children.toArray(children);
 
   return (
