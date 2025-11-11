@@ -12,7 +12,7 @@ interface ServiceLayoutProps {
   children: ReactNode;
   /**
    * If true, the layout will treat the first child as full-bleed hero.
-   * Default: true (keeps behavior you requested)
+   * Default: true
    */
   fullBleedHero?: boolean;
 }
@@ -31,7 +31,8 @@ export default function ServiceLayout({ children, fullBleedHero = true }: Servic
   const childrenArray = React.Children.toArray(children);
 
   return (
-    <div className="h-dvh -m-32 bg-white selection:bg-[#01A959]/20 selection:text-[#034022]">
+    // Use min-h-screen rather than h-dvh and avoid large negative margins
+    <div className="min-h-screen bg-white selection:bg-[#01A959]/20 selection:text-[#034022] antialiased">
       <Header />
 
       <motion.main
@@ -43,22 +44,24 @@ export default function ServiceLayout({ children, fullBleedHero = true }: Servic
       >
         {/* 1) Full-bleed hero (if present and enabled) */}
         {fullBleedHero && childrenArray.length > 0 && (
-          <div className="w-full overflow-hidden ">
+          <div className="w-full overflow-hidden">
             <motion.div variants={fadeUp} className="w-full mt-0">
               {childrenArray[0]}
             </motion.div>
           </div>
         )}
 
-        {/* 2) Remaining children - NO WRAPPER */}
+        {/* 2) Remaining children - wrap them in a centered container so gutters align with header */}
         <motion.div variants={fadeUp}>
-          {fullBleedHero ? childrenArray.slice(1) : childrenArray}
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {fullBleedHero ? childrenArray.slice(1) : childrenArray}
+          </div>
         </motion.div>
       </motion.main>
 
       <Footer />
 
-      {/* Floating WhatsApp */}
+      {/* Floating WhatsApp - tucked in a safe area, slightly smaller on tiny screens */}
       <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-40">
         <motion.a
           href="https://wa.me/+919566515735"
@@ -70,26 +73,36 @@ export default function ServiceLayout({ children, fullBleedHero = true }: Servic
           transition={{ type: "spring", stiffness: 120, damping: 14, duration: 0.6 }}
           whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.98 }}
-          className="relative w-14 h-14 rounded-full shadow-xl overflow-hidden"
+          className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-xl overflow-hidden"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-[#25D366] to-[#1DA851]" />
           <div className="absolute -inset-0.5 rounded-full opacity-10 blur-sm" />
           <span className="relative z-10 flex items-center justify-center w-full h-full text-white">
-            <MessageCircle className="w-6 h-6" />
+            <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />
           </span>
         </motion.a>
       </div>
 
-      {/* Mobile CTA */}
+      {/* Mobile CTA - safe-area aware, doesn't block content, hides at very small widths if needed */}
       <motion.div
-        className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 z-30"
+        className="md:hidden fixed bottom-0 left-0 right-0 p-3 bg-white border-t border-gray-200 z-30"
         initial={{ y: 80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 120, damping: 18 }}
       >
-        <Button className="w-full bg-[#01A959] hover:bg-[#018f4d] text-white py-4 text-lg shadow-lg flex items-center justify-center gap-3">
-          Get a Free Audit
-        </Button>
+        {/* Use env(safe-area-inset-bottom) so the button sits above device gesture/home bar */}
+        {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Button
+            className="w-full bg-[#01A959] hover:bg-[#018f4d] text-white py-3 text-base shadow-lg flex items-center justify-center gap-3"
+            onClick={() => {
+              const el = document.getElementById("startproject");
+              if (el) el.scrollIntoView({ behavior: "smooth" });
+            }}
+            style={{ paddingBottom: "env(safe-area-inset-bottom, 12px)" }}
+          >
+            Get a Free Audit
+          </Button>
+        </div> */}
       </motion.div>
     </div>
   );

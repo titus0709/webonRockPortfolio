@@ -2,13 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---------------------------
+   Defensive global fixes
+   ---------------------------
+   - prevents accidental horizontal scroll
+   - ensures images/iframes never exceed their container
+   - makes flex children able to shrink (no overflow)
+   - consistent box-sizing
+*/
+@layer base {
+  /* essential layout safety */
+  html, body, #__next {
+    overflow-x: hidden !important;
+    box-sizing: border-box;
+  }
 
+  /* apply box-sizing to pseudo elements too */
+  *, *::before, *::after {
+    box-sizing: inherit;
+    /* allow long flex children to shrink instead of forcing overflow */
+    min-width: 0;
+  }
 
+  /* images and media should never blow out the layout */
+  img, picture, video, iframe {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
 
+  /* ensure page-wide boxed container size is consistent */
+.page-box, .boxed, .site-container {
+  width: 100%;
+  max-width: 80rem; /* 7xl = 80rem in Tailwind */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;  /* 16px */
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) { .page-box { padding-left: 1.5rem; padding-right: 1.5rem; } } /* sm:px-6 */
+@media (min-width: 1024px) { .page-box { padding-left: 2rem; padding-right: 2rem; } } /* lg:px-8 */
+
+  /* small accessibility nicety: reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
 
 /* make internal containers full-bleed only inside service pages */
-
-
 /* keep inner text/content centered: add an inner wrapper when you need boxed content */
 .service-page .boxed {
   max-width: 1280px;   /* choose your desired inner width */
@@ -17,7 +64,7 @@
   padding-right: 1rem; /* optional */
 }
 
-
+/* ---------- Theme variables & base styling ---------- */
 @layer base {
   :root {
     --background: 0 0% 100%;

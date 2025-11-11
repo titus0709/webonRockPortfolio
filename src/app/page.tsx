@@ -7,6 +7,9 @@ import WorkProcess from "@/components/WorkProcess";
 import Testimonials from "@/components/Testimonials";
 import LeadMagnet from "@/components/LeadMagnet";
 import Footer from "@/components/Footer";
+import HappyClients from "@/components/HappyClients";
+
+
 
 export default function Page() {
   return (
@@ -17,6 +20,7 @@ export default function Page() {
       <FeaturedWork />
       <WhyWebOnRock />
       <WorkProcess />
+      <HappyClients/>
       <Testimonials />
       <LeadMagnet />
       <Footer />

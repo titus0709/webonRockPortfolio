@@ -1,100 +1,89 @@
 "use client";
-import { useEffect } from "react";
-import { initFlowbite } from "flowbite";
+import { useEffect, useState } from "react";
 import eventplanner from "@/assets/EventPlanner.png";
 import matrimony from "@/assets/Matrimony.png";
 import clinic from "@/assets/Clinic.png";
 import makeup from "@/assets/MakeupArtist.png";
 
+const slides = [
+  { src: (eventplanner as any).src ?? eventplanner, alt: "Event Planner" },
+  { src: (matrimony as any).src ?? matrimony, alt: "Matrimony" },
+  { src: (clinic as any).src ?? clinic, alt: "Clinic" },
+  { src: (makeup as any).src ?? makeup, alt: "Makeup Artist" },
+];
+
 export default function GalleryCarousel() {
+  const [index, setIndex] = useState(0);
+
   useEffect(() => {
-    initFlowbite();
-  }, []);
+    // keyboard navigation: ArrowLeft / ArrowRight
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [index]);
+
+  const prev = () => setIndex((i) => (i - 1 + slides.length) % slides.length);
+  const next = () => setIndex((i) => (i + 1) % slides.length);
 
   return (
-    <div id="custom-controls-gallery" className="relative w-2/3 h-1/2 mt-10 mb-16  " data-carousel="slide">
+    <section className="bg-gradient-to-tr from-green-200 via-gray-100 py-12">
+      <div className="max-w-4xl mx-auto px-4 text-center">
+        <h2 className="text-3xl md:text-4xl font-semibold mb-2">Recent Works</h2>
+        <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+          A quick look at a few projects we recently designed — focused on clarity,
+          friendly navigation, and solid functionality.
+        </p>
 
-      <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
-
-        {/* Item 1 */}
-        <div className="hidden duration-700 rounded-lg   ease-in-out" data-carousel-item>
-          <img
-            src={eventplanner.src}
-            className="absolute block w-full h-full object-contain top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-            alt="eventPlanner"
-          />
-        </div>
-
-        {/* Item 2 */}
-        <div className="hidden duration-700 rounded-lg shadow-lg shadow-yellow-300/50 ease-in-out" data-carousel-item="active">
-          <img
-            src={matrimony.src}
-            className="absolute block w-full h-full object-contain top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-            alt="matrimony"
-          />
-        </div>
-
-        {/* Item 3 */}
-        <div className="hidden duration-700 rounded-lg shadow-lg shadow-yellow-300/50 ease-in-out" data-carousel-item>
-          <img
-            src={clinic.src}
-            className="absolute block w-full h-full object-contain top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-            alt="clinic"
-          />
-        </div>
-
-        {/* Item 4 */}
-        <div className="hidden duration-700 rounded-lg shadow-lg shadow-yellow-300/50 ease-in-out" data-carousel-item>
-          <img
-            src={makeup.src}
-            className="absolute block w-full h-full object-contain top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-            alt="makeup"
-          />
-        </div>
-
-      </div>
-
-      {/* Controls */}
-      <div className="flex justify-center items-center pt-4">
-        <button
-          type="button"
-          className="flex justify-center items-center me-4 h-full cursor-pointer group focus:outline-none"
-          data-carousel-prev
-        >
-          <span className="text-gray-400 hover:text-gray-900 group-focus:text-gray-900">
-            <svg className="rtl:rotate-180 w-5 h-5" viewBox="0 0 14 10" fill="none">
-              <path
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13 5H1m0 0 4 4M1 5l4-4"
+        <div className="relative">
+          {/* slide area */}
+          <div className="relative h-56 md:h-96 overflow-hidden rounded-lg ">
+            {slides.map((s, i) => (
+              <img
+                key={i}
+                src={s.src}
+                alt={s.alt}
+                className={`absolute inset-0 m-auto w-full h-full object-contain transition-opacity duration-500 ease-in-out shadow-lg
+                  ${i === index ? "opacity-100 z-10" : "opacity-0 z-0"}`}
+                draggable={false}
+                onError={(e) => ((e.currentTarget as HTMLImageElement).style.display = "none")}
               />
-            </svg>
-            <span className="sr-only">Previous</span>
-          </span>
-        </button>
+            ))}
+          </div>
 
-        <button
-          type="button"
-          className="flex justify-center items-center h-full cursor-pointer group focus:outline-none"
-          data-carousel-next
-        >
-          <span className="text-gray-400 hover:text-gray-900 group-focus:text-gray-900">
-            <svg className="rtl:rotate-180 w-5 h-5" viewBox="0 0 14 10" fill="none">
-              <path
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M1 5h12m0 0L9 1m4 4L9 9"
-              />
-            </svg>
-            <span className="sr-only">Next</span>
-          </span>
-        </button>
+          {/* controls */}
+          <div className="flex justify-center gap-4 mt-4">
+            <button
+              onClick={prev}
+              aria-label="Previous slide"
+              className="inline-flex items-center justify-center rounded-full px-3 py-2 bg-white/40 shadow-sm border  focus:outline-none"
+            >
+              ‹ 
+            </button>
+
+            <div className="flex items-center gap-2">
+              {slides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setIndex(i)}
+                  aria-label={`Go to slide ${i + 1}`}
+                  className={`w-2 h-2 rounded-full ${i === index ? "bg-blue-600" : "bg-gray-300"}`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={next}
+              aria-label="Next slide"
+              className="inline-flex items-center justify-center px-3 py-2 bg-white/40 shadow-sm border  focus:outline-none rounded-full"
+            >
+               ›
+            </button>
+          </div>
+        </div>
       </div>
-
-    </div>
+    </section>
   );
 }

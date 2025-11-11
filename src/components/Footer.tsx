@@ -9,7 +9,7 @@ export default function Footer() {
           {/* Company Info */}
           <div>
             <div className="text-2xl font-bold text-white mb-4">
-              Web<span className="text-[#01A959]">On</span>Rock
+              Webon<span className="text-[#01A959]">Rock</span>
             </div>
             <p className="text-gray-400 mb-6">
               Building digital experiences that drive results for local businesses and providing Digital Solutions.
@@ -112,7 +112,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-[#01A959] flex-shrink-0 mt-0.5" />
-                <span>Tirrupur<br />Tamilnadu,IN</span>
+                <span>Tiruppur<br />Tamilnadu,IN</span>
               </li>
             </ul>
           </div>

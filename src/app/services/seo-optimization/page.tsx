@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import ServiceLayout from "@/components/ServiceLayout";
 // import DownloadChecklist from "@/components/DownloadChecklist";
-import { ServiceHero} from "@/components/ServiceComponents";
+// import { ServiceHero} from "@/components/ServiceComponents";
 import ContactForm from "@/components/ContactForm";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, FileText, MapPin, TrendingUp, CheckCircle, Download, BarChart } from "lucide-react";
 import seo from "@/assets/seo-1.jpg";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 const auditAreas = [
   { icon: Search, title: "Technical SEO", description: "Site speed, mobile-friendliness, crawlability" },
@@ -33,7 +35,7 @@ const quickWins = [
 const packages = [
   {
     name: "Local SEO",
-    price: "4,999/mo",
+    price: "2,499/mo",
     description: "Perfect for local businesses",
     features: [
       "Google Business optimization",
@@ -46,7 +48,7 @@ const packages = [
   },
   {
     name: "Growth SEO",
-    price: "7,999/mo",
+    price: "4,999/mo",
     description: "For growing businesses",
     features: [
       "Everything in Local",
@@ -61,7 +63,7 @@ const packages = [
   },
   {
     name: "Enterprise SEO",
-    price: "11,999/mo",
+    price: "9,999/mo",
     description: "For established brands",
     features: [
       "Everything in Growth",
@@ -155,9 +157,10 @@ export default function SEOOptimizationPage() {
   };
 
   return (
-    <ServiceLayout>
+    <>
+    <Header />
       <section
-        className="relative h-[60vh] sm:h-[65vh] md:h-[72vh] lg:h-dvh bg-cover bg-center flex items-center justify-center text-center text-white"
+        className="relative md:-mt-[114px] h-[60vh] sm:h-[65vh] md:h-[72vh] lg:h-dvh bg-cover bg-center flex items-center justify-center text-center text-white"
         style={{
           backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.4)), url(${seo.src})`,
         }}
@@ -172,7 +175,7 @@ export default function SEOOptimizationPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-              <a href="#contactform" className="w-full sm:w-auto">
+              <a href="#contact" className="w-full sm:w-auto">
                 <Button className="w-full sm:w-auto bg-[#01A959] hover:bg-[#018f4d] text-white text-base sm:text-lg font-semibold px-8 py-6 rounded-lg">
                   Get Free Audit
                 </Button>
@@ -313,6 +316,7 @@ export default function SEOOptimizationPage() {
         description="Contact us today for a free consultation and see how we can help your business grow online."
         showBudget={false}
       />
-    </ServiceLayout>
+      <Footer />
+    </>
   );
 }

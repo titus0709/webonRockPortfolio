@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 import nammaOoru from "@/assets/nammaKadai.png";
+import foodDelivery from "@/assets/foodDelivery.jpg";
 
 const projects = [
   {
     title: "Food Delivery App (Under Development) ",
     description: "A modern food delivery platform with real-time tracking, seamless ordering, and integrated payment processing.",
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80",
+    image: foodDelivery,
     tags: ["Web App", "Mobile", "Real-time"],
     link: "/case-studies/judah-food-delivery"
   },

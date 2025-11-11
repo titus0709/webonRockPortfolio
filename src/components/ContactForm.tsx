@@ -5,16 +5,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-type ContactFormProps = {
+type ContactFormProps = React.HTMLAttributes<HTMLElement> & {
+  id?: string;
   title?: string;
   description?: string;
   showBudget?: boolean;
 };
 
 export default function ContactForm({
+  id,
   title = "Ready to Rank Higher?",
   description = "Let's discuss your SEO goals and create a custom strategy for your business.",
   showBudget = false,
+  className,
+  ...rest
 }: ContactFormProps) {
   const [status, setStatus] = useState<"" | "sending" | "success" | "error">("");
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -49,7 +53,11 @@ export default function ContactForm({
   };
 
   return (
-    <section id="contactform" className=" py-16 px-6 md:px-12 lg:px-20  rounded-2xl">
+    <section
+      id={id ?? "contactform"}
+      className={`py-16 px-6 md:px-12 lg:px-20 rounded-2xl ${className ?? ""}`}
+      {...rest}
+    >
       <div className="max-w-3xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">{title}</h2>
         <p className="text-gray-600 mb-10">{description}</p>

@@ -1,7 +1,7 @@
 "use client";
 
 import ServiceLayout from "@/components/ServiceLayout";
-import { ServiceHero } from "@/components/ServiceComponents";
+// import { ServiceHero } from "@/components/ServiceComponents";
 import ContactForm from "@/components/ContactForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Monitor, ShoppingCart, Layers, FileText, Zap } from "lucide-react";
@@ -11,6 +11,9 @@ import StartProject from "@/components/StartProject";
 import FeaturedWork from "@/components/FeaturedWork";
 import web from "@/assets/websitePlan.jpg";
 import GalleryCarousel from "@/components/Gallery";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
 
 
 
@@ -36,13 +39,16 @@ const process = [
   { step: "05", title: "Grow", description: "Ongoing optimization and support", duration: "Ongoing" }
 ];
 
+
+
 export default function ClientWebsiteDevelopmentPage() {
   return (
-    <ServiceLayout>
+    <>
+    <Header />
       {/* Hero aligned to same max width as header so side gutters match */}
     
        <section
-                className="relative h-[90vh] sm:h-[65vh] md:h-[72vh] lg:h-dvh bg-cover bg-center flex items-center justify-center text-center text-white"
+                className="relative md:-mt-[114px] h-[90vh] sm:h-[65vh] md:h-[72vh] lg:h-dvh bg-cover bg-center flex items-center justify-center text-center text-white"
                 style={{
                   backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.4)), url(${web.src})`,
                 }}
@@ -52,11 +58,11 @@ export default function ClientWebsiteDevelopmentPage() {
         
           {/* boxed content - MATCHES HEADER WIDTH EXACTLY */}
           <div className="relative z-10 lg:mt-24">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className=" mx-auto px-4 sm:px-6 lg:px-8">
               <div className="h-[60vh] sm:h-[70vh] md:h-[75vh] lg:h-[85vh] flex items-center justify-center text-center text-white">
                 <div className="mx-auto max-w-3xl">
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
-                    Websites that turn visitors into customers
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 ">
+             Websites that turn visitors into customers
                   </h1>
         
                   <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-6 sm:mb-8">
@@ -189,15 +195,7 @@ export default function ClientWebsiteDevelopmentPage() {
       
      
       <FeaturedWork />
-        <h1 className="text-4xl font-bold text-center mt-16">Recent Works</h1>
-        <p className="text-gray-600 mt-2 max-w-xl mx-auto text-center">
-    A quick look at some of the projects, We designed and built recently.  
-    Each one reflects my focus on clarity, user-friendly design, and practical functionality.
-  </p>
-      <div className="flex justify-center ">
-       
-        <GalleryCarousel/>
-      </div>
+      <GalleryCarousel />
 
       <StartProject />
 
@@ -242,7 +240,7 @@ export default function ClientWebsiteDevelopmentPage() {
           </div>
         </div>
       </motion.section>
-
-    </ServiceLayout>
+    <Footer />
+    </>
   );
 }

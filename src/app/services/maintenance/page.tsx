@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import ServiceLayout from "@/components/ServiceLayout";
-import { ServiceHero } from "@/components/ServiceComponents";
+// import { ServiceHero } from "@/components/ServiceComponents";
 import ContactForm from "@/components/ContactForm";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -9,6 +9,8 @@ import { Shield, Zap, RefreshCw, AlertTriangle, CheckCircle, Clock } from "lucid
 
 import maintenanceBg from "@/assets/404.png";
 import { Button } from "@/components/ui/button";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 // Fade-up animation preset
 const fadeUp = {
@@ -120,17 +122,19 @@ export default function MaintenancePage() {
   ];
 
   return (
-    <ServiceLayout>
+    <>
+    <Header />
       {/* Hero */}
       <section
-        className="relative h-[60vh] sm:h-[68vh] md:h-[76vh] lg:h-dvh bg-cover bg-center flex items-center justify-center text-center text-white"
+        className="relative md:-mt-[114px] h-[60vh] sm:h-[68vh] md:h-[76vh] lg:h-dvh bg-cover bg-center flex items-center justify-center text-center text-white"
         style={{
           backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.4)), url(${maintenanceBg.src})`,
         }}
       >
         <div className="container mx-auto px-6 lg:mt-24">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight shadow-black/50 max-w-4xl mx-auto">
-            Reliable Website Maintenance Services
+          <h1 className="text-3xl md:pt-32 sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight shadow-black/50 max-w-4xl mx-auto">
+            Reliable Website Maintenance
+            Services
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-white/70 max-w-2xl mx-auto mb-6 sm:mb-8">
             Proactive maintenance plans to keep your site secure, fast, and always up-to-date.
@@ -143,7 +147,7 @@ export default function MaintenancePage() {
               }}
               className="w-full sm:w-auto bg-[#01A959] hover:bg-[#018f4d] text-white text-base sm:text-lg font-medium px-5 py-3 rounded-lg shadow-md transition"
             >
-              Know More
+              Get Started
             </button>
           </div>
         </div>
@@ -348,6 +352,7 @@ export default function MaintenancePage() {
           </div>
         </div>
       </section>
-    </ServiceLayout>
+      <Footer />
+    </>
   );
 }

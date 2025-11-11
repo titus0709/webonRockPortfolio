@@ -9,6 +9,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Smartphone, Bell, CreditCard, MapPin, Shield, Zap, CheckCircle, Play } from "lucide-react";
 import mobileAppDev from "@/assets/mobileAppDev.jpg";
 import StartProject from "@/components/StartProject";
+import Header from "@/components/Header";
+import { Footer } from "react-day-picker";
 
 // Fade-up animation preset
 const fadeUp = {
@@ -82,11 +84,12 @@ const faqs = [
 
 export default function AppDevelopmentPage() {
   return (
-    <ServiceLayout>
+    <>
+    <Header/>
       {/* ---------- HERO: full-bleed background, boxed content ---------- */}
       {/* ---------- HERO: full-bleed background, boxed content ---------- */}
  <section
-        className="relative h-[60vh] sm:h-[65vh] md:h-[72vh] lg:h-dvh bg-cover bg-center flex items-center justify-center text-center text-white"
+        className="relative md:-mt-[114px] h-[60vh] sm:h-[65vh] md:h-[72vh] lg:h-dvh bg-cover bg-center flex items-center justify-center text-center text-white"
         style={{
           backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.4)), url(${mobileAppDev.src})`,
         }}
@@ -96,7 +99,7 @@ export default function AppDevelopmentPage() {
 
   {/* boxed content - MATCHES HEADER WIDTH EXACTLY */}
   <div className="relative z-10">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:pt-32">
       <div className="h-[60vh] sm:h-[70vh] md:h-[75vh] lg:h-[85vh] flex items-center justify-center text-center text-white">
         <div className="mx-auto max-w-3xl">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
@@ -308,6 +311,7 @@ export default function AppDevelopmentPage() {
 
       {/* contact / CTA */}
       <StartProject />
-    </ServiceLayout>
+      <Footer />
+    </>
   );
 }

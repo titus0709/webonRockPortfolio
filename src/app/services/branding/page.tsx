@@ -1,7 +1,7 @@
 "use client";
 
 import ServiceLayout from "@/components/ServiceLayout";
-import { ServiceHero} from "@/components/ServiceComponents";
+
 import ContactForm from "@/components/ContactForm";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -9,6 +9,8 @@ import { Palette, Instagram, FileText, CheckCircle, Calendar } from "lucide-reac
 import { Button } from "@/components/ui/button";
 import brandingBg from "@/assets/branding.jpg";
 import { motion } from "framer-motion";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 50 },
@@ -133,18 +135,19 @@ export default function BrandingPage() {
   ];
 
   return (
-    <ServiceLayout>
+    <>
+    <Header/>
       <section
-        className="relative h-[60vh] sm:h-[68vh] md:h-[75vh] lg:h-dvh bg-cover bg-center flex items-center justify-center text-center text-white"
+        className="relative md:-mt-[114px] h-[60vh] sm:h-[68vh] md:h-[75vh] lg:h-dvh bg-cover bg-center flex items-center justify-center text-center text-white"
         style={{
           backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.4)), url(${brandingBg.src})`,
         }}
       >
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-6 md:pt-32 lg:pt-32">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight max-w-4xl mx-auto">
             Build a brand that’s memorable and gets found online
           </h1>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 max-w-2xl mx-auto mb-6 sm:mb-8">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 max-w-3xl mx-auto mb-6 sm:mb-8">
             Build a strong online brand: logo, website, color system, and Google Business setup. Get a free brand audit to start growing your presence.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -371,6 +374,7 @@ export default function BrandingPage() {
           </div>
         </div>
       </section>
-    </ServiceLayout>
+      <Footer />
+    </>
   );
 }
