@@ -48,7 +48,7 @@ export default function ClientWebsiteDevelopmentPage() {
       {/* Hero aligned to same max width as header so side gutters match */}
     
        <section
-                className="relative md:-mt-[114px] h-[90vh] sm:h-[65vh] md:h-[72vh] lg:h-dvh bg-cover bg-center flex items-center justify-center text-center text-white"
+                className="relative md:-mt-[114px] -mt-[114px] h-dvh sm:h-[65vh] md:h-[72vh] lg:h-dvh bg-cover bg-center flex items-center justify-center text-center text-white"
                 style={{
                   backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.4)), url(${web.src})`,
                 }}
@@ -201,45 +201,57 @@ export default function ClientWebsiteDevelopmentPage() {
 
        {/* Process */}
       <motion.section
-        id="process"
-        className="py-12 sm:py-20 bg-gradient-to-t from-white to-green-100"
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-      >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 ">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 text-center">
-            Our Process & Timeline
-          </h2>
-          <h3 className="text-gray-500 text-sm sm:text-lg mb-8 text-center">May vary with Requirement</h3>
-          <div className="max-w-4xl mx-auto">
-            {process.map((item, i) => (
-              <motion.div
-                key={i}
-                className="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-8 last:mb-0 items-start"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-[#01A959] text-white rounded-full flex items-center justify-center text-base sm:text-xl font-bold">
-                    {item.step}
-                  </div>
-                </div>
+  id="process"
+  className="py-12 sm:py-20 bg-gradient-to-t from-white to-green-100"
+  variants={fadeUp}
+  initial="hidden"
+  whileInView="visible"
+  transition={{ duration: 0.6 }}
+  viewport={{ once: true }}
+>
+  <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 text-center">
+      Our Process & Timeline
+    </h2>
+    <h3 className="text-gray-500 text-sm sm:text-lg mb-8 text-center">May vary with Requirement</h3>
 
-                <div className="flex-1 pb-4 border-b border-gray-200 last:border-0">
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="text-base sm:text-xl font-bold text-gray-900">{item.title}</h3>
-                    <span className="text-xs sm:text-sm text-gray-500 font-medium">{item.duration}</span>
-                  </div>
-                  <p className="text-sm sm:text-base text-gray-600">{item.description}</p>
-                </div>
-              </motion.div>
-            ))}
+    <div className="max-w-4xl mx-auto">
+      {process.map((item, i) => (
+        <motion.div
+          key={i}
+          className="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-8 last:mb-0 items-start"
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.3 }}
+        >
+          {/* Step circle */}
+          <div className="flex-shrink-0">
+            <div className="w-10 h-10 sm:w-16 sm:h-16 bg-[#01A959] text-white rounded-full flex items-center justify-center text-sm sm:text-xl font-bold">
+              {item.step}
+            </div>
           </div>
-        </div>
-      </motion.section>
+
+          {/* Content */}
+          <div className="flex-1 min-w-0 pb-4 border-b border-gray-200 last:border-0">
+            {/* Title + duration row on desktop; stacked on mobile */}
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-2 gap-1">
+              <h3 className="text-base sm:text-xl font-bold text-gray-900 break-words">
+                {item.title}
+              </h3>
+
+              {/* duration: show under title on mobile, inline on desktop */}
+              <span className="text-xs sm:text-sm text-gray-500 font-medium mt-0.5 sm:mt-0">
+                {item.duration}
+              </span>
+            </div>
+
+            <p className="text-sm sm:text-base text-gray-600 break-words">{item.description}</p>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</motion.section>
+
     <Footer />
     </>
   );

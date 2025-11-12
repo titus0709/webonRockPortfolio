@@ -17,21 +17,46 @@ export default function Header() {
 
     const setPadding = () => {
       const h = el.getBoundingClientRect().height;
-      // set body padding-top to header height (so all pages move down)
       document.body.style.paddingTop = `${Math.ceil(h)}px`;
     };
 
-    // initial set
     setPadding();
-
-    // update on resize
     window.addEventListener("resize", setPadding);
     return () => {
       window.removeEventListener("resize", setPadding);
-      // cleanup
       document.body.style.paddingTop = "";
     };
   }, []);
+
+  // close on Escape key
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  // close mobile panel when clicking outside the header card
+  useEffect(() => {
+    const onDocClick = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (!wrapperRef.current) return;
+      if (!wrapperRef.current.contains(target)) setOpen(false);
+    };
+    if (open) document.addEventListener("click", onDocClick);
+    return () => document.removeEventListener("click", onDocClick);
+  }, [open]);
+
+  const navItems = [
+    { href: "/#services", label: "Services" },
+    { href: "/#work", label: "Our Work" },
+    { href: "/#process", label: "Process" },
+    { href: "/#testimonials", label: "Testimonials" },
+  ];
+
+  // helper: close mobile menu when a mobile nav is clicked
+  const handleNavClick = () => setOpen(false);
 
   return (
     <header
@@ -39,9 +64,7 @@ export default function Header() {
       className="fixed inset-x-0 top-0 z-50 flex justify-center pointer-events-none"
       aria-label="Site header"
     >
-      {/* wrapper full width to center the visible card with the same container width as pages */}
       <div className="pointer-events-auto w-full">
-        {/* use the same container used across pages so edges align - max-w-7xl */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 md:mt-6">
           <div
             className="bg-white/80 backdrop-blur-lg border border-gray-200 shadow-xl rounded-3xl py-3 transition-all"
@@ -49,25 +72,34 @@ export default function Header() {
           >
             <div className="px-4">
               <div className="flex items-center justify-between h-16">
-                {/* Logo */}
-                <Link href="/" className="flex items-center gap-3">
-                  <Image src={logo} alt="WebonRock logo" className="h-14 w-14 object-contain" />
-                  <div className="hidden sm:flex flex-col leading-tight">
-                    <span className="text-xl font-bold text-gray-900">
-                      Webon<span className="text-[#01A959]">Rock</span>
+                {/* Logo + name - VISIBLE on all screens and responsive */}
+                <Link
+                  href="/"
+                  className="flex items-center gap-3"
+                  onClick={() => {
+                    setOpen(false);
+                    // allow the link to navigate as normal
+                  }}
+                >
+                  <Image
+                    src={logo}
+                    alt="WebonRock logo"
+                    className="h-12 w-12 sm:h-14 sm:w-14 object-contain"
+                  />
+                  <div className="flex flex-col leading-tight">
+                    <span className="text-lg sm:text-xl font-bold text-gray-900 leading-tight">
+                      Webon
+                      <span className="text-[#01A959]">Rock</span>
                     </span>
-                    <span className="text-[11px] text-gray-500">Design · Dev · Growth</span>
+                    <span className="text-[10px] sm:text-[11px] text-gray-500">
+                      Design · Dev · Growth
+                    </span>
                   </div>
                 </Link>
 
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex items-center gap-6" aria-label="Primary">
-                  {[
-                    { href: "/#services", label: "Services" },
-                    { href: "/#work", label: "Our Work" },
-                    { href: "/#process", label: "Process" },
-                    { href: "/#testimonials", label: "Testimonials" },
-                  ].map((item) => (
+                  {navItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
@@ -81,11 +113,17 @@ export default function Header() {
                 {/* Right side */}
                 <div className="flex items-center gap-4">
                   <div className="hidden lg:flex items-center gap-6 text-sm text-gray-600">
-                    <a href="tel:+919566515735" className="flex items-center gap-2 hover:text-[#01A959]">
+                    <a
+                      href="tel:+919566515735"
+                      className="flex items-center gap-2 hover:text-[#01A959]"
+                    >
                       <Phone className="w-4 h-4" /> (+91) 95665-15735
                     </a>
 
-                    <a href="mailto:buildwithwebonrock@gmail.com" className="flex items-center gap-2 hover:text-[#01A959]">
+                    <a
+                      href="mailto:buildwithwebonrock@gmail.com"
+                      className="flex items-center gap-2 hover:text-[#01A959]"
+                    >
                       <Mail className="w-4 h-4" /> buildwithwebonrock@gmail.com
                     </a>
                   </div>
@@ -105,22 +143,37 @@ export default function Header() {
 
             {/* mobile menu panel */}
             <div
-              className={`md:hidden overflow-hidden transition-all duration-200 ${
-                open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+              className={`md:hidden overflow-hidden transition-all duration-300 ease-out ${
+                open ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
               }`}
+              aria-hidden={!open}
             >
               <div className="px-4 pb-4">
                 <div className="bg-white/95 border border-gray-100 rounded-2xl shadow-lg p-4">
-                  <Link href="/#services" className="block py-3 text-gray-700">Services</Link>
-                  <Link href="/#work" className="block py-3 text-gray-700">Our Work</Link>
-                  <Link href="/#process" className="block py-3 text-gray-700">Process</Link>
-                  <Link href="/#testimonials" className="block py-3 text-gray-700">Testimonials</Link>
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={handleNavClick}
+                      className="block py-3 text-gray-700"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
 
                   <div className="border-t mt-3 pt-3">
-                    <a href="tel:+919566515735" className="flex items-center gap-2 py-2 text-gray-700">
+                    <a
+                      href="tel:+919566515735"
+                      className="flex items-center gap-2 py-2 text-gray-700"
+                      onClick={() => setOpen(false)}
+                    >
                       <Phone className="w-4 h-4" /> (+91) 95665-15735
                     </a>
-                    <a href="mailto:buildwithwebonrock@gmail.com" className="flex items-center gap-2 py-2 text-gray-700">
+                    <a
+                      href="mailto:buildwithwebonrock@gmail.com"
+                      className="flex items-center gap-2 py-2 text-gray-700"
+                      onClick={() => setOpen(false)}
+                    >
                       <Mail className="w-4 h-4" /> buildwithwebonrock@gmail.com
                     </a>
                   </div>

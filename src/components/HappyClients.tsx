@@ -55,13 +55,13 @@ export default function HappyClientsSimple() {
       <style jsx>{`
         .animate-marquee {
           /* desktop: a bit slower */
-          animation: marquee 22s linear infinite;
+          animation: marquee 12s linear infinite;
         }
 
         /* faster on small screens so motion feels natural */
         @media (max-width: 640px) {
           .animate-marquee {
-            animation: marquee 14s linear infinite;
+            animation: marquee 12s linear infinite;
           }
         }
 

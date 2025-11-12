@@ -138,7 +138,7 @@ export default function BrandingPage() {
     <>
     <Header/>
       <section
-        className="relative md:-mt-[114px] h-[60vh] sm:h-[68vh] md:h-[75vh] lg:h-dvh bg-cover bg-center flex items-center justify-center text-center text-white"
+        className="relative md:-mt-[114px] -mt-[114px] h-dvh sm:h-[68vh] md:h-[75vh] lg:h-dvh bg-cover bg-center flex items-center justify-center text-center text-white"
         style={{
           backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.4)), url(${brandingBg.src})`,
         }}
