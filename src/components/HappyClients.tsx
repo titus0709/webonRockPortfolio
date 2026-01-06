@@ -4,6 +4,7 @@ import nammaOoru from "@/assets/NammaOoru.png";
 import lightzup from "@/assets/lightzupLogo.png";
 import lignite from "@/assets/ligniteLogo.png";
 import thirdeye from "@/assets/thirdEyeLogo.png";
+import mercyLogo from "@/assets/mercy logo.png";
 
 export default function HappyClientsSimple() {
   const logos = [
@@ -12,6 +13,7 @@ export default function HappyClientsSimple() {
     { name: "Lightzup", src: (lightzup as any).src ?? lightzup },
     { name: "Lignite", src: (lignite as any).src ?? lignite },
     { name: "Third Eye", src: (thirdeye as any).src ?? thirdeye },
+    { name: "mercy", src: (mercyLogo as any).src ?? mercyLogo },
   ];
 
   // Duplicate once to create seamless loop

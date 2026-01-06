@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 import nammaOoru from "@/assets/nammaKadai.png";
 import foodDelivery from "@/assets/foodDelivery.jpg";
+import mercy from "@/assets/mercy.png";
 
 const projects = [
   {
@@ -18,7 +19,14 @@ const projects = [
     description: "Simple Food ordering website for a Bakery",
     image: nammaOoru,
     tags: ["Website", "SEO", "Ordering"],
-    link: "/case-studies/simple-business"
+    link: "https://nammaooruteakadai.in/"
+  },
+  {
+    title: "Mercy School Website",
+    description: "Landing page for a Matriculation school to showcase programs and facilitate enrollment.",
+    image: mercy,
+    tags: ["Website", "SEO"],
+    link: "https://www.mercyschool.in/"
   }
 ];
 
@@ -65,7 +73,7 @@ export default function FeaturedWork() {
                   {project.description}
                 </p>
 
-                <a href="https://nammaooruteakadai.in/" target="blank" rel="noopener noreferrer">
+                <a href={project.link} target="blank" rel="noopener noreferrer">
                 <Button 
                   variant="outline" 
                   className="border-2 border-[#01A959] text-[#01A959] hover:bg-[#01A959] hover:text-white group/btn"
