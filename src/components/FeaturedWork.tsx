@@ -5,14 +5,29 @@ import { ArrowRight } from "lucide-react";
 import nammaOoru from "@/assets/nammaKadai.png";
 import foodDelivery from "@/assets/foodDelivery.jpg";
 import mercy from "@/assets/mercy.png";
+import reholife from "@/assets/reholife.png";
 
 const projects = [
+   {
+    title: "Mercy School Website",
+    description: "Landing page for a Matriculation school to showcase programs and facilitate enrollment.",
+    image: mercy,
+    tags: ["Website", "SEO"],
+    link: "https://www.mercyschool.in/"
+  },
   {
-    title: "Food Delivery App (Under Development) ",
+    title: "Reholife Website",
+    description: "Portfolio website for a Leadership and Life Coach to highlight services and client testimonials.",
+    image: reholife,
+    tags: ["Website", "SEO"],
+    link: "https://www.reholife.org/"
+  },
+  {
+    title: "Food Delivery App (Under Testing) ",
     description: "A modern food delivery platform with real-time tracking, seamless ordering, and integrated payment processing.",
     image: foodDelivery,
     tags: ["Web App", "Mobile", "Real-time"],
-    link: "/case-studies/judah-food-delivery"
+    link: "https://play.google.com/store/apps/details?id=com.judah.fooddelivery"
   },
   {
     title: "Namma Ooru Tea Kadai",
@@ -21,13 +36,7 @@ const projects = [
     tags: ["Website", "SEO", "Ordering"],
     link: "https://nammaooruteakadai.in/"
   },
-  {
-    title: "Mercy School Website",
-    description: "Landing page for a Matriculation school to showcase programs and facilitate enrollment.",
-    image: mercy,
-    tags: ["Website", "SEO"],
-    link: "https://www.mercyschool.in/"
-  }
+ 
 ];
 
 export default function FeaturedWork() {

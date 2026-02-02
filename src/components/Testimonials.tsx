@@ -10,20 +10,20 @@ const testimonials = [
     content: "WebOnRock transformed our online presence completely. The website they built is not only beautiful but also drives real business results. Highly recommended!",
     rating: 5
   },
-  {
-    name: "Mr.Ganesan",
-    role: "Namma Ooru Tea Kadai",
-    // avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
-    content: "WebOnRock transformed our online presence completely. The website they built is not only beautiful but also drives real business results. Highly recommended!",
-    rating: 5
-  },
-  {
-    name: "Mr.Ganesan",
-    role: "Namma Ooru Tea Kadai",
-    // avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
-    content: "WebOnRock transformed our online presence completely. The website they built is not only beautiful but also drives real business results. Highly recommended!",
-    rating: 5
-  }
+  // {
+  //   name: "Mr.Ganesan",
+  //   role: "Namma Ooru Tea Kadai",
+  //   // avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
+  //   content: "WebOnRock transformed our online presence completely. The website they built is not only beautiful but also drives real business results. Highly recommended!",
+  //   rating: 5
+  // },
+  // {
+  //   name: "Mr.Ganesan",
+  //   role: "Namma Ooru Tea Kadai",
+  //   // avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
+  //   content: "WebOnRock transformed our online presence completely. The website they built is not only beautiful but also drives real business results. Highly recommended!",
+  //   rating: 5
+  // }
 ];
 
 export default function Testimonials() {
