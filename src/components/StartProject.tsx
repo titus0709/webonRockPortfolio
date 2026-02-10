@@ -107,7 +107,7 @@ Sent from: ${window.location.href}`;
           </div>
 
           {/* Budget */}
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Approximate Budget
             </label>
@@ -115,7 +115,7 @@ Sent from: ${window.location.href}`;
               name="budget"
               placeholder="$5,000 – $10,000"
             />
-          </div>
+          </div> */}
 
           {/* Goals */}
           <div>
