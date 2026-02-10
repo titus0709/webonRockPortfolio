@@ -5,92 +5,169 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
+type Status = "" | "sending" | "success" | "error";
+
 export default function StartProject() {
-  const [status, setStatus] = useState<"" | "sending" | "success" | "error">("");
-  const formRef = useRef<HTMLFormElement | null>(null);
+  const [status, setStatus] = useState<Status>("");
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("sending");
 
-    // prefer the ref (safe across awaits) but fall back to event.currentTarget
-    const formEl = formRef.current ?? (e.currentTarget as HTMLFormElement);
+    const formEl = formRef.current;
+    if (!formEl) return;
 
-    // build payload
-    const payload = Object.fromEntries(new FormData(formEl).entries()) as Record<string, any>;
-    payload.source = typeof window !== "undefined" ? window.location.href : "";
+    const formData = new FormData(formEl);
+
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const projectType = (formData.get("projectType") as string) || "Not specified";
+    const budget = (formData.get("budget") as string) || "Not specified";
+    const goals = (formData.get("goals") as string) || "Not specified";
+
+    const message = `🚀 New Project Inquiry
+
+👤 Name: ${name}
+📧 Email: ${email}
+💼 Project Type: ${projectType}
+💰 Budget: ${budget}
+📝 Goals: ${goals}
+
+Sent from: ${window.location.href}`;
+
+    const whatsappNumber = "919566515735";
+    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+      message
+    )}`;
 
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      window.open(whatsappURL, "_blank");
+      setStatus("success");
+      formEl.reset();
 
-      const data = await res.json().catch(() => ({}));
-      if (res.ok && data.status === "success") {
-        setStatus("success");
-        formEl.reset(); // safe because we kept the reference
-      } else {
-        console.error("Proxy/upstream error:", data);
-        setStatus("error");
-      }
-    } catch (err) {
-      console.error("Network error:", err);
+      setTimeout(() => setStatus(""), 5000);
+    } catch (error) {
+      console.error("WhatsApp open error:", error);
       setStatus("error");
     }
   };
 
   return (
-    <section id="startproject" className="bg-gray-50 py-16 px-6 md:px-12 lg:px-20 shadow-lg rounded-2xl">
-      <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">Let's Grow Your Business!</h2>
-        <p className="text-gray-600 mb-10">Tell us a bit about your project and we'll reach out to discuss how we can help bring your idea to life.</p>
-      </div>
+    <section className="py-16 px-6 bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="max-w-2xl mx-auto">
+        <h2 className="text-4xl font-bold text-center mb-4 text-gray-800">
+          Let&apos;s Grow Your Business!
+        </h2>
 
-      <form
-        ref={formRef}
-        onSubmit={handleSubmit}
-        className="max-w-2xl mx-auto grid gap-6 bg-white p-8 rounded-2xl shadow-md"
-      >
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">Your Name *</label>
-          <Input name="name" type="text" required placeholder="John Doe" />
-        </div>
+        <p className="text-center text-gray-600 mb-8">
+          Tell us a bit about your project and we&apos;ll reach out to help bring
+          your idea to life.
+        </p>
 
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">Email Address *</label>
-          <Input name="email" type="email" required placeholder="you@example.com" />
-        </div>
-
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">What type of project are you looking for?</label>
-          <Input name="project_type" type="text" placeholder="Website, App, Branding, SEO..." />
-        </div>
-
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">What’s your approximate budget?</label>
-          <Input name="budget" type="text" placeholder="₹20,000 – ₹1,00,000" />
-        </div>
-
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">Tell us more about your goals</label>
-          <Textarea name="details" placeholder="Describe what you want to achieve..." rows={5} />
-        </div>
-
-        <Button type="submit" disabled={status === "sending"} className="w-full bg-[#01A959] hover:bg-[#018f4d] text-white py-6 text-lg">
-          {status === "sending" ? "Sending..." : "Submit Project"}
-        </Button>
-
-        {status === "success" && <p className="text-green-600 text-center font-medium">✅ Thanks! We'll get in touch soon.</p>}
-        {status === "error" && (
-          <div className="text-center">
-            <p className="text-red-600 font-medium">❌ Something went wrong. Please try again later.</p>
-            <p className="text-gray-600">Contact Us at</p>
-            <a href="mailto:buildwithwebonrock@gmail.com" className="text-gray-600">buildwithwebonrock@gmail.com</a>
+        <form
+          ref={formRef}
+          onSubmit={handleSubmit}
+          className="bg-white p-8 rounded-lg shadow-lg space-y-6"
+        >
+          {/* Name */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Your Name *
+            </label>
+            <Input
+              name="name"
+              required
+              placeholder="John Doe"
+            />
           </div>
-        )}
-      </form>
+
+          {/* Email */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Email Address *
+            </label>
+            <Input
+              name="email"
+              type="email"
+              required
+              placeholder="john@example.com"
+            />
+          </div>
+
+          {/* Project Type */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Project Type
+            </label>
+            <Input
+              name="projectType"
+              placeholder="Website, App, E-commerce, etc."
+            />
+          </div>
+
+          {/* Budget */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Approximate Budget
+            </label>
+            <Input
+              name="budget"
+              placeholder="$5,000 – $10,000"
+            />
+          </div>
+
+          {/* Goals */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Project Goals
+            </label>
+            <Textarea
+              name="goals"
+              rows={5}
+              placeholder="Describe goals, timeline, and requirements..."
+              className="resize-none"
+            />
+          </div>
+
+          {/* Submit */}
+          <Button
+            type="submit"
+            disabled={status === "sending"}
+            className="w-full bg-[#01A959] hover:bg-[#018f4d] text-white py-6 text-lg"
+          >
+            {status === "sending"
+              ? "Opening WhatsApp..."
+              : "Submit Project Details"}
+          </Button>
+
+          {/* Success */}
+          {status === "success" && (
+            <p className="text-green-600 text-center font-medium">
+              ✅ WhatsApp opened. Please send the message to complete your inquiry.
+            </p>
+          )}
+
+          {/* Error */}
+          {status === "error" && (
+            <div className="text-center">
+              <p className="text-red-600 font-medium">
+                ❌ Unable to open WhatsApp.
+              </p>
+              <p className="text-gray-600 mt-2">Contact us directly:</p>
+
+              <a
+                href="https://wa.me/919566515735"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#01A959] font-medium hover:underline"
+              >
+                +91 95665 15735
+              </a>
+            </div>
+          )}
+        </form>
+      </div>
     </section>
   );
 }
