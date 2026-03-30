@@ -172,8 +172,7 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[#01A959] flex-shrink-0 mt-0.5" />
                 <address className="not-italic text-sm text-gray-300 break-words">
-                  Tiruppur<br />
-                  Tamil Nadu, India
+                   India
                 </address>
               </li>
             </ul>

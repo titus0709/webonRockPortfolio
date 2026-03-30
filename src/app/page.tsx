@@ -8,6 +8,8 @@ import Testimonials from "@/components/Testimonials";
 import LeadMagnet from "@/components/LeadMagnet";
 import Footer from "@/components/Footer";
 import HappyClients from "@/components/HappyClients";
+import ContactForm from "@/components/StartProject";
+import VideoTestimonial from "@/components/VideoTestimonialSection";
 
 
 
@@ -17,12 +19,14 @@ export default function Page() {
       <Header />
       <Hero />
       <Services />
+      <VideoTestimonial />
       <FeaturedWork />
       <WhyWebOnRock />
-      <WorkProcess />
       <HappyClients/>
-      <Testimonials />
-      <LeadMagnet />
+      <WorkProcess />
+      <ContactForm />
+      {/* <Testimonials /> */}
+      {/* <LeadMagnet /> */}
       <Footer />
     </div>
   );

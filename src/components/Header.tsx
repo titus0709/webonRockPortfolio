@@ -50,9 +50,9 @@ export default function Header() {
 
   const navItems = [
     { href: "/#services", label: "Services" },
+    { href: "/#video_testimonials", label: "Testimonials" },
     { href: "/#work", label: "Our Work" },
     { href: "/#process", label: "Process" },
-    { href: "/#testimonials", label: "Testimonials" },
   ];
 
   // helper: close mobile menu when a mobile nav is clicked
@@ -103,7 +103,7 @@ export default function Header() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="px-2 py-1 text-sm font-medium text-gray-800 rounded-lg transition-all duration-200 hover:bg-gray-100"
+                      className="px-2 py-1 text-sm font-medium text-gray-800 rounded-lg transition-all duration-200  hover:text-[#01A959]"
                     >
                       {item.label}
                     </Link>
@@ -130,7 +130,7 @@ export default function Header() {
 
                   {/* mobile menu toggle */}
                   <button
-                    className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+                    className="md:hidden p-4 rounded-lg hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#01A959]"
                     onClick={() => setOpen((v) => !v)}
                     aria-expanded={open}
                     aria-label={open ? "Close menu" : "Open menu"}

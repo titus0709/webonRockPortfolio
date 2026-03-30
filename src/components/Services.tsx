@@ -81,7 +81,7 @@ export default function Services() {
                   className={
                     "h-full relative overflow-hidden transition-transform duration-300 " +
                     "group focus-within:shadow-xl hover:shadow-xl active:translate-y-0.5 " +
-                    "bg-white border-0"
+                    "bg-white border border-black/10 hover:bg-green-50 focus-within:bg-green-50"
                   }
                 >
                   {/* sliding gradient overlay (slides up on hover/focus) */}

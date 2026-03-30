@@ -76,12 +76,12 @@ export default function Hero() {
           
           {/* CTA Buttons with enhanced hover effects */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+            <a href='#video_testimonials' >
               <Button 
                 size="lg" 
                 className="bg-[#01A959] hover:bg-[#018f4d] text-white px-8 py-6 text-lg group shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
-                Get Started
+                What our clients say
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </a>

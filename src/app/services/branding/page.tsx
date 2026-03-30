@@ -1,69 +1,148 @@
 "use client";
 
-import ServiceLayout from "@/components/ServiceLayout";
-
-import ContactForm from "@/components/ContactForm";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import React from "react";
+import { motion, useMotionValue, useTransform, animate, cubicBezier } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Palette, Instagram, FileText, CheckCircle, Calendar } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Palette, Share2, CheckCircle, Sparkles, Layers, BookOpen } from "lucide-react";
 import brandingBg from "@/assets/branding.jpg";
-import { motion } from "framer-motion";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import ContactForm from "@/components/ContactForm";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0 }
+// ─────────────────────────────────────────────
+// Motion helpers
+// ─────────────────────────────────────────────
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } };
+
+const cardIn = {
+  hidden: { opacity: 0, y: 36, scale: 0.96 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.52, ease: cubicBezier(0.25, 0.46, 0.45, 0.94) } },
 };
+
+function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
+  const [display, setDisplay] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting && !started) setStarted(true); },
+      { threshold: 0.5 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [started]);
+
+  useEffect(() => {
+    if (!started) return;
+    const c = animate(0, target, { duration: 1.8, ease: "easeOut", onUpdate: (v) => setDisplay(Math.round(v)) });
+    return c.stop;
+  }, [started, target]);
+
+  return <span ref={ref}>{display}{suffix}</span>;
+}
+
+function TiltCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useTransform(y, [-0.5, 0.5], [7, -7]);
+  const rotateY = useTransform(x, [-0.5, 0.5], [-7, 7]);
+
+  function onMove(e: React.MouseEvent<HTMLDivElement>) {
+    const r = e.currentTarget.getBoundingClientRect();
+    x.set((e.clientX - r.left) / r.width - 0.5);
+    y.set((e.clientY - r.top) / r.height - 0.5);
+  }
+  function onLeave() { animate(x, 0, { duration: 0.4 }); animate(y, 0, { duration: 0.4 }); }
+
+  return (
+    <motion.div
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+// ─────────────────────────────────────────────
+// Data
+// ─────────────────────────────────────────────
+const stats = [
+  { value: 7,   suffix: "s",  label: "to make a first impression" },
+  { value: 200, suffix: "%",  label: "more conversions with strong branding" },
+  { value: 80,  suffix: "%",  label: "of consumers value brand consistency" },
+  { value: 3,   suffix: "×",  label: "more revenue vs inconsistent brands" },
+];
 
 const whyBranding = [
   {
+    icon: Sparkles,
     title: "First Impressions Matter",
-    description: "You have 7 seconds to make an impression. Professional branding builds instant trust."
+    description: "You have 7 seconds to make an impression. Professional branding builds instant trust and credibility.",
+    accent: "#F59E0B",
+    bg: "from-amber-950/60 to-yellow-900/40",
+    border: "border-amber-500/30",
   },
   {
+    icon: Layers,
     title: "Stand Out from Competitors",
-    description: "Consistent visual identity makes you memorable and recognizable in your market."
+    description: "Consistent visual identity makes you memorable and instantly recognizable in a crowded market.",
+    accent: "#6366F1",
+    bg: "from-indigo-950/60 to-violet-900/40",
+    border: "border-indigo-500/30",
   },
   {
+    icon: CheckCircle,
     title: "Increase Conversions",
-    description: "Professional branding can increase conversion rates by up to 200%."
-  }
+    description: "Professional branding can lift conversion rates by up to 200% — it signals quality before a word is read.",
+    accent: "#01A959",
+    bg: "from-emerald-950/60 to-green-900/40",
+    border: "border-emerald-500/30",
+  },
 ];
 
 const packages = [
   {
     name: "Logo + Identity",
-    price: "",
+    price: "Contact us",
     description: "Essential brand foundation",
+    emoji: "✏️",
+    accent: "#0EA5E9",
     features: [
       "3 logo concepts",
       "2 revision rounds",
-      "Color palette",
+      "Colour palette",
       "Typography guide",
       "Logo files (all formats)",
-      "Brand guidelines (basic)"
-    ]
+      "Brand guidelines (basic)",
+    ],
   },
   {
     name: "Social Starter",
-    price: "",
+    price: "Contact us",
     description: "Brand + social presence",
+    emoji: "🚀",
+    accent: "#01A959",
+    popular: true,
     features: [
       "Everything in Logo + Identity",
       "Social media templates (10)",
       "Profile graphics",
       "Cover images",
       "Story templates",
-      "1 month content calendar"
+      "1 month content calendar",
     ],
-    popular: true
   },
   {
     name: "Full Brand Kit",
-    price: "",
+    price: "Contact us",
     description: "Complete brand system",
+    emoji: "💎",
+    accent: "#6366F1",
     features: [
       "Everything in Social Starter",
       "Business card design",
@@ -71,301 +150,525 @@ const packages = [
       "Marketing materials",
       "Brand photography direction",
       "3 months content calendar",
-      "Brand strategy session"
-    ]
-  }
+      "Brand strategy session",
+    ],
+  },
+];
+
+const workExamples = [
+  { icon: Palette,   title: "Logo Design",       desc: "Modern, memorable brand marks",      grad: "from-violet-600 to-purple-700",   glow: "#7c3aed" },
+  { icon: Share2,    title: "Social Templates",  desc: "Consistent, on-brand posts",         grad: "from-[#01A959] to-[#0E8C4A]",    glow: "#01A959" },
+  { icon: BookOpen,  title: "Brand Guidelines",  desc: "Complete usage documentation",       grad: "from-orange-500 to-red-600",     glow: "#f97316" },
 ];
 
 const deliverables = [
-  { category: "Logo Design", items: ["Primary logo", "Secondary logo", "Icon/mark", "Black & white versions"] },
-  { category: "Visual Identity", items: ["Color palette (primary & secondary)", "Typography system", "Pattern/texture library", "Icon style guide"] },
-  { category: "Social Assets", items: ["Profile pictures", "Cover images", "Post templates", "Story templates"] },
-  { category: "Brand Guidelines", items: ["Logo usage rules", "Color specifications", "Typography guidelines", "Do's and don'ts"] }
-];
-
-const contentCalendar = [
-  { day: "Monday", type: "Educational", example: "Industry tips, how-to guides" },
-  { day: "Wednesday", type: "Engagement", example: "Questions, polls, behind-the-scenes" },
-  { day: "Friday", type: "Promotional", example: "Services, offers, testimonials" }
+  {
+    category: "Logo Design",
+    accent: "#01A959",
+    items: ["Primary logo", "Secondary logo", "Icon / mark", "Black & white versions"],
+  },
+  {
+    category: "Visual Identity",
+    accent: "#0EA5E9",
+    items: ["Colour palette (primary & secondary)", "Typography system", "Pattern / texture library", "Icon style guide"],
+  },
+  {
+    category: "Social Assets",
+    accent: "#6366F1",
+    items: ["Profile pictures", "Cover images", "Post templates", "Story templates"],
+  },
+  {
+    category: "Brand Guidelines",
+    accent: "#F59E0B",
+    items: ["Logo usage rules", "Colour specifications", "Typography guidelines", "Do's and don'ts"],
+  },
 ];
 
 const onboardingSteps = [
-  { step: "1", title: "Discovery Call", description: "We learn about your business, values, and target audience" },
-  { step: "2", title: "Concept Development", description: "We create initial logo concepts and mood boards" },
-  { step: "3", title: "Refinement", description: "You provide feedback and we refine your chosen direction" },
-  { step: "4", title: "Finalization", description: "We deliver all files and brand guidelines" }
+  { step: "01", title: "Discovery Call",      description: "We learn about your business, values, and target audience to set the strategic foundation.",  color: "#01A959" },
+  { step: "02", title: "Concept Development", description: "We create initial logo concepts and mood boards aligned with your brand personality.",          color: "#0EA5E9" },
+  { step: "03", title: "Refinement",          description: "You provide feedback and we sharpen your chosen direction until it feels exactly right.",       color: "#6366F1" },
+  { step: "04", title: "Finalization",        description: "We deliver all production-ready files, brand guidelines, and onboarding support.",             color: "#F59E0B" },
 ];
 
 const faqs = [
-  {
-    question: "How long does branding take?",
-    answer: "Logo + Identity takes 2-3 weeks. Full Brand Kit takes 4-6 weeks. Timeline depends on feedback speed and revisions."
-  },
-  {
-    question: "What if I don't like the initial concepts?",
-    answer: "We include revision rounds in all packages. We'll work with you until you're happy with the result."
-  },
-  {
-    question: "Do you provide the source files?",
-    answer: "Yes! You'll receive all logo files in multiple formats (PNG, JPG, SVG, PDF) plus source files for future edits."
-  },
-  {
-    question: "Can you match my existing brand colors?",
-    answer: "Absolutely. We can work with your existing colors or help you refine them for better digital performance."
-  },
-  {
-    question: "Do you create content for social media?",
-    answer: "We provide templates and a content calendar. You can create posts yourself or hire us for ongoing content creation."
-  },
-  {
-    question: "What about trademark registration?",
-    answer: "We design your logo, but trademark registration is separate. We can recommend trademark attorneys if needed."
-  }
+  { question: "How long does branding take?",              answer: "Logo + Identity takes 2–3 weeks. Full Brand Kit takes 4–6 weeks. Timeline depends on feedback speed and revision rounds." },
+  { question: "What if I don't like the initial concepts?",answer: "All packages include revision rounds. We'll keep refining until you're proud to show the world." },
+  { question: "Do you provide source files?",              answer: "Yes — you receive all files in PNG, JPG, SVG, and PDF formats plus source files for future edits." },
+  { question: "Can you match my existing brand colours?",  answer: "Absolutely. We work with your current palette or refine it for better digital and print performance." },
+  { question: "Do you create social media content?",       answer: "We provide templates and a content calendar. We also offer ongoing content creation as an add-on." },
+  { question: "What about trademark registration?",        answer: "We design your logo — trademark registration is separate. We can recommend specialists if needed." },
 ];
 
+// ─────────────────────────────────────────────
+// Page
+// ─────────────────────────────────────────────
 export default function BrandingPage() {
-  const anchorLinks = [
-    { label: "Overview", href: "#overview" },
-    { label: "Packages", href: "#packages" },
-    { label: "Deliverables", href: "#deliverables" },
-    { label: "Content Calendar", href: "#content" },
-    { label: "Process", href: "#process" },
-    { label: "FAQs", href: "#faqs" },
-    { label: "Contact", href: "#contact" }
-  ];
-
   return (
     <>
-    <Header/>
+      <Header />
+
+      {/* ── Hero ─────────────────────────────────── */}
       <section
         className="relative md:-mt-[114px] -mt-[114px] h-dvh sm:h-[68vh] md:h-[75vh] lg:h-dvh bg-cover bg-center flex items-center justify-center text-center text-white"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.4)), url(${brandingBg.src})`,
-        }}
+        style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.45)), url(${brandingBg.src})` }}
       >
-        <div className="container mx-auto px-6 md:pt-32 lg:pt-32">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight max-w-4xl mx-auto">
-            Build a brand that’s memorable and gets found online
-          </h1>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 max-w-3xl mx-auto mb-6 sm:mb-8">
-            Build a strong online brand: logo, website, color system, and Google Business setup. Get a free brand audit to start growing your presence.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-            <button
-              onClick={() => {
-                const contact = document.getElementById("contact");
-                if (contact) contact.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="w-full sm:w-auto bg-[#01A959] hover:bg-[#018f4d] text-white text-sm sm:text-base md:text-lg font-medium px-5 py-3 rounded-lg shadow-md transition"
-            >
-              Get Started
-            </button>
-          </div>
-        </div>
-      </section>
+        <div className="relative z-10 lg:mt-24 w-full">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="h-[60vh] sm:h-[70vh] md:h-[75vh] lg:h-[85vh] flex items-center justify-center">
+              <motion.div
+                className="max-w-3xl mx-auto"
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <motion.span
+                  className="inline-block mb-5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-[#01A959]/20 text-[#4ade80] border border-[#01A959]/30 backdrop-blur-sm"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                >
+                  Branding & Identity
+                </motion.span>
 
-      {/* Why Branding Matters */}
-      <section id="overview" className="py-12 sm:py-16 lg:py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-8 sm:mb-12 text-center">
-            Why Branding Matters for Conversions
-          </h2>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-5 leading-tight tracking-tight">
+                  Build a brand that's{" "}
+                  <span className="text-[#4ade80]">unforgettable</span>
+                </h1>
+                <p className="text-lg sm:text-xl text-white/75 max-w-2xl mx-auto mb-10">
+                  Logo, colour system, social assets and brand guidelines — everything you need to look professional from day one.
+                </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto ">
-            {whyBranding.map((item, index) => (
-              <Card key={index} className="hover:shadow-md transition-shadow  hover:border-green-600/30 hover:shadow-green-600/50 hover:bg-green-50">
-                <CardHeader>
-                  <CardTitle className="text-lg sm:text-xl">{item.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm sm:text-base text-gray-600">{item.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="mt-8 sm:mt-12 max-w-4xl mx-auto bg-[#01A959]/5 border-l-4 border-[#01A959] p-4 sm:p-6 rounded-r-lg">
-            <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1">The WebOnRock Difference</h3>
-            <p className="text-sm sm:text-base text-gray-700">
-              We don't just design logos — we create complete brand systems that work across all touchpoints.
-              From your website to social media, every element reinforces your brand and builds trust with customers.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Packages */}
-      <section id="packages" className="py-12 sm:py-16 lg:py-20 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-8 sm:mb-12 text-center">
-            Branding Packages
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {packages.map((pkg, index) => (
-              <Card key={index} className={`relative ${pkg.popular ? "border-[#01A959] border-2 shadow-xl" : ""}`}>
-                {pkg.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#01A959] text-white px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
-                    Most Popular
-                  </div>
-                )}
-                <CardHeader>
-                  <CardTitle className="text-lg sm:text-2xl">{pkg.name}</CardTitle>
-                  <CardDescription className="text-sm sm:text-base">{pkg.description}</CardDescription>
-                  <div className="text-xl sm:text-2xl font-bold text-gray-900 mt-3">{pkg.price}</div>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {pkg.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <CheckCircle className="w-4 h-4 text-[#01A959] flex-shrink-0 mt-0.5" />
-                        <span className="text-sm sm:text-base text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <button className="w-full mt-4 sm:mt-6 bg-[#01A959] hover:bg-[#018f4d] text-white py-2.5 sm:py-3 rounded-lg font-medium transition">
-                    Get Started
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <button
+                    onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                    className="px-7 py-3.5 rounded-xl bg-[#01A959] hover:bg-[#018f4d] text-white font-semibold text-base shadow-lg shadow-[#01A959]/30 transition-all"
+                  >
+                    Get Free Brand Audit
                   </button>
-                </CardContent>
-              </Card>
-            ))}
+                  <button
+                    onClick={() => document.getElementById("packages")?.scrollIntoView({ behavior: "smooth" })}
+                    className="px-7 py-3.5 rounded-xl border-2 border-white/25 hover:bg-white/10 backdrop-blur-sm text-base font-medium transition-all"
+                  >
+                    View Packages
+                  </button>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Work Examples */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-8 sm:mb-12 text-center">
-            Brand Work Examples
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <Card className="overflow-hidden hover:shadow-lg transition hover:shadow-purple-500/50">
-              <div className="aspect-square bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                <Palette className="w-16 h-16 sm:w-20 sm:h-20 text-white" />
-              </div>
-              <CardHeader>
-                <CardTitle className="font-bold text-2xl text-gray-700">Logo Design</CardTitle>
-                <CardDescription>Modern, memorable brand marks</CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="overflow-hidden hover:shadow-lg transition hover:shadow-green-500/50">
-              <div className="aspect-square bg-gradient-to-br from-[#01A959] to-[#0E8C4A] flex items-center justify-center">
-                <Instagram className="w-16 h-16 sm:w-20 sm:h-20 text-white" />
-              </div>
-              <CardHeader>
-                <CardTitle className="font-bold text-2xl text-gray-700">Social Templates</CardTitle>
-                <CardDescription>Consistent, on-brand posts</CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="overflow-hidden hover:shadow-lg transition hover:shadow-red-600/50">
-              <div className="aspect-square bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
-                <FileText className="w-16 h-16 sm:w-20 sm:h-20 text-white" />
-              </div>
-              <CardHeader>
-                <CardTitle className="font-bold text-2xl text-gray-700">Brand Guidelines</CardTitle>
-                <CardDescription>Complete usage documentation</CardDescription>
-              </CardHeader>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Deliverables */}
-      <section id="deliverables" className="py-12 sm:py-16 lg:py-20 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-8 sm:mb-12 text-center">
-            What You'll Receive
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {deliverables.map((section, index) => (
-              <Card key={index} className="shadow-md hover:shadow-green-400/50 transition ">
-                <CardHeader>
-                  <CardTitle className="text-lg sm:text-xl">{section.category}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 ">
-                    {section.items.map((item, idx) => (
-                      <li key={idx} className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-[#01A959] flex-shrink-0" />
-                        <span className="text-sm sm:text-base text-gray-700">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Onboarding Process */}
+      {/* ── Stats Bar ────────────────────────────── */}
       <motion.section
-        id="process"
-        className="py-12 sm:py-16 lg:py-20 bg-gradient-to-t from-white to-green-100"
-        variants={fadeUp}
+        className="py-12 bg-gray-950 border-y border-white/5"
         initial="hidden"
         whileInView="visible"
-        transition={{ duration: 0.6 }}
         viewport={{ once: true }}
+        variants={stagger}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 text-center">
-            Our Branding Process
-          </h2>
-
-          <div className="max-w-3xl mx-auto">
-            {onboardingSteps.map((item, index) => (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            {stats.map((s, i) => (
               <motion.div
-                key={index}
-                className="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-6 last:mb-0 items-start"
-                whileHover={{ scale: 1.01 }}
-                transition={{ duration: 0.2 }}
+                key={i}
+                className="text-center"
+                variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, delay: i * 0.1 } } }}
               >
-                <div className="flex-shrink-0">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#01A959] text-white rounded-full flex items-center justify-center text-base sm:text-lg font-bold">
-                    {item.step}
-                  </div>
+                <div className="text-4xl sm:text-5xl font-black text-[#4ade80] tabular-nums">
+                  <AnimatedCounter target={s.value} suffix={s.suffix} />
                 </div>
-                <div className="flex-1 pb-4 border-b border-gray-200 last:border-0">
-                  <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1">{item.title}</h3>
-                  <p className="text-sm sm:text-base text-gray-600">{item.description}</p>
-                </div>
+                <p className="text-xs sm:text-sm text-gray-400 mt-1 max-w-[150px] mx-auto leading-snug">{s.label}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </motion.section>
 
-      {/* FAQs */}
-      <section id="faqs" className="py-12 sm:py-16 lg:py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 text-center">
-              Frequently Asked Questions
+      {/* ── Why Branding Matters ─────────────────── */}
+      <motion.section
+        id="overview"
+        className="relative py-16 sm:py-24 bg-gray-950 overflow-hidden"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={stagger}
+      >
+        <div
+          className="pointer-events-none absolute inset-0 opacity-15"
+          style={{ backgroundImage: "radial-gradient(circle, #ffffff15 1px, transparent 1px)", backgroundSize: "32px 32px" }}
+        />
+        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-40 bg-[#01A959]/10 blur-3xl rounded-full" />
+
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center mb-12 sm:mb-16"
+            variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+          >
+            <span className="inline-block mb-3 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-[#01A959]/15 text-[#4ade80] border border-[#01A959]/25">
+              Why It Matters
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white">
+              Why Branding Drives Conversions
             </h2>
-            <Accordion type="single" collapsible className="space-y-4">
-              {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`} className="bg-gray-50 rounded-lg px-4 sm:px-6 border">
-                  <AccordionTrigger className="text-left text-sm sm:text-base font-semibold text-gray-900 hover:text-[#01A959]">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-gray-600 text-sm sm:text-base">{faq.answer}</AccordionContent>
-                </AccordionItem>
+            <p className="mt-3 text-gray-400 max-w-lg mx-auto">The numbers are clear — a strong brand isn't a luxury, it's a growth lever.</p>
+          </motion.div>
+
+          <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12" variants={stagger}>
+            {whyBranding.map((item) => {
+              const Icon = item.icon;
+              return (
+                <motion.div key={item.title} variants={cardIn}>
+                  <TiltCard className="h-full">
+                    <div
+                      className={`h-full rounded-2xl border ${item.border} bg-gradient-to-br ${item.bg} p-6 flex flex-col gap-4 backdrop-blur-sm hover:brightness-110 transition-all duration-300 cursor-default`}
+                      style={{ transformStyle: "preserve-3d" }}
+                    >
+                      <div
+                        className="w-12 h-12 rounded-xl flex items-center justify-center"
+                        style={{ background: `${item.accent}20`, border: `1.5px solid ${item.accent}50` }}
+                      >
+                        <Icon className="w-6 h-6" style={{ color: item.accent }} />
+                      </div>
+                      <h3 className="text-base font-bold text-white">{item.title}</h3>
+                      <p className="text-sm text-gray-400 leading-relaxed">{item.description}</p>
+                      <div className="mt-auto h-0.5 rounded-full" style={{ background: `linear-gradient(to right, ${item.accent}60, transparent)` }} />
+                    </div>
+                  </TiltCard>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+
+          {/* Promise banner */}
+          <motion.div
+            className="relative max-w-3xl mx-auto"
+            variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2 } } }}
+          >
+            <div className="relative overflow-hidden rounded-2xl p-[1.5px] bg-[#01A959]">
+              <motion.div
+                className="absolute inset-0 rounded-2xl"
+                style={{ background: "conic-gradient(from 0deg, transparent 70%, rgba(255,255,255,0.35) 80%, transparent 90%)" }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+              />
+              <div className="relative rounded-2xl bg-gradient-to-br from-[#01A959] to-[#017a40] px-8 py-6 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+                <div className="shrink-0 w-12 h-12 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center text-2xl backdrop-blur-sm">
+                  ✨
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white mb-0.5">The WebOnRock Difference</h3>
+                  <p className="text-green-100 text-sm leading-relaxed">
+                    We don't just design logos — we create <strong className="text-white">complete brand systems</strong> that work across every touchpoint, from your website to social media, building trust at every interaction.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* ── Work Examples ────────────────────────── */}
+      <motion.section
+        className="relative py-16 sm:py-24 bg-white overflow-hidden"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={stagger}
+      >
+        <div className="pointer-events-none absolute -top-32 right-0 w-96 h-96 bg-violet-100/40 blur-3xl rounded-full" />
+        <div className="pointer-events-none absolute bottom-0 left-0 w-72 h-72 bg-green-50 blur-3xl rounded-full" />
+
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center mb-12"
+            variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+          >
+            <span className="inline-block mb-3 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-[#01A959]/10 text-[#01A959] border border-[#01A959]/20">
+              Our Work
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900">Brand Work Examples</h2>
+          </motion.div>
+
+          <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto" variants={stagger}>
+            {workExamples.map((ex, i) => {
+              const Icon = ex.icon;
+              return (
+                <motion.div key={i} variants={cardIn}>
+                  <TiltCard className="h-full">
+                    <div
+                      className="h-full rounded-2xl overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 cursor-default group"
+                      style={{ transformStyle: "preserve-3d" }}
+                    >
+                      {/* Visual area */}
+                      <div
+                        className={`aspect-video bg-gradient-to-br ${ex.grad} flex items-center justify-center relative overflow-hidden`}
+                      >
+                        {/* Subtle radial glow */}
+                        <div
+                          className="absolute inset-0 opacity-30"
+                          style={{ background: `radial-gradient(ellipse at center, ${ex.glow}60, transparent 70%)` }}
+                        />
+                        <Icon className="w-16 h-16 text-white relative z-10 transition-transform duration-300 group-hover:scale-110" />
+                      </div>
+                      <div className="p-5 bg-white">
+                        <h3 className="text-base font-bold text-gray-900">{ex.title}</h3>
+                        <p className="text-sm text-gray-500 mt-1">{ex.desc}</p>
+                      </div>
+                    </div>
+                  </TiltCard>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* ── Packages ─────────────────────────────── */}
+      <motion.section
+        id="packages"
+        className="relative py-16 sm:py-24 bg-gray-950 overflow-hidden"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={stagger}
+      >
+        <div
+          className="pointer-events-none absolute inset-0 opacity-10"
+          style={{ backgroundImage: "radial-gradient(circle, #ffffff15 1px, transparent 1px)", backgroundSize: "28px 28px" }}
+        />
+        <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-48 bg-[#01A959]/12 blur-3xl rounded-full" />
+
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center mb-12 sm:mb-16"
+            variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+          >
+            <span className="inline-block mb-3 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-[#01A959]/15 text-[#4ade80] border border-[#01A959]/25">
+              Pricing
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white">Branding Packages</h2>
+            <p className="mt-3 text-gray-400 max-w-lg mx-auto">Pick your starting point — everything is built to grow with you.</p>
+          </motion.div>
+
+          <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto" variants={stagger}>
+            {packages.map((pkg, i) => (
+              <motion.div key={i} variants={cardIn} className="relative">
+                {pkg.popular && (
+                  <div
+                    className="absolute -top-4 left-1/2 -translate-x-1/2 z-10 px-4 py-1 rounded-full text-xs font-bold text-white shadow-lg"
+                    style={{ background: pkg.accent }}
+                  >
+                    Most Popular
+                  </div>
+                )}
+                <TiltCard className="h-full">
+                  <div
+                    className={`h-full rounded-2xl border p-6 flex flex-col gap-5 transition-all duration-300 cursor-default ${
+                      pkg.popular
+                        ? "border-[#01A959]/50 bg-[#01A959]/8 hover:bg-[#01A959]/12 shadow-xl shadow-[#01A959]/10"
+                        : "border-white/10 bg-white/5 hover:bg-white/10"
+                    }`}
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    <div>
+                      <div
+                        className="w-10 h-10 rounded-xl mb-4 flex items-center justify-center text-xl"
+                        style={{ background: `${pkg.accent}25`, border: `1.5px solid ${pkg.accent}45` }}
+                      >
+                        {pkg.emoji}
+                      </div>
+                      <h3 className="text-xl font-extrabold text-white">{pkg.name}</h3>
+                      <p className="text-sm text-gray-400 mt-1">{pkg.description}</p>
+                      <p className="mt-3 text-sm font-medium" style={{ color: pkg.accent }}>{pkg.price}</p>
+                    </div>
+
+                    <ul className="flex flex-col gap-2.5 flex-1">
+                      {pkg.features.map((f, idx) => (
+                        <li key={idx} className="flex items-start gap-2.5">
+                          <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: pkg.accent }} />
+                          <span className="text-sm text-gray-300">{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <button
+                      onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                      className="w-full py-3 rounded-xl text-sm font-bold transition-all duration-200 mt-2"
+                      style={
+                        pkg.popular
+                          ? { background: pkg.accent, color: "#fff" }
+                          : { background: `${pkg.accent}20`, color: pkg.accent, border: `1px solid ${pkg.accent}40` }
+                      }
+                    >
+                      Get Started
+                    </button>
+                  </div>
+                </TiltCard>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* ── Deliverables ─────────────────────────── */}
+      <motion.section
+        id="deliverables"
+        className="relative py-16 sm:py-24 bg-white overflow-hidden"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={stagger}
+      >
+        <div className="pointer-events-none absolute top-0 inset-x-0 h-48 bg-gradient-to-b from-gray-50 to-transparent" />
+
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center mb-12"
+            variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+          >
+            <span className="inline-block mb-3 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-[#01A959]/10 text-[#01A959] border border-[#01A959]/20">
+              Deliverables
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900">What You'll Receive</h2>
+            <p className="mt-3 text-gray-500 max-w-lg mx-auto">Every asset you need to show up professionally, everywhere.</p>
+          </motion.div>
+
+          <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto" variants={stagger}>
+            {deliverables.map((d, i) => (
+              <motion.div key={i} variants={cardIn}>
+                <TiltCard className="h-full">
+                  <div
+                    className="h-full rounded-2xl border border-gray-100 bg-gray-50 hover:bg-white hover:shadow-xl hover:border-gray-200 transition-all duration-300 p-6 flex flex-col gap-4 cursor-default group"
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    {/* Category header with accent bar */}
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="w-1 h-6 rounded-full"
+                        style={{ background: d.accent }}
+                      />
+                      <h3 className="text-base font-bold text-gray-900">{d.category}</h3>
+                    </div>
+
+                    <ul className="flex flex-col gap-2.5">
+                      {d.items.map((item, idx) => (
+                        <li key={idx} className="flex items-center gap-2.5">
+                          <CheckCircle className="w-4 h-4 shrink-0" style={{ color: d.accent }} />
+                          <span className="text-sm text-gray-600">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div
+                      className="mt-auto h-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      style={{ background: `linear-gradient(to right, ${d.accent}, ${d.accent}44)` }}
+                    />
+                  </div>
+                </TiltCard>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* ── Process ──────────────────────────────── */}
+      <motion.section
+        id="process"
+        className="relative py-16 sm:py-24 bg-white overflow-hidden"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={stagger}
+      >
+        <div className="pointer-events-none absolute top-0 inset-x-0 h-48 bg-gradient-to-b from-green-50 to-transparent" />
+
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center mb-14"
+            variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+          >
+            <span className="inline-block mb-3 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-[#01A959]/10 text-[#01A959] border border-[#01A959]/20">
+              How It Works
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900">Our Branding Process</h2>
+          </motion.div>
+
+          {/* Timeline */}
+          <div className="relative">
+            <div className="absolute left-5 sm:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-[#01A959] via-gray-200 to-transparent hidden sm:block" />
+            <div className="flex flex-col gap-8">
+              {onboardingSteps.map((item, i) => (
+                <motion.div
+                  key={i}
+                  className="relative flex gap-5 sm:gap-8 items-start group"
+                  variants={{
+                    hidden: { opacity: 0, x: -30 },
+                    visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 } },
+                  }}
+                >
+                  <div
+                    className="shrink-0 z-10 w-10 h-10 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white text-sm sm:text-xl font-extrabold shadow-lg ring-4 ring-white transition-transform duration-300 group-hover:scale-110"
+                    style={{ background: `linear-gradient(135deg, ${item.color}, ${item.color}bb)` }}
+                  >
+                    {item.step}
+                  </div>
+                  <div className="flex-1 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-white hover:shadow-md hover:border-gray-200 transition-all duration-300 px-5 sm:px-7 py-5">
+                    <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1">{item.title}</h3>
+                    <p className="text-sm text-gray-500 leading-relaxed">{item.description}</p>
+                  </div>
+                </motion.div>
               ))}
-            </Accordion>
+            </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* Contact Form */}
+      {/* ── FAQs ─────────────────────────────────── */}
+      <motion.section
+        id="faqs"
+        className="relative py-16 sm:py-24 bg-gray-950 overflow-hidden"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+      >
+        <div
+          className="pointer-events-none absolute inset-0 opacity-10"
+          style={{ backgroundImage: "linear-gradient(to right, #ffffff08 1px, transparent 1px), linear-gradient(to bottom, #ffffff08 1px, transparent 1px)", backgroundSize: "48px 48px" }}
+        />
+        <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-40 bg-[#01A959]/10 blur-3xl rounded-full" />
+
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <span className="inline-block mb-3 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-[#01A959]/15 text-[#4ade80] border border-[#01A959]/25">
+              FAQ
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white">Common Questions</h2>
+          </div>
+
+          <Accordion type="single" collapsible className="space-y-3 max-w-3xl mx-auto">
+            {faqs.map((faq, i) => (
+              <AccordionItem
+                key={i}
+                value={`item-${i}`}
+                className="rounded-2xl border border-white/8 bg-white/5 px-5 sm:px-6 hover:border-[#01A959]/30 hover:bg-[#01A959]/5 transition-colors duration-200"
+              >
+                <AccordionTrigger className="text-left text-sm sm:text-base font-semibold text-white hover:text-[#4ade80] py-4 [&>svg]:text-[#01A959]">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-400 text-sm sm:text-base pb-4 leading-relaxed">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </motion.section>
+
+      {/* ── Contact ──────────────────────────────── */}
       <section id="contact" className="py-12 sm:py-16 lg:py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {/* <h2 className="text-center text-xl sm:text-2xl md:text-3xl font-semibold mb-6">- Let's Discuss Your Growth! -</h2> */}
           <div className="max-w-5xl mx-auto">
             <ContactForm
               title="Ready to Build Your Brand?"
@@ -374,6 +677,7 @@ export default function BrandingPage() {
           </div>
         </div>
       </section>
+
       <Footer />
     </>
   );

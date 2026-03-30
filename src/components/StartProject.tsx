@@ -54,7 +54,7 @@ Sent from: ${window.location.href}`;
   };
 
   return (
-    <section className="py-16 px-6 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section className="py-16 px-6 bg-gradient-to-br from-gray-50 to-gray-100" id="start-project">
       <div className="max-w-2xl mx-auto">
         <h2 className="text-4xl font-bold text-center mb-4 text-gray-800">
           Let&apos;s Grow Your Business!
