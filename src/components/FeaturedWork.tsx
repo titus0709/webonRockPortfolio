@@ -6,14 +6,29 @@ import nammaOoru from "@/assets/nammaKadai.png";
 import foodDelivery from "@/assets/foodDelivery.jpg";
 import mercy from "@/assets/mercy.png";
 import reholife from "@/assets/reholife.png";
+import vimala from "@/assets/vimala.png";
 
 const projects = [
+   {
+    title: "Vimala School Website",
+    description: "High Convertion website for a school to get More Admissions and showcase the school's facilities and programs.",
+    image: vimala,
+    tags: ["Website", "SEO"],
+    link: "https://www.vimalaschool.in/"
+  },
    {
     title: "Mercy School Website",
     description: "Landing page for a Matriculation school to showcase programs and facilitate enrollment.",
     image: mercy,
     tags: ["Website", "SEO"],
     link: "https://www.mercyschool.in/"
+  },
+   {
+    title: "Food Delivery App ",
+    description: "A modern food delivery platform with real-time tracking, seamless ordering, and integrated payment processing.",
+    image: foodDelivery,
+    tags: [ "Mobile App", "Real-time"],
+    link: "https://play.google.com/store/apps/details?id=com.judah.fooddelivery"
   },
   {
     title: "Reholife Website",
@@ -22,13 +37,7 @@ const projects = [
     tags: ["Website", "SEO"],
     link: "https://www.reholife.org/"
   },
-  {
-    title: "Food Delivery App (Under Testing) ",
-    description: "A modern food delivery platform with real-time tracking, seamless ordering, and integrated payment processing.",
-    image: foodDelivery,
-    tags: ["Web App", "Mobile", "Real-time"],
-    link: "https://play.google.com/store/apps/details?id=com.judah.fooddelivery"
-  },
+ 
   {
     title: "Namma Ooru Tea Kadai",
     description: "Simple Food ordering website for a Bakery",

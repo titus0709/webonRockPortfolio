@@ -20,12 +20,11 @@ export default function Footer() {
               Webon<span className="text-[#01A959]">Rock</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Building digital experiences that drive results for local businesses.
-              Digital solutions for web, apps, SEO, and branding.
+              Building digital experiences that drive results for Businesses.
             </p>
 
             <div className="flex items-center gap-3 flex-wrap">
-              <a
+              {/* <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -34,8 +33,8 @@ export default function Footer() {
               >
                 <Facebook className="w-5 h-5" />
                 <span className="sr-only">Facebook</span>
-              </a>
-              <a
+              </a> */}
+              {/* <a
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -44,9 +43,9 @@ export default function Footer() {
               >
                 <Twitter className="w-5 h-5" />
                 <span className="sr-only">Twitter</span>
-              </a>
+              </a> */}
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/webonrock/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
@@ -56,7 +55,7 @@ export default function Footer() {
                 <span className="sr-only">Instagram</span>
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/titus-kirubakaran/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"

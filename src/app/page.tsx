@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import HappyClients from "@/components/HappyClients";
 import ContactForm from "@/components/StartProject";
 import VideoTestimonial from "@/components/VideoTestimonialSection";
+import { WhatsAppButton } from "@/components/whatsapp-button"
 
 
 
@@ -25,6 +26,7 @@ export default function Page() {
       <HappyClients/>
       <WorkProcess />
       <ContactForm />
+      <WhatsAppButton/>
       {/* <Testimonials /> */}
       {/* <LeadMagnet /> */}
       <Footer />
