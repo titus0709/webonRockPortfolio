@@ -11,6 +11,7 @@ import mobileAppDev from "@/assets/mobileAppDev.jpg";
 import StartProject from "@/components/StartProject";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer"; // ← fixed: was imported from "react-day-picker"
+import HappyClients from "@/components/HappyClients";
 
 // ─────────────────────────────────────────────
 // Shared helpers
@@ -341,6 +342,10 @@ export default function AppDevelopmentPage() {
         </div>
       </motion.section>
 
+            <HappyClients/>
+
+             <StartProject />
+
       {/* ── Process ────────────────────────────── */}
       <motion.section
         id="process"
@@ -363,6 +368,9 @@ export default function AppDevelopmentPage() {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900">Our Process & Timeline</h2>
             <p className="mt-2 text-gray-400 text-sm sm:text-base">May vary with requirements</p>
           </motion.div>
+
+
+           
 
           {/* Timeline */}
           <div className="relative">
@@ -534,7 +542,7 @@ export default function AppDevelopmentPage() {
         </div>
       </motion.section>
 
-      <StartProject />
+      
       <Footer />
     </>
   );

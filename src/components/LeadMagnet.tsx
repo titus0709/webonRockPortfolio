@@ -3,210 +3,266 @@
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle2 } from "lucide-react";
+import {
+  CheckCircle2,
+  ArrowRight,
+  ArrowLeft,
+  Globe,
+  Mail,
+  User,
+  Send,
+  Lock,
+  Zap,
+} from "lucide-react";
 
-const benefits = [
-  "Comprehensive website analysis",
-  "SEO performance review",
-  "Mobile responsiveness check",
-  "Speed optimization recommendations",
-  "Actionable improvement plan",
+type Step = "website" | "contact" | "success";
+
+const auditItems = [
+  "Website performance score",
+  "SEO health & keyword gaps",
+  "Mobile & speed check",
+  "Top 3 action items to fix now",
 ];
 
 export default function LeadMagnet() {
-  const [status, setStatus] = useState<"" | "sending" | "success" | "error">(
-    ""
-  );
-  const formRef = useRef<HTMLFormElement | null>(null);
+  const [step, setStep] = useState<Step>("website");
+  const [status, setStatus] = useState<"idle" | "sending">("idle");
+  const [websiteVal, setWebsiteVal] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const progress = step === "website" ? 50 : step === "contact" ? 100 : 100;
+
+  const handleStep1 = () => {
+    if (!websiteVal.trim()) return;
+    setStep("contact");
+  };
+
+  const handleSubmit = async () => {
+    if (!firstName.trim() || !email.trim()) return;
     setStatus("sending");
 
-    const formEl = formRef.current ?? (e.currentTarget as HTMLFormElement);
-    const fd = new FormData(formEl);
+    let site = websiteVal.trim();
+    if (site && !/^https?:\/\//i.test(site)) site = `https://${site}`;
 
-    if (!fd.has("website")) {
-      const websiteInput = formEl.querySelector<HTMLInputElement>(
-        'input[name="website"], input#website, input[id="website"]'
-      );
-      if (websiteInput && websiteInput.value.trim()) {
-        fd.set("website", websiteInput.value.trim());
-      }
-    }
-
-    if (fd.has("website")) {
-      let site = String(fd.get("website") || "").trim();
-      if (site && !/^https?:\/\//i.test(site)) site = `https://${site}`;
-      fd.set("website", site);
-    }
-
-    const payloadObj = Object.fromEntries(fd.entries()) as Record<string, any>;
-    payloadObj.source =
-      typeof window !== "undefined" ? window.location.href : "";
-    payloadObj.form_type = "SEO_AUDIT_FORM";
+    const payload = {
+      name: `${firstName} ${lastName}`.trim(),
+      email,
+      website: site,
+      source: typeof window !== "undefined" ? window.location.href : "",
+      form_type: "SEO_AUDIT_FORM",
+    };
 
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payloadObj),
+        body: JSON.stringify(payload),
       });
-
       const data = await res.json().catch(() => ({}));
-
       if (res.ok && data.status === "success") {
-        setStatus("success");
-        formEl.reset();
-      } else {
-        setStatus("error");
+        setStep("success");
       }
     } catch (err) {
-      setStatus("error");
-      console.error("Network error:", err);
+      console.error(err);
+    } finally {
+      setStatus("idle");
     }
   };
 
   return (
     <section className="py-12 sm:py-16 bg-gradient-to-br from-[#01A959] to-[#018f4d]">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <Card className="mx-auto max-w-4xl border-0 shadow-2xl">
-          <CardContent className="p-6 sm:p-8 md:p-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-              {/* Right on md+, but show form first on mobile for conversions */}
-              <div className="order-2 md:order-1">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">
-                  Get Your Free Mini SEO Audit
-                </h2>
-                <p className="text-gray-800 mb-5 leading-relaxed">
-                  Discover how your website performs and receive clear,
-                  prioritized recommendations to improve visibility and speed.
-                </p>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden">
+          {/* Top bar */}
+          <div className="bg-[#01A959] px-6 py-5">
+            <span className="inline-flex items-center gap-1.5 bg-white/20 text-white text-xs px-3 py-1 rounded-full mb-3">
+              <Zap className="w-3 h-3" /> Free · Results in 24h
+            </span>
+            <h2 className="text-white text-xl font-bold leading-snug mb-1">
+              Get your free mini SEO audit
+            </h2>
+            <p className="text-white/80 text-sm">
+              {step === "website"
+                ? "Step 1 of 2 — enter your website"
+                : step === "contact"
+                ? "Step 2 of 2 — almost done!"
+                : "Audit request received!"}
+            </p>
+          </div>
 
-                <ul className="space-y-3">
-                  {benefits.map((benefit, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-start gap-3 text-gray-900"
+          {/* Progress bar */}
+          <div className="h-1 bg-white/20 bg-[#01A959]">
+            <div
+              className="h-full bg-[#01A959] transition-all duration-500"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <div className="h-1 bg-gray-100">
+            <div
+              className="h-full bg-[#01A959] transition-all duration-500"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+
+          <div className="p-6">
+            {/* Social proof */}
+            {step !== "success" && (
+              <div className="flex items-center gap-3 bg-gray-50 rounded-lg px-3 py-2.5 mb-5">
+                <div className="flex -space-x-1.5">
+                  {["JK", "SR", "PM"].map((initials) => (
+                    <div
+                      key={initials}
+                      className="w-6 h-6 rounded-full bg-[#01A959] text-white text-[10px] font-medium flex items-center justify-center border-2 border-white"
                     >
-                      <CheckCircle2 className="w-5 h-5 text-white flex-shrink-0 mt-0.5 bg-green-600 rounded-full p-[2px]" />
-                      <span className="text-sm sm:text-base">{benefit}</span>
+                      {initials}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-gray-500">
+                  <span className="font-semibold text-gray-800">
+                    127 audits
+                  </span>{" "}
+                  sent this week
+                </p>
+              </div>
+            )}
+
+            {/* Step 1 */}
+            {step === "website" && (
+              <div>
+                <label className="block text-sm text-gray-600 mb-1.5">
+                  Your website URL
+                </label>
+                <div className="relative mb-4">
+                  <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Input
+                    type="url"
+                    placeholder="https://yoursite.com"
+                    value={websiteVal}
+                    onChange={(e) => setWebsiteVal(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleStep1()}
+                    className="pl-9"
+                    autoComplete="url"
+                    autoFocus
+                  />
+                </div>
+                <Button
+                  onClick={handleStep1}
+                  className="w-full bg-[#01A959] hover:bg-[#018f4d] text-white py-3 text-sm font-medium"
+                >
+                  Analyze my site <ArrowRight className="w-4 h-4 ml-1" />
+                </Button>
+                <p className="flex items-center justify-center gap-1 text-xs text-gray-400 mt-3">
+                  <Lock className="w-3 h-3" /> No credit card. No spam. Unsubscribe anytime.
+                </p>
+              </div>
+            )}
+
+            {/* Step 2 */}
+            {step === "contact" && (
+              <div>
+                <button
+                  onClick={() => setStep("website")}
+                  className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 mb-4"
+                >
+                  <ArrowLeft className="w-4 h-4" /> Back
+                </button>
+                <div className="grid grid-cols-2 gap-3 mb-3">
+                  <div>
+                    <label className="block text-sm text-gray-600 mb-1.5">
+                      First name
+                    </label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <Input
+                        placeholder="John"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        className="pl-9"
+                        autoComplete="given-name"
+                        autoFocus
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-600 mb-1.5">
+                      Last name
+                    </label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <Input
+                        placeholder="Doe"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        className="pl-9"
+                        autoComplete="family-name"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <label className="block text-sm text-gray-600 mb-1.5">
+                  Email address
+                </label>
+                <div className="relative mb-4">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Input
+                    type="email"
+                    placeholder="john@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+                    className="pl-9"
+                    autoComplete="email"
+                  />
+                </div>
+                <Button
+                  onClick={handleSubmit}
+                  disabled={status === "sending"}
+                  className="w-full bg-[#01A959] hover:bg-[#018f4d] text-white py-3 text-sm font-medium"
+                >
+                  {status === "sending" ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      Send me the audit <Send className="w-4 h-4 ml-1" />
+                    </>
+                  )}
+                </Button>
+                <p className="flex items-center justify-center gap-1 text-xs text-gray-400 mt-3">
+                  <Lock className="w-3 h-3" /> We'll only use this to send your audit.
+                </p>
+              </div>
+            )}
+
+            {/* Success */}
+            {step === "success" && (
+              <div className="text-center py-2">
+                <div className="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle2 className="w-8 h-8 text-[#01A959]" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  You're all set, {firstName}!
+                </h3>
+                <p className="text-sm text-gray-500 mb-4">
+                  Your SEO audit is on the way. Check your inbox within 24 hours.
+                </p>
+                <ul className="text-left divide-y divide-gray-100">
+                  {auditItems.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-center gap-2 py-2.5 text-sm text-gray-600"
+                    >
+                      <CheckCircle2 className="w-4 h-4 text-[#01A959] flex-shrink-0" />
+                      {item}
                     </li>
                   ))}
                 </ul>
-
-                <p className="mt-6 text-sm text-gray-700">
-                  No credit card required. Results delivered within 24 hours.
-                </p>
               </div>
-
-              {/* Form */}
-              <div className="order-1 md:order-2">
-                <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm">
-                  <form
-                    ref={formRef}
-                    onSubmit={handleSubmit}
-                    className="space-y-4"
-                    aria-labelledby="leadmagnet-heading"
-                  >
-                    <div>
-                      <label
-                        htmlFor="name"
-                        className="block text-sm font-medium text-gray-700 mb-1"
-                      >
-                        Full Name
-                      </label>
-                      <Input
-                        id="name"
-                        name="name"
-                        required
-                        placeholder="John Doe"
-                        className="w-full"
-                        aria-required="true"
-                      />
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-medium text-gray-700 mb-1"
-                      >
-                        Email Address
-                      </label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        required
-                        placeholder="john@example.com"
-                        className="w-full"
-                        aria-required="true"
-                      />
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="website"
-                        className="block text-sm font-medium text-gray-700 mb-1"
-                      >
-                        Website URL
-                      </label>
-                      <Input
-                        id="website"
-                        name="website"
-                        type="url"
-                        required
-                        placeholder="https://yourwebsite.com"
-                        className="w-full"
-                        aria-required="true"
-                      />
-                    </div>
-
-                    <Button
-                      type="submit"
-                      disabled={status === "sending"}
-                      className="w-full py-3 text-base sm:py-4 sm:text-lg bg-[#01A959] hover:bg-[#018f4d] text-white"
-                    >
-                      {status === "sending" ? "Sending..." : "Get My Free Audit"}
-                    </Button>
-
-                    {/* Accessible status messages */}
-                    <div
-                      aria-live="polite"
-                      className="min-h-[1.25rem] flex items-center justify-center"
-                    >
-                      {status === "success" && (
-                        <p className="text-sm text-green-700 font-medium">
-                          ✅ Your audit request has been submitted!
-                        </p>
-                      )}
-
-                      {status === "error" && (
-                        <p className="text-sm text-red-600 font-medium">
-                          ❌ Something went wrong. Please try again.
-                        </p>
-                      )}
-                    </div>
-
-                    <p className="text-xs text-gray-500 text-center">
-                      We respect your privacy. We’ll only use this info to send
-                      the audit.
-                    </p>
-                  </form>
-                </div>
-              </div>
-            </div>
-
-            {/* Optional: small footer text visible on larger screens */}
-            <div className="mt-6 text-center md:text-left text-xs text-gray-600">
-              <span className="hidden md:inline">
-                This mini audit covers basic SEO checks. For a full audit,
-                contact our team.
-              </span>
-            </div>
-          </CardContent>
-        </Card>
+            )}
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -20,11 +20,13 @@ export default function Page() {
       <Header />
       <Hero />
       <Services />
+      <HappyClients/>
       <VideoTestimonial />
       <FeaturedWork />
       <WhyWebOnRock />
-      <HappyClients/>
+      
       <WorkProcess />
+      <HappyClients/>
       <ContactForm />
       <WhatsAppButton/>
       {/* <Testimonials /> */}

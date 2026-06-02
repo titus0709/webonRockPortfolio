@@ -17,13 +17,6 @@ const projects = [
     link: "https://www.vimalaschool.in/"
   },
    {
-    title: "Mercy School Website",
-    description: "Landing page for a Matriculation school to showcase programs and facilitate enrollment.",
-    image: mercy,
-    tags: ["Website", "SEO"],
-    link: "https://www.mercyschool.in/"
-  },
-   {
     title: "Food Delivery App ",
     description: "A modern food delivery platform with real-time tracking, seamless ordering, and integrated payment processing.",
     image: foodDelivery,
@@ -36,6 +29,13 @@ const projects = [
     image: reholife,
     tags: ["Website", "SEO"],
     link: "https://www.reholife.org/"
+  },
+   {
+    title: "Mercy School Website",
+    description: "Landing page for a Matriculation school to showcase programs and facilitate enrollment.",
+    image: mercy,
+    tags: ["Website", "SEO"],
+    link: "https://www.mercyschool.in/"
   },
  
   {

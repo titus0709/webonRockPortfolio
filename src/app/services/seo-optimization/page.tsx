@@ -10,7 +10,7 @@ import {
 import seo from "@/assets/seo-1.jpg";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import ContactForm from "@/components/ContactForm";
+import StartProject from "@/components/StartProject";
 
 // ─────────────────────────────────────────────
 // Shared motion helpers
@@ -511,6 +511,9 @@ export default function SEOOptimizationPage() {
         </div>
       </motion.section>
 
+
+      <StartProject />
+
       {/* ── FAQs ─────────────────────────────────── */}
       <motion.section
         id="faqs"
@@ -552,12 +555,7 @@ export default function SEOOptimizationPage() {
         </div>
       </motion.section>
 
-      <ContactForm
-        id="contact"
-        title="Ready to Boost Your SEO?"
-        description="Contact us today for a free consultation and see how we can help your business grow online."
-        showBudget={false}
-      />
+      
       <Footer />
     </>
   );

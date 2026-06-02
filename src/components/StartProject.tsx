@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,6 +23,7 @@ export default function StartProject() {
 
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
+    const phone = formData.get("phone") as string;
     const projectType = (formData.get("projectType") as string) || "Not specified";
     const budget = (formData.get("budget") as string) || "Not specified";
     const goals = (formData.get("goals") as string) || "Not specified";
@@ -29,10 +31,8 @@ export default function StartProject() {
     const message = `🚀 New Project Inquiry
 
 👤 Name: ${name}
-📧 Email: ${email}
-💼 Project Type: ${projectType}
-💰 Budget: ${budget}
-📝 Goals: ${goals}
+📧 Phone: ${phone}
+
 
 Sent from: ${window.location.href}`;
 
@@ -83,7 +83,7 @@ Sent from: ${window.location.href}`;
           </div>
 
           {/* Email */}
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Email Address *
             </label>
@@ -93,10 +93,10 @@ Sent from: ${window.location.href}`;
               required
               placeholder="john@example.com"
             />
-          </div>
+          </div> */}
 
           {/* Project Type */}
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Project Type
             </label>
@@ -104,7 +104,7 @@ Sent from: ${window.location.href}`;
               name="projectType"
               placeholder="Website, App, E-commerce, etc."
             />
-          </div>
+          </div> */}
 
           {/* Budget */}
           {/* <div>
@@ -117,9 +117,22 @@ Sent from: ${window.location.href}`;
             />
           </div> */}
 
-          {/* Goals */}
-          <div>
+          {/* {phone} */}
+           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
+              WhatsApp / Phone
+            </label>
+            <Input
+              name="phone"
+              type="tel"
+              placeholder="+91 98765 43210"
+            />
+          </div> 
+
+          {/* Goals */}
+          {/* <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+            
               Project Goals
             </label>
             <Textarea
@@ -128,8 +141,11 @@ Sent from: ${window.location.href}`;
               placeholder="Describe goals, timeline, and requirements..."
               className="resize-none"
             />
-          </div>
+          </div> */}
 
+          <p className="flex items-center justify-center gap-1 text-xs text-gray-400 mt-3">
+                  <Lock className="w-3 h-3" /> We won't spam or share your number.
+                </p>
           {/* Submit */}
           <Button
             type="submit"

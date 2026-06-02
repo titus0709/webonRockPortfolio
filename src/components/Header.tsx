@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Phone, Mail, Menu, X } from "lucide-react";
+import { Phone, Mail, Menu, X, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
+import { Button } from "./ui/button";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -112,21 +113,15 @@ export default function Header() {
 
                 {/* Right side */}
                 <div className="flex items-center gap-4">
-                  <div className="hidden lg:flex items-center gap-6 text-sm text-gray-600">
-                    <a
-                      href="tel:+919566515735"
-                      className="flex items-center gap-2 hover:text-[#01A959]"
-                    >
-                      <Phone className="w-4 h-4" /> (+91) 95665-15735
-                    </a>
-
-                    <a
-                      href="mailto:buildwithwebonrock@gmail.com"
-                      className="flex items-center gap-2 hover:text-[#01A959]"
-                    >
-                      <Mail className="w-4 h-4" /> buildwithwebonrock@gmail.com
-                    </a>
-                  </div>
+                 <a href='#start-project' >
+              <Button 
+                size="lg" 
+                className="bg-[#01A959] hover:bg-[#018f4d] text-white px-5 py-6 text-base group shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 lg:mx-4 rounded-2xl"
+              >
+                Let's Build 
+                <ArrowRight className="ml-2 w-3 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </a>
 
                   {/* mobile menu toggle */}
                   <button

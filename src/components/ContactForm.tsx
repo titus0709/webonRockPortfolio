@@ -3,111 +3,122 @@
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { User, Phone, ArrowRight, Lock, CheckCircle2 } from "lucide-react";
 
 type ContactFormProps = React.HTMLAttributes<HTMLElement> & {
   id?: string;
   title?: string;
   description?: string;
-  showBudget?: boolean;
 };
 
 export default function ContactForm({
   id,
-  title = "Ready to Rank Higher?",
-  description = "Let's discuss your SEO goals and create a custom strategy for your business.",
-  showBudget = false,
+  title = "Let's talk",
+  description = "Drop your details and we'll call you back within 24 hours.",
   className,
   ...rest
 }: ContactFormProps) {
-  const [status, setStatus] = useState<"" | "sending" | "success" | "error">("");
-  const formRef = useRef<HTMLFormElement | null>(null);
+  const [status, setStatus] = useState<"idle" | "sending" | "success">("idle");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    if (!name.trim() || !phone.trim()) return;
     setStatus("sending");
-
-    const formEl = formRef.current ?? (e.currentTarget as HTMLFormElement);
-    const payload = Object.fromEntries(new FormData(formEl).entries()) as Record<string, any>;
-    payload.source = typeof window !== "undefined" ? window.location.href : "";
 
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          name,
+          phone,
+          source: typeof window !== "undefined" ? window.location.href : "",
+          form_type: "CALLBACK_FORM",
+        }),
       });
-
       const data = await res.json().catch(() => ({}));
-      if (res.ok && data.status === "success") {
-        setStatus("success");
-        formEl.reset();
-      } else {
-        console.error("Proxy/upstream error:", data);
-        setStatus("error");
-      }
+      if (res.ok && data.status === "success") setStatus("success");
     } catch (err) {
-      console.error("Network error:", err);
-      setStatus("error");
+      console.error(err);
+    } finally {
+      if (status !== "success") setStatus("idle");
     }
   };
 
   return (
-    <section
-      id={id ?? "contactform"}
-      className={`py-16 px-6 md:px-12 lg:px-20 rounded-2xl ${className ?? ""}`}
-      {...rest}
-    >
-      <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">{title}</h2>
-        <p className="text-gray-600 mb-10">{description}</p>
+    <section  id={id ?? "contact"} className={className} {...rest}>
+      <div className="flex justify-center px-4 py-12">
+        <div className="w-full max-w-sm bg-white border border-gray-100 rounded-2xl shadow-lg overflow-hidden">
+          <div className="bg-[#01A959] px-6 py-5">
+            <h2 className="text-white text-xl font-semibold mb-1">{title}</h2>
+            <p className="text-white/80 text-sm">{description}</p>
+          </div>
+
+          <div className="p-6">
+            {status === "success" ? (
+              <div className="text-center py-4">
+                <div className="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle2 className="w-7 h-7 text-[#01A959]" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                  Got it, {name.split(" ")[0]}!
+                </h3>
+                <p className="text-sm text-gray-500">
+                  We'll call you back within 24 hours.
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="mb-4">
+                  <label className="block text-sm text-gray-500 mb-1.5">Your name</label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <Input
+                      type="text"
+                      placeholder="John Doe"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="pl-9"
+                      autoComplete="name"
+                      autoFocus
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-5">
+                  <label className="block text-sm text-gray-500 mb-1.5">WhatsApp / Phone</label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <Input
+                      type="tel"
+                      placeholder="+91 98765 43210"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+                      className="pl-9"
+                      autoComplete="tel"
+                    />
+                  </div>
+                </div>
+
+                <Button
+                  onClick={handleSubmit}
+                  disabled={status === "sending"}
+                  className="w-full bg-[#01A959] hover:bg-[#018f4d] text-white py-3"
+                >
+                  {status === "sending" ? "Sending..." : "Send Message"}
+                  <ArrowRight className="w-4 h-4 ml-1" />
+                </Button>
+
+                <p className="flex items-center justify-center gap-1 text-xs text-gray-400 mt-3">
+                  <Lock className="w-3 h-3" /> We won't spam or share your number.
+                </p>
+              </>
+            )}
+          </div>
+        </div>
       </div>
-
-      <form
-        ref={formRef}
-        onSubmit={handleSubmit}
-        className="max-w-2xl mx-auto grid gap-6 bg-white p-8 rounded-2xl shadow-md"
-      >
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">Your Name *</label>
-          <Input name="name" type="text" required placeholder="John Doe" />
-        </div>
-
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">Email Address *</label>
-          <Input name="email" type="email" required placeholder="you@example.com" />
-        </div>
-
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">What type of project are you looking for?</label>
-          <Input name="project_type" type="text" placeholder="Website, App, Branding, SEO..." />
-        </div>
-
-        {showBudget && (
-          <div>
-            <label className="block text-lg font-medium text-gray-700 mb-2">What’s your approximate budget?</label>
-            <Input name="budget" type="text" placeholder="₹20,000 – ₹1,00,000" />
-          </div>
-        )}
-
-        <div>
-          <label className="block text-lg font-medium text-gray-700 mb-2">Tell us more about your goals</label>
-          <Textarea name="details" placeholder="Describe what you want to achieve..." rows={5} />
-        </div>
-
-        <Button type="submit" disabled={status === "sending"} className="w-full bg-[#01A959] hover:bg-[#018f4d] text-white py-6 text-lg">
-          {status === "sending" ? "Sending..." : "Submit Project"}
-        </Button>
-
-        {status === "success" && <p className="text-green-600 text-center font-medium">✅ Thanks! We'll get in touch soon.</p>}
-        {status === "error" && (
-          <div className="text-center">
-            <p className="text-red-600 font-medium">❌ Something went wrong. Please try again later.</p>
-            <p className="text-gray-600">Contact Us at</p>
-            <a href="mailto:buildwithwebonrock@gmail.com" className="text-gray-600">buildwithwebonrock@gmail.com</a>
-          </div>
-        )}
-      </form>
     </section>
   );
 }
