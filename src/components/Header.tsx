@@ -104,7 +104,7 @@ export default function Header() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="px-2 py-1 text-sm font-medium text-gray-800 rounded-lg transition-all duration-200  hover:text-[#01A959]"
+                      className="px-2 py-1 text-lg font-medium text-gray-800 rounded-lg transition-all duration-200  hover:text-[#01A959]"
                     >
                       {item.label}
                     </Link>
@@ -113,15 +113,16 @@ export default function Header() {
 
                 {/* Right side */}
                 <div className="flex items-center gap-4">
-                 <a href='#start-project' >
-              <Button 
-                size="lg" 
-                className="bg-[#01A959] hover:bg-[#018f4d] text-white px-5 py-6 text-base group shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 lg:mx-4 rounded-2xl"
-              >
-                Let's Build 
-                <ArrowRight className="ml-2 w-3 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </a>
+
+                    <a href="#start-project">
+                    <Button
+                      size="lg"
+                      className="hidden lg:inline-flex bg-[#01A959] hover:bg-[#018f4d] text-white px-5 py-6 text-base group shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 lg:mx-4 rounded-2xl"
+                    >
+                      Let's Build
+                      <ArrowRight className="ml-2 w-3 h-5 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </a>
 
                   {/* mobile menu toggle */}
                   <button

@@ -16,12 +16,12 @@ import { WhatsAppButton } from "@/components/whatsapp-button"
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-black/95">
       <Header />
       <Hero />
-      <Services />
-      <HappyClients/>
       <VideoTestimonial />
+      <HappyClients/>
+      <Services />
       <FeaturedWork />
       <WhyWebOnRock />
       
