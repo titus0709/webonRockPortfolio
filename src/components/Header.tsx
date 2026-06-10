@@ -89,8 +89,8 @@ export default function Header() {
                   />
                   <div className="flex flex-col leading-tight">
                     <span className="text-lg sm:text-xl font-bold text-gray-900 leading-tight">
-                      Webon
-                      <span className="text-[#01A959]">Rock</span>
+                      WebOn 
+                      <span className="text-[#01A959] text-xl">Rock</span>
                     </span>
                     <span className="text-[10px] sm:text-[11px] text-gray-500">
                       Design · Dev · Growth
