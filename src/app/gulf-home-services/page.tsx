@@ -302,9 +302,9 @@ const AnnouncementBar = () => (
 /* ─── TICKER ─────────────────────────────────────────────────────── */
 const tickItems = [
   "Google Ads · SEO · Conversion Websites",
-  "AC Maintenance Specialists",
+  "AC Maintenance Lead Specialists",
   "Home Cleaning Lead Generation",
-  "Kuwait · Bahrain · Oman",
+  "Kuwait · Bahrain · Oman · Dubai",
   "14-Day Website Launch",
   "Month-to-Month · No Lock-In",
   "WhatsApp Lead Delivery",
@@ -1131,7 +1131,7 @@ const faqs = [
   { q: "Do you have Gulf clients already?", a: "Not yet — and we say that openly on our page. We're actively expanding to the Gulf and offering introductory pricing for our first 3 Gulf clients. That means you get a founder-level developer working directly on your project, not a junior handed an account." },
   { q: "What makes this different from a regular web design agency?", a: "Most web agencies hand you a website and walk away. We build lead pipelines — every page, button, and ad is engineered to generate inbound enquiries from people actively searching for your service right now. We don't track page views. We track leads." },
   { q: "How long until I see real results?", a: "Google Ads can generate leads from day one of going live. Organic SEO typically shows traction in 30–60 days. We set realistic expectations at the start and track every lead from week one." },
-  { q: "How do I pay you from Kuwait / Bahrain / Oman?", a: "We invoice in USD and accept payment via Wise or Payoneer — both work seamlessly from Gulf countries. You pay in your local currency; we receive it in India. No hassle, no bank transfer paperwork." },
+  { q: "How do I pay you from Kuwait / Bahrain / Oman / Dubai?", a: "We invoice in USD and accept payment via Wise or Payoneer — both work seamlessly from Gulf countries. You pay in your local currency; we receive it in India. No hassle, no bank transfer paperwork." },
 ];
 
 const FAQ = () => {
@@ -1240,7 +1240,7 @@ export default function WebonrockLanding() {
          <BookACall />
         <Founder/> 
         <HonestSection />
-        <Work />
+        {/* <Work /> */}
         <Results />
         <Services />
         <Packages />
