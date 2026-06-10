@@ -456,7 +456,7 @@ const Navbar = () => {
     >
       <WaIcon size={16} />
       <span className="hidden sm:inline">
-        Book a Free Call
+        Let's Talk Growth
       </span>
       <span className="sm:hidden">
         Call
