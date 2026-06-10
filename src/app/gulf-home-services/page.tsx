@@ -350,7 +350,7 @@ const Navbar = () => {
 >
   {/* Brand */}
   <a
-    href="/"
+    href="/gulf-home-services"
     className="
       flex
       items-center
@@ -513,7 +513,7 @@ const Hero = () => (
           </h1>
 
           <p className="animate-fade-up-3" style={{ fontSize: "17px", lineHeight: 1.75, color: "#4a5568", maxWidth: "500px", marginBottom: "36px" }}>
-            We help AC maintenance and cleaning companies in <strong style={{ color: "#0F5132" }}>Kuwait, Bahrain, and Oman</strong> generate qualified leads through Google, SEO and conversion-focused websites.
+            We help AC maintenance and cleaning companies in <strong style={{ color: "#0F5132" }}>Kuwait, Bahrain, Dubai and Oman</strong> generate qualified leads through Google, SEO and conversion-focused websites.
           </p>
 
           <div className="animate-fade-up-4 btn-stack" style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginBottom: "52px" }}>
@@ -1200,12 +1200,12 @@ const FooterCta = () => (
             webonrock<span style={{ color: "#D4AF37" }}>.</span>
           </p>
           <p style={{ fontSize: "13px", lineHeight: 1.8, color: "rgba(255,255,255,.4)", maxWidth: "240px" }}>
-            Lead generation for AC maintenance and home cleaning companies in Kuwait, Bahrain & Oman.
+            Lead generation for AC maintenance and home cleaning companies in Kuwait, Bahrain, Dubai and Oman.
           </p>
         </div>
         {[
           { title: "Services", links: ["Conversion Websites", "Google Ads", "Local SEO", "WhatsApp Pipeline", "CRO"] },
-          { title: "Markets", links: ["Kuwait", "Bahrain", "Oman"] },
+          { title: "Markets", links: ["Kuwait", "Bahrain", "Oman", "Dubai"] },
           { title: "Company", links: ["Our Work", "Results", "How It Works", "Contact"] },
         ].map(({ title, links }) => (
           <div key={title}>
