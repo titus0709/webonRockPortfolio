@@ -22,7 +22,8 @@ const logos = [
   { name: "Vimala",     src: (vimala     as any).src ?? vimala,     industry: "Education · India" },
 ];
 
-const track = [...logos, ...logos, ...logos];
+// Exactly 2 copies → -50% is one full set width → perfect seamless loop
+const track = [...logos, ...logos];
 
 export default function GulfHappyClients() {
   return (
@@ -72,48 +73,55 @@ export default function GulfHappyClients() {
         </p>
       </div>
 
-      {/* Edge fade masks */}
+      {/* Marquee — GPU layer promoted via translateZ(0) */}
       <div
-        className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-        style={{ background: "linear-gradient(to right, #0F5132, transparent)" }}
-        aria-hidden="true"
-      />
-      <div
-        className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-        style={{ background: "linear-gradient(to left, #0F5132, transparent)" }}
-        aria-hidden="true"
-      />
+        className="overflow-hidden relative"
+        style={{ transform: "translateZ(0)" }}
+        aria-label="Scrolling client logos"
+      >
+        {/* Edge fades */}
+        <div
+          className="absolute left-0 top-0 bottom-0 z-10 pointer-events-none"
+          style={{
+            width: "clamp(40px, 8vw, 96px)",
+            background: "linear-gradient(to right, #0F5132, transparent)",
+          }}
+          aria-hidden="true"
+        />
+        <div
+          className="absolute right-0 top-0 bottom-0 z-10 pointer-events-none"
+          style={{
+            width: "clamp(40px, 8vw, 96px)",
+            background: "linear-gradient(to left, #0F5132, transparent)",
+          }}
+          aria-hidden="true"
+        />
 
-      {/* Marquee */}
-      <div className="overflow-hidden relative z-0" aria-label="Scrolling client logos">
-        <div className="flex items-start gap-10 sm:gap-16 whitespace-nowrap animate-gulf-marquee will-change-transform">
+        <div className="flex items-start gap-[clamp(24px,4vw,56px)] animate-gulf-marquee will-change-transform py-1 ">
           {track.map((logo, i) => (
             <div
               key={i}
               className="flex-shrink-0 flex flex-col items-center gap-2 hover:scale-105 transition-transform duration-300"
-              style={{ width: "clamp(80px, 12vw, 140px)" }}
+              style={{ width: "clamp(68px, 11vw, 120px)" }}
               title={logo.name}
             >
-              {/* Logo */}
               <div
-                className="flex items-center justify-center"
-                style={{ width: "100%", height: "clamp(56px, 8vw, 80px)" }}
+                className="flex items-center justify-center w-full"
+                style={{ height: "clamp(48px, 7vw, 72px)" }}
               >
                 <img
                   src={logo.src}
                   alt={logo.name}
-                  className="w-full h-full object-contain drop-shadow-[0_2px_12px_rgba(212,175,55,0.25)]"
+                  className="max-w-full max-h-full w-auto h-auto object-contain drop-shadow-[0_0_10px_rgba(255,223,70,0.25)]"
                   onError={(e) => {
                     (e.currentTarget as HTMLImageElement).style.display = "none";
                   }}
                 />
               </div>
-
-              {/* Industry label */}
               <p
                 className="text-center leading-tight"
                 style={{
-                  fontSize: "10px",
+                  fontSize: "clamp(8px, 1.4vw, 10px)",
                   color: "rgba(255,255,255,0.38)",
                   whiteSpace: "normal",
                   wordBreak: "break-word",
@@ -139,7 +147,8 @@ export default function GulfHappyClients() {
 
       <style jsx>{`
         .animate-gulf-marquee {
-          animation: gulf-marquee 8s linear infinite;
+          animation: gulf-marquee 22s linear infinite;
+          transform: translateZ(0); /* GPU compositing */
         }
         .animate-gulf-marquee:hover,
         .animate-gulf-marquee:active {
@@ -147,7 +156,19 @@ export default function GulfHappyClients() {
         }
         @keyframes gulf-marquee {
           from { transform: translateX(0); }
-          to   { transform: translateX(-33.333%); }
+          to   { transform: translateX(-50%); }
+        }
+        /* Faster on mobile so it doesn't feel sluggish */
+        @media (max-width: 480px) {
+          .animate-gulf-marquee {
+            animation-duration: 16s;
+          }
+        }
+        /* Respect reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+          .animate-gulf-marquee {
+            animation: none;
+          }
         }
       `}</style>
     </section>

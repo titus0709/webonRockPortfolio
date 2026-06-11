@@ -161,7 +161,7 @@ export default function BookACall() {
                 Totally fine. Send us a WhatsApp and we'll reply within the hour.
               </p>
               <a
-                href={`https://wa.me/96500000000?text=${encodeURIComponent(
+                href={`https://wa.me/919566515735?text=${encodeURIComponent(
                   "Hi! I'd like to schedule a strategy call about getting leads for my Gulf business."
                 )}`}
                 target="_blank"
