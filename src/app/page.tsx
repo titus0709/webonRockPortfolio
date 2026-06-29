@@ -21,8 +21,8 @@ export default function Page() {
       <Hero />
       <VideoTestimonial />
       <HappyClients/>
-      <Services />
       <FeaturedWork />
+      <Services />
       <WhyWebOnRock />
       
       <WorkProcess />

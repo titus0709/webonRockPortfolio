@@ -7,6 +7,7 @@ import foodDelivery from "@/assets/foodDelivery.jpg";
 import mercy from "@/assets/mercy.png";
 import reholife from "@/assets/reholife.png";
 import vimala from "@/assets/vimala.png";
+import vform from "@/assets/vformwebsite.png";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface LighthouseScore {
@@ -27,6 +28,24 @@ interface Project {
 }
 
 const projects: Project[] = [
+  {
+    title: "Architectural Portfolio Website",
+    craft:
+      "Convertion specific website for Architect ",
+    outcome: "Under Process",
+    image: vform,
+    tags: ["Website", "Local SEO", "Lead Generation"],
+    link: "https://www.studiovform.in/",
+  },
+   {
+    title: "On-Demand Mobile App",
+    craft:
+      "Mobile application with real-time order tracking, seamless UX, and integrated payment processing — live on the Play Store.",
+    outcome: "Production app. Real users, real transactions. Built and shipped.",
+    image: foodDelivery,
+    tags: ["Mobile App", "Real-time", "Play Store", "App Store"],
+    link: "https://play.google.com/store/apps/details?id=com.judah.fooddelivery",
+  },
   {
     title: "Institutional Service Website",
     craft:
@@ -58,15 +77,7 @@ const projects: Project[] = [
     link: "https://www.reholife.org/",
     lighthouse: { performance: 72, accessibility: 99, bestPractices: 100, seo: 100 },
   },
-  {
-    title: "On-Demand Mobile App",
-    craft:
-      "Full-stack mobile application with real-time order tracking, seamless UX, and integrated payment processing — live on the Play Store.",
-    outcome: "Production app. Real users, real transactions. Built and shipped.",
-    image: foodDelivery,
-    tags: ["Mobile App", "Real-time", "Play Store"],
-    link: "https://play.google.com/store/apps/details?id=com.judah.fooddelivery",
-  },
+ 
   {
     title: "Direct Ordering Platform",
     craft:
