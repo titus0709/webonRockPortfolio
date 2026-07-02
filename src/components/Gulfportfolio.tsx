@@ -398,8 +398,8 @@ export default function GulfPortfolio() {
             That's the baseline we build every project to.
           </p>
           <a
-            href={`https://wa.me/96500000000?text=${encodeURIComponent(
-              "Hi! I saw your portfolio and Google scores. I want to discuss a website for my business in the Gulf."
+            href={`https://wa.me/919566515735?text=${encodeURIComponent(
+              "Hi! I saw your portfolio and Google scores. I want to discuss a website for my business."
             )}`}
             target="_blank"
             rel="noopener noreferrer"

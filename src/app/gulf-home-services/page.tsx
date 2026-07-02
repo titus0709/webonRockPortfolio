@@ -291,7 +291,7 @@ const Reveal = ({
 /* ─── ANNOUNCEMENT BAR ───────────────────────────────────────────── */
 const AnnouncementBar = () => (
   <div className="announcement-bar" style={{ background: "#0F5132", color: "#fff", padding: "10px 24px", textAlign: "center", fontSize: "13px", fontWeight: 500, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
-    🔥 Only 3 new client spots open this month —&nbsp;
+    🔥 Only 3 founding Gulf spots this quarter —&nbsp;
     <a href={WA_URL} target="_blank" rel="noopener noreferrer"
       style={{ color: "#D4AF37", fontWeight: 700, textDecoration: "underline", textUnderlineOffset: "3px" }}>
       Reserve yours on WhatsApp →
