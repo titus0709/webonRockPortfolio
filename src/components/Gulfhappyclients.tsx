@@ -35,7 +35,7 @@ export default function GulfHappyClients() {
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(ellipse 70% 60% at 50% 100%, rgba(212,175,55,0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse 70% 60% at 50% 100%, rgba(249,115,22,0.08) 0%, transparent 70%)",
         }}
       />
 
@@ -67,7 +67,7 @@ export default function GulfHappyClients() {
             padding: "14px 0",
           }}
         >
-          <span style={{ color: "rgba(212,175,55,0.9)", fontWeight: 700 }}>Our track record:</span>{" "}
+          <span style={{ color: "rgba(249,115,22,0.9)", fontWeight: 700 }}>Our track record:</span>{" "}
           10 projects across coaching, education, food & beverage, and retail.
           New to the USA — bringing the same quality to your market.
         </p>
