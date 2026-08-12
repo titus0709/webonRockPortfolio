@@ -101,8 +101,8 @@ export default function Founder() {
             <div className="space-y-4 mb-8">
               {[
                 "I'm a Digital growth specialist from India with 3+ years building conversion-focused websites, running Meta ads, Google Ads, and delivering SEO results for real businesses — not just mockups.",
-                "I built WebonRock to serve Gulf businesses the way I'd want to be served — with direct communication, honest timelines, and measurable outcomes. No middlemen, no account managers you'll never meet. Just the person doing the work, answerable to you.",
-                "The Gulf market deserves better than generic agencies. I'm here to close that gap.",
+                "I built WebonRock to serve USA businesses the way I'd want to be served — with direct communication, honest timelines, and measurable outcomes. No middlemen, no account managers you'll never meet. Just the person doing the work, answerable to you.",
+                "The USA market deserves better than generic agencies. I'm here to close that gap.",
               ].map((para, i) => (
                 <p key={i} className="text-sm sm:text-base text-gray-500 leading-relaxed">
                   {para}

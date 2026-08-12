@@ -377,7 +377,7 @@ export default function GulfVideoTestimonials() {
             max-w-2xl
             mx-auto
             ">
-            We're new to the Gulf market — and we believe in earning trust through
+            We're new to the USA market — and we believe in earning trust through
             transparency, not empty promises. Watch what our existing clients say about
             working with us, and{" "}
             <span className="text-white/80 font-medium">
@@ -464,11 +464,10 @@ export default function GulfVideoTestimonials() {
             "
           >
             <p className="text-[#F97316] text-xs font-bold uppercase tracking-widest mb-3">
-              A Note for Gulf Business Owners
+              A Note for USA Business Owners
             </p>
             <p className="text-white/70 text-sm leading-relaxed">
-              We haven't worked with a Gulf company yet — this is our first step into Kuwait,
-              Bahrain, and Oman. What we bring is a{" "}
+              We haven't worked with a USA company yet — this is our first step into the American market. What we bring is a{" "}
               <span className="text-white font-medium">
                 proven system for turning websites into lead machines
               </span>
@@ -481,7 +480,7 @@ export default function GulfVideoTestimonials() {
         {/* CTA */}
         <div className="relative z-10 text-center px-4">
           <p className="text-white/30 text-xs uppercase tracking-widest mb-5 font-medium">
-            Be among the first Gulf companies to work with us
+            Be among the first USA companies to work with us
           </p>
           <div
               className="
@@ -496,7 +495,7 @@ export default function GulfVideoTestimonials() {
                   "
             >
             <a
-              href={`https://wa.me/96500000000?text=${encodeURIComponent("Hi! I watched your client videos and I'm interested in getting leads for my AC/cleaning business.")}`}
+              href={`https://wa.me/+919566515735?text=${encodeURIComponent("Hi! I watched your client videos and I'm interested in getting leads for my HVAC business.")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="

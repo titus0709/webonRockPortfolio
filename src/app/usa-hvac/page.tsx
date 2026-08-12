@@ -14,9 +14,9 @@ import { title } from "process";
 // const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
 
 /* ─── CONFIG ─────────────────────────────────────────────────────── */
-const SMS_NUMBER = "+919566515735"; // TODO: your US business line
-const SMS_MSG = encodeURIComponent("Hi! I want to get more HVAC leads and stop missing calls. Let's talk.");
-const SMS_URL = `sms:${SMS_NUMBER}?&body=${SMS_MSG}`;
+const WA_NUMBER = "+919566515735"; // TODO: your US business line
+const WA_MSG = encodeURIComponent("Hi! I want to grow my HVAC business with better digital marketing. Let's talk.");
+const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
 const BOOKING_URL = "#book-call";
 
 /* ─── ICONS ──────────────────────────────────────────────────────── */
@@ -822,7 +822,7 @@ const Work = () => (
           <h2 className="syne" style={{ fontSize: "clamp(1.9rem,4vw,2.8rem)", fontWeight: 800, color: "#172033", marginTop: "14px", letterSpacing: "-.03em" }}>What We Build</h2>
         </div>
         <p style={{ fontSize: "14px", color: "#64748B", maxWidth: "300px", textAlign: "right", lineHeight: 1.6 }}>
-          India-market projects — same methodology & systems now deployed for Gulf home service companies.
+          India-market projects — same methodology & systems now deployed for USA home service companies.
         </p>
       </Reveal>
 
@@ -860,9 +860,9 @@ const Work = () => (
       </div>
 
       <Reveal style={{ textAlign: "center", marginTop: "48px" }}>
-        <p style={{ fontSize: "13px", color: "#64748B", marginBottom: "20px" }}>India-market results — same systems, now available for Gulf AC & cleaning companies.</p>
+        <p style={{ fontSize: "13px", color: "#64748B", marginBottom: "20px" }}>India-market results — same systems, now available for USA HVAC companies.</p>
         <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-gold">
-          <PhIcon size={16} /> Become Our First Gulf Case Study
+          <PhIcon size={16} /> Become Our First USA Case Study
         </a>
       </Reveal>
     </div>
@@ -1689,7 +1689,7 @@ const FooterCta = () => (
     </div>
 
     {/* Floating CTA */}
-    <a href={SMS_URL} className="floating-cta" aria-label="Text us now">
+    <a href={WA_URL} className="floating-cta" aria-label="Text us now">
   <span style={{ animation: "pulse 2.2s infinite", display: "flex" }}><MsgIcon size={20} /></span>
   <span className="cta-label">Text Us Now</span>
 </a>

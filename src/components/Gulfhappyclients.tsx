@@ -69,7 +69,7 @@ export default function GulfHappyClients() {
         >
           <span style={{ color: "rgba(212,175,55,0.9)", fontWeight: 700 }}>Our track record:</span>{" "}
           10 projects across coaching, education, food & beverage, and retail.
-          New to the Gulf — bringing the same quality to your market.
+          New to the USA — bringing the same quality to your market.
         </p>
       </div>
 
@@ -140,7 +140,7 @@ export default function GulfHappyClients() {
       <div className="relative z-10 mt-10 flex items-center justify-center gap-4 px-6">
         <div className="flex-1 max-w-[120px] h-px bg-white/10" />
         <p className="text-white/30 text-xs text-center">
-          Existing client base — bringing the same craft to Kuwait · Bahrain · Oman
+          Existing client base — bringing the same craft to the USA
         </p>
         <div className="flex-1 max-w-[120px] h-px bg-white/10" />
       </div>

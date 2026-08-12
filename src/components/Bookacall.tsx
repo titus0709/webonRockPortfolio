@@ -82,8 +82,8 @@ export default function BookACall() {
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base leading-relaxed px-2">
             Pick a time that works for you. 30 minutes. No pitch deck, no pressure —
-            just a straight conversation about what your AC or cleaning business needs
-            to start generating leads in Kuwait, Bahrain, or Oman.
+            just a straight conversation about what your HVAC business needs
+            to start generating leads in the USA.
           </p>
         </div>
 
@@ -103,7 +103,7 @@ export default function BookACall() {
                   {
                     icon: <ClockIcon />,
                     title: "30 minutes, your time zone",
-                    desc: "We work with Gulf time — AST/GST. Pick any slot that suits you.",
+                    desc: "We work with USA time . Pick any slot that suits you.",
                   },
                   {
                     icon: <VideoIcon />,
@@ -137,7 +137,7 @@ export default function BookACall() {
               <ul className="space-y-3">
                 {[
                   "Your current lead situation — what's working, what isn't",
-                  "Which Gulf keywords your competitors are ranking for",
+                  "Which USA keywords your competitors are ranking for",
                   "Whether a website, ads, or both makes sense for your stage",
                   "A realistic timeline and what results to expect",
                   "Honest answer if we're not the right fit for you",
@@ -162,7 +162,7 @@ export default function BookACall() {
               </p>
               <a
                 href={`https://wa.me/919566515735?text=${encodeURIComponent(
-                  "Hi! I'd like to schedule a strategy call about getting leads for my Gulf business."
+                  "Hi! I'd like to schedule a strategy call about getting leads for my USA business."
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
