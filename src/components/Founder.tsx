@@ -19,8 +19,8 @@ const StarIcon = () => (
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
     <path
       d="M9 1.5L11.09 6.26L16.5 6.93L12.75 10.57L13.68 16L9 13.27L4.32 16L5.25 10.57L1.5 6.93L6.91 6.26L9 1.5Z"
-      fill="#D4AF37"
-      stroke="#D4AF37"
+      fill="#F97316"
+      stroke="#F97316"
       strokeWidth="1"
       strokeLinejoin="round"
     />
@@ -38,10 +38,10 @@ export default function Founder() {
           <div className="relative">
 
             {/* Decorative green shape */}
-            <div className="absolute -bottom-6 -left-6 w-40 h-40 bg-[#0F5132] rounded-tr-[40px] opacity-[0.06] pointer-events-none z-0" />
+            <div className="absolute -bottom-6 -left-6 w-40 h-40 bg-[#0B1F3A] rounded-tr-[40px] opacity-[0.06] pointer-events-none z-0" />
 
             {/* Gold accent bar */}
-            <div className="absolute top-8 -left-1.5 w-1 h-20 bg-[#D4AF37] rounded-full z-10" />
+            <div className="absolute top-8 -left-1.5 w-1 h-20 bg-[#F97316] rounded-full z-10" />
 
             {/* Photo frame */}
             <div className="relative z-10 rounded-2xl overflow-hidden border border-[#e8e4d8] shadow-[0_24px_64px_rgba(15,81,50,0.10)] aspect-[4/5] bg-[#f0f0ec]">
@@ -53,7 +53,7 @@ export default function Founder() {
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
               {/* Fallback initials */}
-              <div className="absolute inset-0 flex items-center justify-center text-[72px] font-extrabold text-[#0F5132] opacity-10 select-none">
+              <div className="absolute inset-0 flex items-center justify-center text-[72px] font-extrabold text-[#0B1F3A] opacity-10 select-none">
                 TK
               </div>
             </div>
@@ -82,7 +82,7 @@ export default function Founder() {
 
             {/* Section pill */}
             <div className="inline-flex items-center gap-2 bg-[#f9f8f5] border border-[#e8e4d8] rounded-full px-3.5 py-1.5 text-xs font-semibold text-gray-500 mb-7">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] inline-block" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] inline-block" />
               The person behind the work
             </div>
 
@@ -93,7 +93,7 @@ export default function Founder() {
             >
               Titus
             </h2>
-            <p className="text-xs sm:text-sm font-bold text-[#0F5132] tracking-[0.06em] uppercase mb-7">
+            <p className="text-xs sm:text-sm font-bold text-[#0B1F3A] tracking-[0.06em] uppercase mb-7">
               Founder — WebonRock
             </p>
 
@@ -118,7 +118,7 @@ export default function Founder() {
                 { n: "3+",  l: "Video testimonials"  },
               ].map(({ n, l }) => (
                 <div key={l} className="px-3 sm:px-4 first:pl-0 last:pr-0 text-center sm:text-left">
-                  <p className="text-xl sm:text-2xl font-extrabold text-[#0F5132] tracking-tight leading-none">
+                  <p className="text-xl sm:text-2xl font-extrabold text-[#0B1F3A] tracking-tight leading-none">
                     {n}
                   </p>
                   <p className="text-[10px] sm:text-[11px] text-gray-400 mt-1 leading-snug">{l}</p>
@@ -132,7 +132,7 @@ export default function Founder() {
                 href={WA_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 bg-[#D4AF37] text-[#0a3d22] font-bold text-sm sm:text-[15px] px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl self-start hover:brightness-105 active:scale-95 transition-all duration-150 shadow-[0_4px_16px_rgba(212,175,55,0.30)]"
+                className="inline-flex items-center gap-2.5 bg-[#F97316] text-[#0a3d22] font-bold text-sm sm:text-[15px] px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl self-start hover:brightness-105 active:scale-95 transition-all duration-150 shadow-[0_4px_16px_rgba(212,175,55,0.30)]"
               >
                 <WaIcon size={17} />
                 Message me directly on WhatsApp

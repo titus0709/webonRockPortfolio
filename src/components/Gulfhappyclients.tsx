@@ -27,7 +27,7 @@ const track = [...logos, ...logos];
 
 export default function GulfHappyClients() {
   return (
-    <section className="w-full bg-[#0F5132] py-14 overflow-hidden relative">
+    <section className="w-full bg-[#0B1F3A] py-14 overflow-hidden relative">
 
       {/* Subtle radial glow */}
       <div
@@ -41,7 +41,7 @@ export default function GulfHappyClients() {
 
       {/* Header */}
       <div className="text-center mb-8 px-4 relative z-10">
-        <p className="text-[#D4AF37] font-bold text-xs uppercase tracking-widest mb-3">
+        <p className="text-[#F97316] font-bold text-xs uppercase tracking-widest mb-3">
           Trusted By
         </p>
         <h2
@@ -84,7 +84,7 @@ export default function GulfHappyClients() {
           className="absolute left-0 top-0 bottom-0 z-10 pointer-events-none"
           style={{
             width: "clamp(40px, 8vw, 96px)",
-            background: "linear-gradient(to right, #0F5132, transparent)",
+            background: "linear-gradient(to right, #0B1F3A, transparent)",
           }}
           aria-hidden="true"
         />
@@ -92,7 +92,7 @@ export default function GulfHappyClients() {
           className="absolute right-0 top-0 bottom-0 z-10 pointer-events-none"
           style={{
             width: "clamp(40px, 8vw, 96px)",
-            background: "linear-gradient(to left, #0F5132, transparent)",
+            background: "linear-gradient(to left, #0B1F3A, transparent)",
           }}
           aria-hidden="true"
         />

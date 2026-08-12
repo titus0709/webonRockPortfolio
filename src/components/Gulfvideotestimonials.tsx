@@ -63,7 +63,7 @@ function PlayButton({ onClick }: { onClick: () => void }) {
         bg-white/15 backdrop-blur-md
         border border-white/30
         flex items-center justify-center
-        hover:bg-[#D4AF37] hover:border-[#D4AF37]
+        hover:bg-[#F97316] hover:border-[#F97316]
         hover:shadow-[0_0_36px_rgba(212,175,55,0.55)]
         transition-all duration-300
       "
@@ -122,7 +122,7 @@ function VideoModal({
         style={{ aspectRatio: "9/16" }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="absolute inset-0 rounded-[28px] overflow-hidden border-2 border-[#D4AF37]/30 shadow-[0_32px_80px_rgba(0,0,0,0.7)]">
+        <div className="absolute inset-0 rounded-[28px] overflow-hidden border-2 border-[#F97316]/30 shadow-[0_32px_80px_rgba(0,0,0,0.7)]">
           {ytId ? (
             <iframe
               src={`https://www.youtube.com/embed/${ytId}?autoplay=1`}
@@ -143,7 +143,7 @@ function VideoModal({
         <button
           onClick={onClose}
           aria-label="Close video"
-          className="absolute -top-4 -right-4 w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-[#D4AF37] hover:text-[#0a3d22] hover:border-[#D4AF37] transition-all z-10"
+          className="absolute -top-4 -right-4 w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-[#F97316] hover:text-[#0a3d22] hover:border-[#F97316] transition-all z-10"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -211,11 +211,11 @@ function ReelCard({
           <div className="absolute top-4 left-4 flex flex-col items-start">
             <span
               className="text-3xl font-black leading-none"
-              style={{ color: "#D4AF37", textShadow: "0 2px 12px rgba(0,0,0,0.8)" }}
+              style={{ color: "#F97316", textShadow: "0 2px 12px rgba(0,0,0,0.8)" }}
             >
               {video.result}
             </span>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-[#D4AF37]/80">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#F97316]/80">
               {video.resultLabel}
             </span>
           </div>
@@ -246,7 +246,7 @@ function ReelCard({
               </p>
             </div>
             <div className="ml-auto flex-shrink-0">
-              <svg className="w-5 h-5" viewBox="0 0 20 20" fill="#D4AF37" aria-label="Verified client">
+              <svg className="w-5 h-5" viewBox="0 0 20 20" fill="#F97316" aria-label="Verified client">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
             </div>
@@ -321,7 +321,7 @@ export default function GulfVideoTestimonials() {
         aria-label="Client video testimonials"
         className={`
           relative w-full overflow-hidden
-          bg-[#071a10] text-white
+          bg-[#1769AA] text-white
           py-14 sm:py-16 lg:py-20 flex flex-col items-center
           transition-all duration-700
           ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
@@ -329,8 +329,8 @@ export default function GulfVideoTestimonials() {
       >
         {/* Background */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full bg-[#D4AF37]/6 blur-[130px]" />
-          <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] rounded-full bg-[#0F5132]/40 blur-[100px]" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full bg-[#F97316]/6 blur-[130px]" />
+          <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] rounded-full bg-[#0B1F3A]/40 blur-[100px]" />
           <div
             className="absolute inset-0 opacity-[0.03]"
             style={{
@@ -342,11 +342,11 @@ export default function GulfVideoTestimonials() {
 
         {/* Header */}
         <div className="relative z-10 text-center px-4 sm:px-6 mb-10 sm:mb-14 max-w-3xl">
-          <div className="inline-flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/25 rounded-full px-5 py-2 mb-7">
-            <svg className="w-3.5 h-3.5 text-[#D4AF37]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+          <div className="inline-flex items-center gap-2 bg-[#F97316]/10 border border-[#F97316]/25 rounded-full px-5 py-2 mb-7">
+            <svg className="w-3.5 h-3.5 text-[#F97316]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
               <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm12 2a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1zm0 4a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1z" />
             </svg>
-            <span className="text-[#D4AF37] text-xs font-bold uppercase tracking-widest">
+            <span className="text-[#F97316] text-xs font-bold uppercase tracking-widest">
               Verified Client Stories
             </span>
           </div>
@@ -365,7 +365,7 @@ export default function GulfVideoTestimonials() {
             style={{ fontFamily: "'Georgia', serif" }}
           >
             <span className="text-white">Real Clients.</span>{" "}
-            <span className="text-[#D4AF37]">Real Words.</span>
+            <span className="text-[#F97316]">Real Words.</span>
           </h2>
 
           {/* Honest framing for a Gulf audience — no fake Gulf clients claimed */}
@@ -442,9 +442,9 @@ export default function GulfVideoTestimonials() {
               onClick={() => goTo(i)}
               className={`
                 rounded-full transition-all duration-300
-                focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]
+                focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316]
                 ${i === active
-                  ? "w-8 h-2.5 bg-[#D4AF37] shadow-[0_0_12px_rgba(212,175,55,0.7)]"
+                  ? "w-8 h-2.5 bg-[#F97316] shadow-[0_0_12px_rgba(212,175,55,0.7)]"
                   : "w-2.5 h-2.5 bg-white/20 hover:bg-white/40"}
               `}
             />
@@ -455,7 +455,7 @@ export default function GulfVideoTestimonials() {
         <div className="relative z-10 max-w-2xl mx-auto px-6 mb-14">
           <div
             className="
-            border border-[#D4AF37]/20
+            border border-[#F97316]/20
             rounded-2xl
             p-5
             sm:p-7
@@ -463,7 +463,7 @@ export default function GulfVideoTestimonials() {
             text-center
             "
           >
-            <p className="text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-3">
+            <p className="text-[#F97316] text-xs font-bold uppercase tracking-widest mb-3">
               A Note for Gulf Business Owners
             </p>
             <p className="text-white/70 text-sm leading-relaxed">
@@ -501,15 +501,15 @@ export default function GulfVideoTestimonials() {
               rel="noopener noreferrer"
               className="
                 group inline-flex items-center gap-3
-                bg-[#D4AF37] hover:brightness-105
+                bg-[#F97316] hover:brightness-105
                 text-[#0a3d22] font-bold text-sm
                   sm:text-base
                   px-5
                   sm:px-8
                   py-3
                   sm:py-4 rounded-xl
-                shadow-[0_0_36px_rgba(212,175,55,0.4)]
-                hover:shadow-[0_0_56px_rgba(212,175,55,0.65)]
+                shadow-[0_0_36px_rgba(249,115,22,0.4)]
+                hover:shadow-[0_0_56px_rgba(249,115,22,0.65)]
                 transition-all duration-300
               "
             >
@@ -532,7 +532,7 @@ export default function GulfVideoTestimonials() {
                   sm:px-6
                   py-3
                   sm:py-4 rounded-xl
-                border border-white/10 hover:border-[#D4AF37]/30
+                border border-white/50 hover:border-white
                 transition-all duration-200
               "
             >

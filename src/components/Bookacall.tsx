@@ -42,7 +42,7 @@ const WaIcon = () => (
 );
 
 const CheckIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="2.5" aria-hidden="true">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2.5" aria-hidden="true">
     <polyline points="20 6 9 17 4 12"/>
   </svg>
 );
@@ -50,7 +50,7 @@ const CheckIcon = () => (
 // ─── Calendly embed ───────────────────────────────────────────────────────────
 function CalendlyEmbed() {
   return (
-    <div className="rounded-2xl overflow-hidden border border-[#D4AF37]/20 bg-white shadow-[0_8px_40px_rgba(0,0,0,0.08)]">
+    <div className="rounded-2xl overflow-hidden border border-[#F97316]/20 bg-white shadow-[0_8px_40px_rgba(0,0,0,0.08)]">
       <InlineWidget
         url={CALENDLY_URL}
         styles={{ height: "660px" }}
@@ -70,15 +70,15 @@ export default function BookACall() {
 
         {/* ── Header ── */}
         <div className="text-center mb-10 sm:mb-14">
-          <p className="text-[#D4AF37] font-bold text-[10px] sm:text-xs uppercase tracking-[0.18em] mb-3">
+          <p className="text-[#F97316] font-bold text-[10px] sm:text-xs uppercase tracking-[0.18em] mb-3">
             Book a Free Strategy Call
           </p>
           <h2
-            className="text-[#0F5132] font-extrabold mb-4 leading-tight"
+            className="text-[#0B1F3A] font-extrabold mb-4 leading-tight"
             style={{ fontSize: "clamp(1.75rem, 5vw, 2.9rem)", fontFamily: "'Georgia', serif" }}
           >
             Let's Talk About{" "}
-            <span className="text-[#D4AF37]">Your Leads.</span>
+            <span className="text-[#F97316]">Your Leads.</span>
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-base leading-relaxed px-2">
             Pick a time that works for you. 30 minutes. No pitch deck, no pressure —
@@ -94,8 +94,8 @@ export default function BookACall() {
           <div className="w-full space-y-5 sm:space-y-6">
 
             {/* Call details card */}
-            <div className="bg-[#0F5132] rounded-2xl p-6 sm:p-8 text-white shadow-[0_4px_24px_rgba(15,81,50,0.18)]">
-              <p className="text-[#D4AF37] text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] mb-5 sm:mb-6">
+            <div className="bg-[#0B1F3A] rounded-2xl p-6 sm:p-8 text-white shadow-[0_4px_24px_rgba(15,81,50,0.18)]">
+              <p className="text-[#F97316] text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] mb-5 sm:mb-6">
                 What's Included
               </p>
               <div className="space-y-4 sm:space-y-5">
@@ -117,7 +117,7 @@ export default function BookACall() {
                   },
                 ].map(({ icon, title, desc }) => (
                   <div key={title} className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#D4AF37]/15 flex items-center justify-center text-[#D4AF37] flex-shrink-0 mt-0.5">
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#F97316]/15 flex items-center justify-center text-[#F97316] flex-shrink-0 mt-0.5">
                       {icon}
                     </div>
                     <div>
@@ -131,7 +131,7 @@ export default function BookACall() {
 
             {/* What we'll cover */}
             <div className="border border-gray-100 rounded-2xl p-5 sm:p-7 shadow-[0_2px_12px_rgba(0,0,0,0.05)]">
-              <p className="text-[#0F5132] font-bold text-sm mb-4">
+              <p className="text-[#0B1F3A] font-bold text-sm mb-4">
                 What we'll cover in the call
               </p>
               <ul className="space-y-3">
@@ -143,7 +143,7 @@ export default function BookACall() {
                   "Honest answer if we're not the right fit for you",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2.5 text-sm text-gray-600">
-                    <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-[#D4AF37]/10 flex items-center justify-center">
+                    <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-[#F97316]/10 flex items-center justify-center">
                       <CheckIcon />
                     </span>
                     <span className="leading-relaxed">{item}</span>
@@ -153,7 +153,7 @@ export default function BookACall() {
             </div>
 
             {/* Prefer WhatsApp */}
-            <div className="border border-[#D4AF37]/30 bg-[#D4AF37]/6 rounded-2xl p-5 sm:p-6">
+            <div className="border border-[#F97316]/30 bg-[#F97316]/6 rounded-2xl p-5 sm:p-6">
               <p className="text-[#0a3d22] font-semibold text-sm mb-1">
                 Prefer to message first?
               </p>
@@ -166,7 +166,7 @@ export default function BookACall() {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#D4AF37] text-[#0a3d22] font-bold text-sm px-5 py-2.5 rounded-xl hover:brightness-105 active:scale-95 transition-all duration-150 shadow-[0_2px_12px_rgba(212,175,55,0.3)]"
+                className="inline-flex items-center gap-2 bg-[#F97316] text-[#0a3d22] font-bold text-sm px-5 py-2.5 rounded-xl hover:brightness-105 active:scale-95 transition-all duration-150 shadow-[0_2px_12px_rgba(212,175,55,0.3)]"
               >
                 <WaIcon />
                 Chat on WhatsApp
@@ -187,7 +187,7 @@ export default function BookACall() {
                   href={CALENDLY_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#0F5132] font-medium hover:underline underline-offset-2"
+                  className="text-[#0B1F3A] font-medium hover:underline underline-offset-2"
                 >
                   Calendly
                 </a>
