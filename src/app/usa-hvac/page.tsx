@@ -1373,7 +1373,6 @@ const Packages = () => (
                                 ? "#F97316"
                                 : "#0B1F3A"
                             }
-                            size={12}
                           />
                         </div>
 
