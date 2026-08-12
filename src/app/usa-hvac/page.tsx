@@ -14,7 +14,7 @@ import { title } from "process";
 // const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
 
 /* ─── CONFIG ─────────────────────────────────────────────────────── */
-const SMS_NUMBER = "+1XXXXXXXXXX"; // TODO: your US business line
+const SMS_NUMBER = "+919566515735"; // TODO: your US business line
 const SMS_MSG = encodeURIComponent("Hi! I want to get more HVAC leads and stop missing calls. Let's talk.");
 const SMS_URL = `sms:${SMS_NUMBER}?&body=${SMS_MSG}`;
 const BOOKING_URL = "#book-call";
