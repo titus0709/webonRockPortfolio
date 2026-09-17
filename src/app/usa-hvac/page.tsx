@@ -318,7 +318,7 @@ const tickItems = [
   "HVAC Lead Generation Specialists",
   "AI Receptionist · Missed-Call Recovery",
   "Residential & Commercial HVAC",
-  "14-Day Website Launch",
+  "10-Day Website Launch",
   "Month-to-Month · No Lock-In",
   "Instant Text-Back on Every Call",
   "100% Exclusive Leads",
@@ -364,7 +364,7 @@ const Navbar = () => {
 >
   {/* Brand */}
   <a
-    href="/usa-hvac-marketing"
+    href="/usa-hvac"
     className="
       flex
       items-center
@@ -423,7 +423,7 @@ const Navbar = () => {
       ["Work", "#work"],
       ["Results", "#results"],
       ["Services", "#services"],
-      ["Process", "#process"],
+      // ["Process", "#process"],
     ].map(([label, href]) => (
       <a
         key={label}
@@ -521,24 +521,53 @@ const Hero = () => (
             Only 3 HVAC spots available this month
             </div>
 
-            <h1 className="syne animate-fade-up-2" style={{ fontSize: "clamp(2.4rem, 5.2vw, 3.4rem)", fontWeight: 1000, lineHeight: 1.06, color: "#172033", letterSpacing: "-.03em", marginBottom: "24px" }}>
-            Get More Calls. Book More Jobs. <br />
-            <span className="gold-shimmer"> Grow Your HVAC Business.</span>
-            </h1>
+          <h1
+            className="syne animate-fade-up-2"
+            style={{
+              fontSize: "clamp(2.8rem, 5.2vw, 4.4rem)",
+              fontWeight: 1000,
+              lineHeight: 1.02,
+              color: "#172033",
+              letterSpacing: "-0.045em",
+              marginBottom: "28px",
+              maxWidth: "780px",
+            }}
+          >
+            No Qualified Leads.
+            <br />
+
+            <span style={{ color: "#0B1F3A" }}>
+              No Payment.
+            </span>
+
+            <br />
+
+            <span
+              className="gold-shimmer"
+              style={{
+                display: "inline-block",
+                marginTop: "5px",
+              }}
+            >
+              That’s My Promise.
+            </span>
+          </h1>
+
+
 
             <p className="animate-fade-up-3" style={{ fontSize: "17px", lineHeight: 1.75, color: "#64748B", maxWidth: "500px", marginBottom: "36px" }}>
-            We help <strong style={{ color: "#0B1F3A" }}>HVAC contractors across the U.S.</strong> turn Google searches into booked jobs — conversion-focused websites, Google Ads, and an AI receptionist that answers and texts back every call you'd otherwise miss.
+            Get in front of<strong style={{ color: "#0B1F3A" }}> Local Home Owners</strong> actively looking for the HVAC services you provide.
             </p>
 
           <div className="animate-fade-up-4 btn-stack" style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginBottom: "52px" }}>
 
             <a href="#book-call" className="btn-gold">
-              <PhIcon size={18} /> Book a Call
+              <PhIcon size={18} /> Get Started Now
             </a>
 
-            <a href="#work" className="btn-ghost-green">
+            {/* <a href="#work" className="btn-ghost-green">
               See Our Work <ArrowRight />
-            </a>
+            </a> */}
           </div>
 
           <div
@@ -552,7 +581,7 @@ const Hero = () => (
   "
 >
   {[
-    { n: "14", s: "Days", l: "Website Live" },
+    { n: "10", s: "Days", l: "Website Live" },
     { n: "3×", s: "", l: "Avg. Lead Uplift" },
     { n: "100%", s: "", l: "Exclusive Leads" },
     { n: "0", s: "Lock-In", l: "Cancel Anytime" },
@@ -696,7 +725,7 @@ const Hero = () => (
             </p>
           </div>
           <a href="#work">
-           <span className="bg-[#0B1F3A] text-white/90 text-sm font-medium py-1 px-3 rounded-md hover:shadow-md hover:bg-green-900/90 " style={{ padding: "4px 8px",marginLeft: "68px" }}>Know more</span>
+           <span className="bg-[#0B1F3A] text-white/90 text-sm font-medium py-1 px-3 rounded-md hover:shadow-md hover:bg-[#0B1F3A]/90 " style={{ padding: "4px 8px",marginLeft: "68px" }}>Know more</span>
           </a>
           <p style={{ fontSize: "10.5px", color: "#adb5a0", marginTop: "10px", fontStyle: "italic", textAlign: "center" }}>Built to generate leads, not just look good.</p>
         </div>
@@ -724,7 +753,7 @@ const CredStrip = () => (
   mt-10
 ">
   {[
-    { n: "134e", s: "days", l: "Website live" },
+    { n: "10", s: "Days", l: "Website Live" },
     { n: "3×", s: "", l: "Avg. lead uplift" },
     { n: "100%", s: "", l: "Exclusive leads" },
     { n: "0", s: "", l: "Lock-in contracts" },
@@ -776,22 +805,52 @@ const CredStrip = () => (
 const HonestSection = () => (
   <section style={{ background: "#fff", padding: "100px 28px" }}>
     <div style={{ maxWidth: "980px", margin: "0 auto" }}>
+      
       <Reveal style={{ textAlign: "center", marginBottom: "56px" }}>
-        <span className="pill-label-green" style={{ marginBottom: "16px", display: "inline-flex" }}>Our Story</span>
-        <h2 className="syne" style={{ fontSize: "clamp(1.9rem,4vw,3rem)", fontWeight: 800, color: "#172033", letterSpacing: "-.03em", lineHeight: 1.15, marginTop: "16px", marginBottom: "20px" }}>
-            No U.S. HVAC Case Studies Yet?<br />
-            <span style={{ color: "#0B1F3A" }}>That's Actually Good News For You.</span>
-            </h2>
-            <p style={{ fontSize: "17px", lineHeight: 1.8, maxWidth: "680px", margin: "0 auto" }}>
-            After 2 years building conversion-focused lead systems for service businesses in India, we're bringing that proven playbook to U.S. HVAC contractors — where most companies are still invisible online or paying generalist agencies who don't understand home services or emergency call volume.
-            </p>
-            </Reveal>
+  <span
+    className="pill-label-green"
+    style={{ marginBottom: "16px", display: "inline-flex" }}
+  >
+    Lead Generation System
+  </span>
+
+  <h2
+    className="syne"
+    style={{
+      fontSize: "clamp(1.9rem,4vw,3rem)",
+      fontWeight: 800,
+      color: "#172033",
+      letterSpacing: "-.03em",
+      lineHeight: 1.15,
+      marginTop: "16px",
+      marginBottom: "20px",
+    }}
+  >
+    Get More Qualified HVAC Leads.{" "}
+    <span style={{ color: "#0B1F3A" }}>
+      Every Day.
+    </span>
+  </h2>
+
+  <p
+    style={{
+      fontSize: "17px",
+      lineHeight: 1.8,
+      maxWidth: "680px",
+      margin: "0 auto",
+    }}
+  >
+    We use targeted Meta Ads and Google Ads to reach the right homeowners, send them to a
+    conversion-focused landing page, and turn their interest into direct
+    WhatsApp or CRM leads.
+  </p>
+</Reveal>
 
             <div className="honest-grid">
             {[
-                { icon: "🏗️", title: "Proven systems", body: "The conversion architecture and Google Ads playbook we use has driven results for service businesses for years. Same signals, same algorithm, same buyer psychology." },
+                { icon: "🏗️", title: "Proven systems", body: "Target the right homeowners. Stop wasting ad spend. Turn Meta attention into qualified HVAC leads with proven targeting, creative, and conversion strategies." },
                 { icon: "🎯", title: "Specialist focus", body: "We only work with HVAC companies. Every template, keyword list, and ad copy is purpose-built for heating and cooling — never recycled from an unrelated industry." },
-                { icon: "🤝", title: "Skin in the game", body: "Early U.S. clients get our best attention and rates. When you win your first season with us, that's the case study that builds our reputation in this market — together." },
+                { icon: "🤝", title: "Skin in the game", body: "Your ad spend deserves accountability. We stay hands-on from strategy to optimization, focused on turning your budget into qualified HVAC leads and booked jobs." },
             ].map(({ icon, title, body }, i) => (
           <Reveal key={title} type="reveal-scale" delay={i * 0.12}>
             <div className="card-lift" style={{ background: "#f9f9f7", border: "1px solid #E2E8F0", borderRadius: "12px", padding: "32px 28px", borderTop: "3px solid #F97316", height: "100%" }}>
@@ -804,10 +863,24 @@ const HonestSection = () => (
       </div>
 
       <Reveal delay={0.3}>
-        <p style={{ color: "#64748B", marginTop: "32px", textAlign: "center", fontSize: "14px", lineHeight: 1.8 }}>
-          <strong style={{ color: "#0B1F3A" }}>#Every Agency</strong> you see with dozens of case studies? <strong style={{ color: "#0B1F3A" }}>started with Zero</strong>, just like we are now. The difference is you get our absolute best work — not a junior passed the account after the sales pitch. You deal directly with the <strong style={{ color: "#0B1F3A" }}>Founder.</strong>, just like we are now. The difference is you get our absolute best work — not a junior passed the account after the sales pitch. You deal directly with the <strong style={{ color: "#0B1F3A" }}>Founder.</strong>
-        </p>
-      </Reveal>
+  <p
+    style={{
+      color: "#64748B",
+      marginTop: "32px",
+      textAlign: "center",
+      fontSize: "14px",
+      lineHeight: 1.8,
+    }}
+  >
+    <strong style={{ color: "#0B1F3A" }}>No layers.</strong> No unnecessary
+    handoffs. You get <strong style={{ color: "#0B1F3A" }}>direct access</strong>{" "}
+    to the person managing your campaigns, from strategy and creative to
+    optimization. Your account gets{" "}
+    <strong style={{ color: "#0B1F3A" }}>hands-on attention</strong> focused on
+    generating more qualified HVAC leads and booked jobs.
+  </p>
+</Reveal>
+
     </div>
   </section>
 );
@@ -871,32 +944,259 @@ const Work = () => (
 
 /* ─── RESULTS ────────────────────────────────────────────────────── */
 const Results = () => (
-  <section id="results" style={{ background: "#0B1F3A", padding: "100px 28px" }}>
-    <div style={{ maxWidth: "1160px", margin: "0 auto" }}>
-      <Reveal style={{ textAlign: "center", marginBottom: "64px" }}>
-        <span className="pill-label" style={{ background: "rgba(249,115,22,.15)", color: "#F97316", border: "1px solid rgba(249,115,22,.3)", display: "inline-flex" }}>Proven Results</span>
-        <h2 className="syne" style={{ fontSize: "clamp(1.9rem,4vw,3rem)", fontWeight: 800, color: "#fff", marginTop: "16px", letterSpacing: "-.03em" }}>Numbers That Drive Decisions</h2>
+  <section
+    id="results"
+    style={{
+      background: "#0B1F3A",
+      padding: "clamp(72px, 10vw, 120px) 20px",
+      position: "relative",
+      overflow: "hidden",
+    }}
+  >
+    {/* Subtle background glow */}
+    <div
+      style={{
+        position: "absolute",
+        top: "-180px",
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: "500px",
+        height: "500px",
+        background: "rgba(249,115,22,.08)",
+        filter: "blur(100px)",
+        borderRadius: "50%",
+        pointerEvents: "none",
+      }}
+    />
+
+    <div
+      style={{
+        maxWidth: "1160px",
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      {/* Heading */}
+      <Reveal
+        style={{
+          textAlign: "center",
+          marginBottom: "clamp(40px, 6vw, 64px)",
+        }}
+      >
+        <span
+          className="pill-label"
+          style={{
+            background: "rgba(249,115,22,.12)",
+            color: "#F97316",
+            border: "1px solid rgba(249,115,22,.25)",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          Proven Results
+        </span>
+
+        <h2
+          className="syne"
+          style={{
+            fontSize: "clamp(1.8rem, 4vw, 3rem)",
+            fontWeight: 800,
+            color: "#fff",
+            marginTop: "16px",
+            letterSpacing: "-.035em",
+            lineHeight: 1.1,
+          }}
+        >
+          Numbers That Drive Decisions
+        </h2>
+
+        <p
+          style={{
+            maxWidth: "600px",
+            margin: "18px auto 0",
+            color: "rgba(255,255,255,.58)",
+            fontSize: "clamp(13px, 1.5vw, 15px)",
+            lineHeight: 1.7,
+          }}
+        >
+          Real results from websites, marketing campaigns, and digital
+          systems built for growing businesses.
+        </p>
       </Reveal>
 
-      <div className="results-grid" style={{ background: "rgba(255,255,255,.08)", borderRadius: "12px", overflow: "hidden" }}>
+      {/* Results */}
+      <div
+        className="results-grid"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          background: "rgba(255,255,255,.06)",
+          border: "1px solid rgba(255,255,255,.08)",
+          borderRadius: "18px",
+          overflow: "hidden",
+          boxShadow: "0 20px 60px rgba(0,0,0,.18)",
+        }}
+      >
         {[
-          { n: "6+", l: "websites getting organic traffic", sub: "vs. previous marketing method" },
-          { n: "3–4 weeks", l: "Website launch time", sub: "From kickoff to live" },
-          { n: "10+", l: "projects delivered", sub: "across 5 industries" },
+          {
+            n: "3,700+",
+            l: "Leads & Users Generated",
+            sub: "Across campaigns & digital products",
+          },
+          {
+            n: "1–2 Weeks",
+            l: "Website Launch Time",
+            sub: "From kickoff to live",
+          },
+          {
+            n: "20+",
+            l: "Projects Delivered",
+            sub: "Across 5+ industries",
+          },
         ].map(({ n, l, sub }, i) => (
           <Reveal key={n} delay={i * 0.12}>
-            <div style={{ background: "#0B1F3A", padding: "48px 32px", textAlign: "center", transition: "background .2s", cursor: "default" }}
-              onMouseEnter={e => e.currentTarget.style.background = "#1769AA"}
-              onMouseLeave={e => e.currentTarget.style.background = "#0B1F3A"}
+            <div
+              style={{
+                padding: "clamp(34px, 5vw, 52px) clamp(20px, 3vw, 32px)",
+                textAlign: "center",
+                height: "100%",
+                borderRight:
+                  i < 2
+                    ? "1px solid rgba(255,255,255,.08)"
+                    : "none",
+                transition:
+                  "background .25s ease, transform .25s ease",
+                cursor: "default",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background =
+                  "rgba(23,105,170,.35)";
+                e.currentTarget.style.transform = "translateY(-2px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
             >
-              <p className="syne gold-shimmer" style={{ fontSize: "clamp(2.5rem,5vw,52px)", fontWeight: 800, lineHeight: 1 }}>{n}</p>
-              <p style={{ fontSize: "14px", fontWeight: 600, color: "#fff", marginTop: "14px", marginBottom: "6px" }}>{l}</p>
-              <p style={{ fontSize: "12px", color: "rgba(255,255,255,.4)" }}>{sub}</p>
+              <p
+                className="syne gold-shimmer"
+                style={{
+                  fontSize: "clamp(2.2rem, 5vw, 52px)",
+                  fontWeight: 800,
+                  lineHeight: 1,
+                  letterSpacing: "-.04em",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {n}
+              </p>
+
+              <p
+                style={{
+                  fontSize: "clamp(13px, 1.5vw, 15px)",
+                  fontWeight: 600,
+                  color: "#fff",
+                  marginTop: "16px",
+                  marginBottom: "7px",
+                  lineHeight: 1.4,
+                }}
+              >
+                {l}
+              </p>
+
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "rgba(255,255,255,.42)",
+                  lineHeight: 1.5,
+                }}
+              >
+                {sub}
+              </p>
             </div>
           </Reveal>
         ))}
       </div>
+
+      {/* CTA */}
+      <Reveal
+        delay={0.25}
+        style={{
+          textAlign: "center",
+          marginTop: "clamp(36px, 5vw, 52px)",
+        }}
+      >
+        <p
+          style={{
+            color: "rgba(255,255,255,.55)",
+            fontSize: "16px",
+            marginBottom: "18px",
+          }}
+        >
+          Need more Leads ? 👇
+        </p>
+
+        <a
+          href="#book-call"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "10px",
+            padding: "14px 24px",
+            minHeight: "50px",
+            borderRadius: "8px",
+            background: "#F97316",
+            color: "#fff",
+            fontSize: "14px",
+            fontWeight: 700,
+            textDecoration: "none",
+            boxShadow: "0 10px 30px rgba(249,115,22,.2)",
+            transition:
+              "transform .2s ease, box-shadow .2s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "translateY(-2px)";
+            e.currentTarget.style.boxShadow =
+              "0 14px 35px rgba(249,115,22,.3)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "translateY(0)";
+            e.currentTarget.style.boxShadow =
+              "0 10px 30px rgba(249,115,22,.2)";
+          }}
+        >
+          Book a Call
+          <span style={{ fontSize: "17px", lineHeight: 1 }}>→</span>
+        </a>
+      </Reveal>
     </div>
+
+    {/* Responsive styles */}
+    <style jsx>{`
+      @media (max-width: 768px) {
+        .results-grid {
+          grid-template-columns: 1fr !important;
+        }
+
+        .results-grid > div {
+          border-right: none !important;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .results-grid > div:last-child {
+          border-bottom: none;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .results-grid {
+          border-radius: 14px !important;
+        }
+      }
+    `}</style>
   </section>
 );
 
@@ -922,10 +1222,11 @@ const Services = () => (
 
         <div>
           {[
-            { n: "01", title: "Conversion Website", sub: "Live in 14 business days", body: "Not a template. A purpose-built lead machine — mobile-first, sub-0.5s load, click-to-call built into every screen. Engineered to rank and convert.", tags: ["Google-ready", "Core Web Vitals", "Click-to-Call", "Mobile-First"] },
-            { n: "02", title: "Google Ads Management", sub: "Results from Week 1", body: "Precision campaigns targeting exact-match buyers in your service zones. No branded fluff, no wasted budget on tire-kickers. Every dollar tracked to a lead.", tags: ["Search campaigns", "Local targeting", "Lead-focused bidding", "Weekly reports"] },
-            { n: "03", title: "Local SEO", sub: "Own your city's search results", body: "Google Business optimisation, local citation building, and content architecture that puts you on Page 1 for 'AC repair [your city]' and every local variation.", tags: ["Google Business", "Local citations", "Page 1 targeting", "Service-area pages"] },
-            { n: "04", title: "AI Receptionist & Missed-Call Text-Back", sub: "Never lose a lead again", body: "Every unanswered call gets an instant automated text, so a busy tech or an after-hours emergency call still turns into a booked job. Weekly performance reports included.", tags: ["Instant text-back", "24/7 coverage", "Lead tracking", "Zero missed calls"] },
+            { n: "01", title: "Lead Generation System", sub: "Get leads 24/7", body: "Our system generates high-quality leads 24/7, ensuring you never miss an opportunity.", tags: ["Meta Ads", "Converting Landing Page", "Click-to-Call", "CRM"]  },
+            { n: "02", title: "Conversion Website", sub: "Live in 14 business days", body: "Not a template. A purpose-built lead machine — mobile-first, sub-0.5s load, click-to-call built into every screen. Engineered to rank and convert.", tags: ["Google-ready", "Core Web Vitals", "Click-to-Call", "Mobile-First"] },
+            { n: "03", title: "Meta & Google Ads Management", sub: "Results from Week 1", body: "Precision campaigns targeting exact-match buyers in your service zones. No branded fluff, no wasted budget on tire-kickers. Every dollar tracked to a lead.", tags: ["Search campaigns", "Local targeting", "Lead-focused bidding", "Weekly reports"] },
+            { n: "04", title: "Local SEO", sub: "Own your city's search results", body: "Google Business optimisation, local citation building, and content architecture that puts you on Page 1 for 'AC repair [your city]' and every local variation.", tags: ["Google Business", "Local citations", "Page 1 targeting", "Service-area pages"] },
+            { n: "05", title: "AI Receptionist & Missed-Call Text-Back", sub: "Never lose a lead again", body: "Every unanswered call gets an instant automated text, so a busy tech or an after-hours emergency call still turns into a booked job. Weekly performance reports included.", tags: ["Instant text-back", "24/7 coverage", "Lead tracking", "Zero missed calls"] },
           ].map(({ n, title, sub, body, tags }, i) => (
             <Reveal key={n} delay={i * 0.08}>
               <div className="service-item" style={{ padding: "32px 0", borderBottom: i < 3 ? "1px solid #E2E8F0" : "none", transition: "padding-left .2s, border-left .2s" }}>
@@ -1561,39 +1862,399 @@ const Compare = () => (
 );
 
 /* ─── TESTIMONIALS ───────────────────────────────────────────────── */
-const Testimonials = () => (
-  <section style={{ background: "#f9f8f5", padding: "100px 28px", borderTop: "1px solid #E2E8F0" }}>
-    <div style={{ maxWidth: "1160px", margin: "0 auto" }}>
-      <Reveal style={{ textAlign: "center", marginBottom: "56px" }}>
-        <span className="pill-label-green">Client Stories</span>
-        <h2 className="syne" style={{ fontSize: "clamp(1.9rem,4vw,2.8rem)", fontWeight: 800, color: "#172033", marginTop: "16px", letterSpacing: "-.03em" }}>Straight from the Clients</h2>
-      </Reveal>
 
-      <div className="testimonials-grid">
-        {[
-          { q: "Increased our Brand Value and visibility in the market. We are getting more Trustability than before.", name: "Abraham Shankar", co: "Reholife, India", result: "More Trust & Visibility" },
-          { q: "Super reliable and trustworthy. They delivered exactly what they promised. Looking forward to working with them again.", name: "Sanjith.", co: "VelzFlow, USA", result: "Super Reliable" },
-          { q: "Got leads from Google organically after the website launch. Website is clean and fast. Highly recommend.", name: "Mercy School Admin", co: "Mercy School, India", result: "Got more Leads in 1 month." },
-        ].map(({ q, name, co, result }, i) => (
-          <Reveal key={name} type="reveal-scale" delay={i * 0.12}>
-            <div className="card-lift" style={{ background: "#fff", borderRadius: "12px", padding: "36px 28px", border: "1px solid #E2E8F0", boxShadow: "0 2px 12px rgba(0,0,0,.04)", height: "100%" }}>
-              <p style={{ fontSize: "42px", color: "#F97316", lineHeight: 1, marginBottom: "12px", fontFamily: "Georgia,serif", opacity: .6 }}>"</p>
-              <p style={{ fontSize: "14px", lineHeight: 1.8, color: "#64748B", marginBottom: "24px", fontStyle: "italic" }}>{q}</p>
-              <div style={{ display: "flex", gap: "2px", marginBottom: "16px" }}>{[...Array(5)].map((_, i) => <Star key={i} />)}</div>
-              <div style={{ borderTop: "1px solid #E2E8F0", paddingTop: "16px" }}>
-                <p style={{ fontSize: "14px", fontWeight: 700, color: "#172033" }}>{name}</p>
-                <p style={{ fontSize: "12px", color: "#64748B", marginTop: "2px" }}>{co}</p>
-                <div style={{ marginTop: "12px", background: "rgba(11,31,58,.06)", border: "1px solid rgba(11,31,58,.15)", borderRadius: "6px", padding: "7px 14px", display: "inline-block" }}>
-                  <p style={{ fontSize: "12px", fontWeight: 700, color: "#0B1F3A" }}>📈 {result}</p>
+
+const Testimonials = () => {
+  const testimonials = [
+    {
+      q: "Generated 400+ leads in the first month.",
+      name: "Karur Study Centre",
+      co: "KSC Distance Education",
+      result: "More Leads",
+    },
+    {
+      q: "Increased our Brand Value and visibility in the market. We are getting more Trustability than before.",
+      name: "Abraham Shankar",
+      co: "Reholife, India",
+      result: "More Trust & Visibility",
+    },
+    {
+      q: "Super reliable and trustworthy. They delivered exactly what they promised. Looking forward to working with them again.",
+      name: "Sanjith",
+      co: "VelzFlow, USA",
+      result: "Super Reliable",
+    },
+    {
+      q: "Got leads from Google organically after the website launch. Website is clean and fast. Highly recommend.",
+      name: "Mercy School Admin",
+      co: "Mercy School, India",
+      result: "More Leads in 1 Month",
+    },{
+      q: "Generated 400+ leads in the first month.",
+      name: "Karur Study Centre",
+      co: "KSC Distance Education",
+      result: "More Leads",
+    },
+    {
+      q: "Increased our Brand Value and visibility in the market. We are getting more Trustability than before.",
+      name: "Abraham Shankar",
+      co: "Reholife, India",
+      result: "More Trust & Visibility",
+    },
+    {
+      q: "Super reliable and trustworthy. They delivered exactly what they promised. Looking forward to working with them again.",
+      name: "Sanjith",
+      co: "VelzFlow, USA",
+      result: "Super Reliable",
+    },
+    {
+      q: "Got leads from Google organically after the website launch. Website is clean and fast. Highly recommend.",
+      name: "Mercy School Admin",
+      co: "Mercy School, India",
+      result: "More Leads in 1 Month",
+    },
+  ];
+
+  // Duplicate the testimonials so the animation can loop seamlessly
+  const infiniteTestimonials = [...testimonials, ...testimonials];
+
+  return (
+    <section className="testimonials-section">
+      <div className="testimonials-header">
+        <Reveal style={{ textAlign: "center" }}>
+          <span className="pill-label-green">Client Stories</span>
+
+          <h2 className="syne testimonials-title">
+            Straight from the Clients
+          </h2>
+
+          <p className="testimonials-subtitle">
+            Real results. Real experiences. Built through meaningful
+            collaboration.
+          </p>
+        </Reveal>
+      </div>
+
+      <div className="testimonials-marquee-wrapper">
+        <div className="testimonials-fade testimonials-fade-left" />
+        <div className="testimonials-fade testimonials-fade-right" />
+
+        <div className="testimonials-track">
+          {infiniteTestimonials.map(({ q, name, co, result }, i) => (
+            <div
+              className="testimonial-card"
+              key={`${name}-${i}`}
+            >
+              <div className="testimonial-top">
+                <span className="quote-mark">“</span>
+
+                <div className="testimonial-stars">
+                  {[...Array(5)].map((_, starIndex) => (
+                    <Star
+                      key={starIndex}
+                    />
+                  ))}
                 </div>
               </div>
+
+              <p className="testimonial-quote">
+                {q}
+              </p>
+
+              <div className="testimonial-bottom">
+                <div>
+                  <p className="testimonial-name">{name}</p>
+                  <p className="testimonial-company">{co}</p>
+                </div>
+
+                <span className="testimonial-result">
+                  <span>↗</span>
+                  {result}
+                </span>
+              </div>
             </div>
-          </Reveal>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
+
+      <style jsx>{`
+        .testimonials-section {
+          position: relative;
+          overflow: hidden;
+          padding: 110px 0 120px;
+          background: #f9f8f5;
+          border-top: 1px solid #e2e8f0;
+        }
+
+        .testimonials-header {
+          width: min(1160px, calc(100% - 48px));
+          margin: 0 auto 64px;
+        }
+
+        .testimonials-title {
+          margin-top: 16px;
+          color: #172033;
+          font-size: clamp(2rem, 4vw, 3rem);
+          line-height: 1.1;
+          font-weight: 800;
+          letter-spacing: -0.04em;
+        }
+
+        .testimonials-subtitle {
+          max-width: 520px;
+          margin: 16px auto 0;
+          color: #64748b;
+          font-size: 14px;
+          line-height: 1.7;
+        }
+
+        .testimonials-marquee-wrapper {
+          position: relative;
+          width: 100%;
+          overflow: hidden;
+        }
+
+        .testimonials-track {
+          display: flex;
+          width: max-content;
+          gap: 20px;
+          padding: 10px 0 20px;
+          animation: testimonials-scroll 32s linear infinite;
+          will-change: transform;
+        }
+
+        
+
+        .testimonial-card {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          width: 360px;
+          min-height: 310px;
+          padding: 32px;
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 18px;
+          box-shadow:
+            0 8px 30px rgba(15, 23, 42, 0.04),
+            0 2px 8px rgba(15, 23, 42, 0.03);
+          transition:
+            transform 0.35s ease,
+            box-shadow 0.35s ease,
+            border-color 0.35s ease;
+        }
+
+        .testimonial-card:hover {
+          transform: translateY(-8px);
+          border-color: rgba(11, 31, 58, 0.18);
+          box-shadow:
+            0 20px 45px rgba(15, 23, 42, 0.09),
+            0 4px 12px rgba(15, 23, 42, 0.04);
+        }
+
+        .testimonial-top {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          margin-bottom: 20px;
+        }
+
+        .quote-mark {
+          display: block;
+          color: #f97316;
+          font-family: Georgia, serif;
+          font-size: 64px;
+          line-height: 0.65;
+          opacity: 0.55;
+        }
+
+        .testimonial-stars {
+          display: flex;
+          gap: 3px;
+          padding-top: 4px;
+          color: #f97316;
+        }
+
+        .testimonial-quote {
+          flex: 1;
+          margin: 0;
+          color: #475569;
+          font-size: 15px;
+          line-height: 1.85;
+          font-style: italic;
+        }
+
+        .testimonial-bottom {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 16px;
+          margin-top: 28px;
+          padding-top: 20px;
+          border-top: 1px solid #e2e8f0;
+        }
+
+        .testimonial-name {
+          margin: 0;
+          color: #172033;
+          font-size: 14px;
+          font-weight: 700;
+        }
+
+        .testimonial-company {
+          margin: 4px 0 0;
+          color: #64748b;
+          font-size: 12px;
+        }
+
+        .testimonial-result {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          max-width: 150px;
+          padding: 7px 11px;
+          border: 1px solid rgba(11, 31, 58, 0.12);
+          border-radius: 8px;
+          background: rgba(11, 31, 58, 0.05);
+          color: #0b1f3a;
+          font-size: 11px;
+          font-weight: 700;
+          line-height: 1.3;
+        }
+
+        .testimonial-result span {
+          font-size: 15px;
+          line-height: 1;
+        }
+
+        .testimonials-fade {
+          position: absolute;
+          z-index: 5;
+          top: 0;
+          bottom: 0;
+          width: 140px;
+          pointer-events: none;
+        }
+
+        .testimonials-fade-left {
+          left: 0;
+          background: linear-gradient(
+            90deg,
+            #f9f8f5 0%,
+            rgba(249, 248, 245, 0) 100%
+          );
+        }
+
+        .testimonials-fade-right {
+          right: 0;
+          background: linear-gradient(
+            270deg,
+            #f9f8f5 0%,
+            rgba(249, 248, 245, 0) 100%
+          );
+        }
+
+        @keyframes testimonials-scroll {
+          from {
+            transform: translateX(0);
+          }
+
+          to {
+            transform: translateX(calc(-50% - 10px));
+          }
+        }
+
+        @media (max-width: 900px) {
+          .testimonials-section {
+            padding: 90px 0 100px;
+          }
+
+          .testimonials-header {
+            margin-bottom: 48px;
+          }
+
+          .testimonial-card {
+            width: 330px;
+            min-height: 300px;
+            padding: 28px;
+          }
+
+          .testimonials-track {
+            gap: 16px;
+            animation-duration: 28s;
+          }
+
+          .testimonials-fade {
+            width: 80px;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .testimonials-section {
+            padding: 75px 0 85px;
+          }
+
+          .testimonials-header {
+            width: calc(100% - 40px);
+            margin-bottom: 40px;
+          }
+
+          .testimonials-title {
+            font-size: 2rem;
+          }
+
+          .testimonials-subtitle {
+            font-size: 13px;
+            max-width: 340px;
+          }
+
+          .testimonial-card {
+            width: min(82vw, 320px);
+            min-height: 290px;
+            padding: 25px;
+            border-radius: 16px;
+          }
+
+          .testimonial-quote {
+            font-size: 14px;
+            line-height: 1.75;
+          }
+
+          .testimonial-bottom {
+            align-items: flex-start;
+            flex-direction: column;
+          }
+
+          .testimonial-result {
+            max-width: none;
+          }
+
+          .testimonials-track {
+            gap: 14px;
+            animation-duration: 24s;
+          }
+
+          .testimonials-fade {
+            width: 45px;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .testimonials-track {
+            animation: none;
+          }
+
+          .testimonial-card {
+            transition: none;
+          }
+        }
+      `}</style>
+    </section>
+  );
+};
+
+
 
 /* ─── FAQ ────────────────────────────────────────────────────────── */
 const faqs = [
@@ -1676,7 +2337,7 @@ const FooterCta = () => (
           </p>
         </div>
         {[
-          { title: "Services", links: ["Conversion Websites", "Google Ads", "Local SEO", "AI Receptionist", "CRO"] },
+          { title: "Services", links: ["Conversion Websites", "Conversion Websites", "Google Ads", "Local SEO", "AI Receptionist", "CRO"] },
             { title: "Focus Areas", links: ["Residential HVAC", "Commercial HVAC", "Emergency / 24-7", "Multi-Location Groups"] },
             { title: "Company", links: ["Our Work", "Results", "How It Works", "Contact"] },
         ].map(({ title, links }) => (
@@ -1712,14 +2373,14 @@ export default function WebonrockLanding() {
         <Founder/> 
          <BookACall />
         <HonestSection />
-        {/* <Work /> */}
         <Results />
+        {/* <Work /> */}
         <Services />
-        <Packages />
-        <Process />
-        <Compare />
+        {/* <Packages /> */}
+        {/* <Process />
+        <Compare /> */}
         <Testimonials />
-        <FAQ />
+        {/* <FAQ /> */}
       </main>
       <FooterCta />
     </>

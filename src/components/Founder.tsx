@@ -66,7 +66,7 @@ export default function Founder() {
                 </div>
                 <div>
                   <p className="text-[13px] font-extrabold text-[#0F1A0E] leading-tight mb-0.5">
-                    10+ Projects
+                    20+ Projects
                   </p>
                   <p className="text-[11px] text-gray-400 leading-snug">
                     Delivered across India and USA
@@ -99,23 +99,32 @@ export default function Founder() {
 
             {/* Story paragraphs */}
             <div className="space-y-4 mb-8">
-              {[
-                "I'm a Digital growth specialist from India with 3+ years building conversion-focused websites, running Meta ads, Google Ads, and delivering SEO results for real businesses — not just mockups.",
-                "I built WebonRock to serve USA businesses the way I'd want to be served — with direct communication, honest timelines, and measurable outcomes. No middlemen, no account managers you'll never meet. Just the person doing the work, answerable to you.",
-                "The USA market deserves better than generic agencies. I'm here to close that gap.",
-              ].map((para, i) => (
-                <p key={i} className="text-sm sm:text-base text-gray-500 leading-relaxed">
-                  {para}
-                </p>
-              ))}
-            </div>
+  <p className="text-sm sm:text-base text-gray-500 leading-relaxed">
+    I help HVAC companies generate more qualified leads and keep their
+    schedules consistently busy.
+  </p>
+
+  <p className="text-sm sm:text-base text-gray-500 leading-relaxed">
+    With 3+ years in websites, Meta Ads, Google Ads, and SEO, I build
+    marketing systems focused on real business results. No generic campaigns.
+    No confusing agency layers.
+  </p>
+
+  <p className="text-sm sm:text-base text-gray-500 leading-relaxed">
+    You work directly with the person doing the work, with clear communication
+    and measurable outcomes.{" "}
+    <strong className="font-bold text-gray-900">
+      You run the HVAC Business. I bring you More Customers.
+    </strong>
+  </p>
+</div>
 
             {/* Credential strip */}
             <div className="bg-[#f9f8f5] border border-[#e8e4d8] rounded-xl px-4 sm:px-5 py-4 mb-8 grid grid-cols-3 divide-x divide-[#e8e4d8]">
               {[
-                { n: "10+", l: "Projects delivered" },
+                { n: "20+", l: "Projects delivered" },
                 { n: "1",   l: "App on Play Store"  },
-                { n: "3+",  l: "Video testimonials"  },
+                { n: "5+",  l: "Industries served"  },
               ].map(({ n, l }) => (
                 <div key={l} className="px-3 sm:px-4 first:pl-0 last:pr-0 text-center sm:text-left">
                   <p className="text-xl sm:text-2xl font-extrabold text-[#0B1F3A] tracking-tight leading-none">

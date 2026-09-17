@@ -20,6 +20,16 @@ interface VideoTestimonial {
 // ─── Data — REAL clients only, nothing fabricated ─────────────────────────────
 const videos: VideoTestimonial[] = [
   {
+    id: 2,
+    name: "Sanjith",
+    designation: "Founder & CEO",
+    company: "Velz Flow",
+    quote: "Responsive & Reliable",
+    result: "",
+    resultLabel: "",
+    thumbnail: sanjithThumbnail.src,
+    videoSrc: "https://youtube.com/shorts/0WioC-LPgzs",
+  },{
     id: 1,
     name: "Abraham Shankar",
     designation: "Founder & CEO",
@@ -30,17 +40,7 @@ const videos: VideoTestimonial[] = [
     thumbnail: reholifeLogo.src,
     videoSrc: "https://youtube.com/shorts/ev3j1n7jXEg?si=uG7fq4oq8iSr6Ey-",
   },
-  {
-    id: 2,
-    name: "Sanjith",
-    designation: "Founder & CEO",
-    company: "Velz Flow",
-    quote: "Responsive & Reliable",
-    result: "",
-    resultLabel: "",
-    thumbnail: sanjithThumbnail.src,
-    videoSrc: "https://youtube.com/shorts/0WioC-LPgzs",
-  },
+  
 ];
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -369,7 +369,7 @@ export default function GulfVideoTestimonials() {
           </h2>
 
           {/* Honest framing for a Gulf audience — no fake Gulf clients claimed */}
-          <p className="
+          {/* <p className="
             text-white/55
             text-sm
             sm:text-base
@@ -383,7 +383,7 @@ export default function GulfVideoTestimonials() {
             <span className="text-white/80 font-medium">
               judge the quality of the work for yourself.
             </span>
-          </p>
+          </p> */}
         </div>
 
         {/* Carousel */}
@@ -452,7 +452,7 @@ export default function GulfVideoTestimonials() {
         </div>
 
         {/* Honest "first Gulf pitch" trust block */}
-        <div className="relative z-10 max-w-2xl mx-auto px-6 mb-14">
+        {/* <div className="relative z-10 max-w-2xl mx-auto px-6 mb-14">
           <div
             className="
             border border-[#F97316]/20
@@ -475,13 +475,13 @@ export default function GulfVideoTestimonials() {
               results — not just words. We'd rather be honest with you upfront than oversell.
             </p>
           </div>
-        </div>
+        </div> */}
 
         {/* CTA */}
         <div className="relative z-10 text-center px-4">
-          <p className="text-white/30 text-xs uppercase tracking-widest mb-5 font-medium">
+          {/* <p className="text-white/30 text-xs uppercase tracking-widest mb-5 font-medium">
             Be among the first USA companies to work with us
-          </p>
+          </p> */}
           <div
               className="
                   group

@@ -9,17 +9,19 @@ import mercyLogo from "@/assets/mercy logo.png";
 import velz from "@/assets/velzflow.png";
 import vform from "@/assets/vform.png";
 import vimala from "@/assets/vimalaschool.jpeg";
+import ksc from "@/assets/KSC-logo.jpg";
 
 const logos = [
-  { name: "Reholife",   src: (reholife   as any).src ?? reholife,   industry: "Leadership Coaching · India" },
-  { name: "Namma Ooru", src: (nammaOoru  as any).src ?? nammaOoru,  industry: "Bakery · India" },
-  { name: "Lightzup",   src: (lightzup   as any).src ?? lightzup,   industry: "Media · USA" },
-  { name: "Lignite",    src: (lignite    as any).src ?? lignite,    industry: "Clothing Brand · India" },
-  { name: "Third Eye",  src: (thirdeye   as any).src ?? thirdeye,   industry: "Photography · India" },
-  { name: "Mercy",      src: (mercyLogo  as any).src ?? mercyLogo,  industry: "Education · India" },
-  { name: "Velz",       src: (velz       as any).src ?? velz,       industry: "AI Automation · USA" },
-  { name: "Vform",      src: (vform      as any).src ?? vform,      industry: "Architecture · India" },
-  { name: "Vimala",     src: (vimala     as any).src ?? vimala,     industry: "Education · India" },
+  { name: "Reholife",   src: (reholife   as any).src ?? reholife,   industry: "Leadership Coaching " },
+  { name: "Namma Ooru", src: (nammaOoru  as any).src ?? nammaOoru,  industry: "Bakery" },
+  { name: "Lightzup",   src: (lightzup   as any).src ?? lightzup,   industry: "Media Agency · USA " },
+  { name: "Lignite",    src: (lignite    as any).src ?? lignite,    industry: "Clothing Brand " },
+  // { name: "Third Eye",  src: (thirdeye   as any).src ?? thirdeye,   industry: "Photographer" },
+  { name: "Mercy",      src: (mercyLogo  as any).src ?? mercyLogo,  industry: "Education " },
+  { name: "Velz",       src: (velz       as any).src ?? velz,       industry: "AI Automation Agency· USA" },
+  { name: "Vform",      src: (vform      as any).src ?? vform,      industry: "Architecture " },
+  { name: "Vimala",     src: (vimala     as any).src ?? vimala,     industry: "Education " },
+  { name: "KSC",        src: (ksc        as any).src ?? ksc,        industry: "Distance Education" },
 ];
 
 // Exactly 2 copies → -50% is one full set width → perfect seamless loop
@@ -50,14 +52,14 @@ export default function GulfHappyClients() {
         >
           Real Businesses. Real Results.
         </h2>
-        <p className="text-white/50 text-sm max-w-sm mx-auto leading-relaxed">
+        {/* <p className="text-white/50 text-sm max-w-sm mx-auto leading-relaxed">
           Every logo below is a client we've built and delivered for.
           Click any site and see the work live.
-        </p>
+        </p> */}
       </div>
 
       {/* Track record sentence */}
-      <div className="relative z-10 max-w-2xl mx-auto px-6 mb-10">
+      {/* <div className="relative z-10 max-w-2xl mx-auto px-6 mb-10">
         <p
           className="text-center text-sm leading-relaxed"
           style={{
@@ -68,10 +70,10 @@ export default function GulfHappyClients() {
           }}
         >
           <span style={{ color: "rgba(249,115,22,0.9)", fontWeight: 700 }}>Our track record:</span>{" "}
-          10 projects across coaching, education, food & beverage, and retail.
-          New to the USA — bringing the same quality to your market.
+          20+ projects across coaching, education, food & beverage, and retail.
+    
         </p>
-      </div>
+      </div> */}
 
       {/* Marquee — GPU layer promoted via translateZ(0) */}
       <div
@@ -140,7 +142,7 @@ export default function GulfHappyClients() {
       <div className="relative z-10 mt-10 flex items-center justify-center gap-4 px-6">
         <div className="flex-1 max-w-[120px] h-px bg-white/10" />
         <p className="text-white/30 text-xs text-center">
-          Existing client base — bringing the same craft to the USA
+          Existing client base
         </p>
         <div className="flex-1 max-w-[120px] h-px bg-white/10" />
       </div>
