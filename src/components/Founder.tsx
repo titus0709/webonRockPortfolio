@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import founder from "@/assets/founder.jpg";
+import founder from "@/assets/profile.jpeg";
 
 const WA_URL =
   "https://wa.me/+919566515735?text=Hi%20Titus%2C%20I%20came%20across%20your%20profile%20and%20would%20like%20to%20learn%20more%20about%20your%20services.%20Could%20you%20please%20share%20more%20details%3F";
@@ -53,9 +53,7 @@ export default function Founder() {
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
               {/* Fallback initials */}
-              <div className="absolute inset-0 flex items-center justify-center text-[72px] font-extrabold text-[#0B1F3A] opacity-10 select-none">
-                TK
-              </div>
+              
             </div>
 
             {/* Floating credential badge */}
