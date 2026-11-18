@@ -1,183 +1,209 @@
+
 "use client";
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Phone, Mail, Menu, X, ArrowRight } from "lucide-react";
 import Image from "next/image";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/webonrock-white.png";
 import { Button } from "./ui/button";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLElement | null>(null);
 
-  // measure and push page down so fixed header doesn't overlap content
-  useEffect(() => {
-    const el = wrapperRef.current;
-    if (!el) return;
-
-    const setPadding = () => {
-      const h = el.getBoundingClientRect().height;
-      document.body.style.paddingTop = `${Math.ceil(h)}px`;
-    };
-
-    setPadding();
-    window.addEventListener("resize", setPadding);
-    return () => {
-      window.removeEventListener("resize", setPadding);
-      document.body.style.paddingTop = "";
-    };
-  }, []);
-
-  // close on Escape key
+  // Close menu on Escape
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
+
     window.addEventListener("keydown", onKey);
+
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // close mobile panel when clicking outside the header card
+  // Close menu when clicking outside
   useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
       const target = e.target as Node;
-      if (!wrapperRef.current) return;
-      if (!wrapperRef.current.contains(target)) setOpen(false);
+
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(target)
+      ) {
+        setOpen(false);
+      }
     };
-    if (open) document.addEventListener("click", onDocClick);
-    return () => document.removeEventListener("click", onDocClick);
+
+    if (open) {
+      document.addEventListener("click", onDocClick);
+    }
+
+    return () => {
+      document.removeEventListener("click", onDocClick);
+    };
   }, [open]);
 
   const navItems = [
     { href: "/#services", label: "Services" },
+    { href: "/#case-studies", label: "Results" },
     { href: "/#video_testimonials", label: "Testimonials" },
     { href: "/#work", label: "Our Work" },
-    { href: "/#process", label: "Process" },
   ];
 
-  // helper: close mobile menu when a mobile nav is clicked
   const handleNavClick = () => setOpen(false);
 
   return (
     <header
       ref={wrapperRef}
-      className="fixed inset-x-0 top-0 z-50 flex justify-center pointer-events-none"
+      className="fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-2 sm:px-6 sm:pt-3"
       aria-label="Site header"
     >
-      <div className="pointer-events-auto w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 md:mt-6">
-          <div
-            className="bg-white/80 backdrop-blur-lg border border-gray-200 shadow-xl rounded-3xl py-3 transition-all"
-            style={{ borderColor: "rgba(156,163,175,0.12)" }}
-          >
-            <div className="px-4">
-              <div className="flex items-center justify-between h-16">
-                {/* Logo + name - VISIBLE on all screens and responsive */}
-                <Link
-                  href="/"
-                  className="flex items-center gap-3"
-                  onClick={() => {
-                    setOpen(false);
-                    // allow the link to navigate as normal
-                  }}
-                >
-                  <Image
-                    src={logo}
-                    alt="WebonRock logo"
-                    className="h-12 w-12 sm:h-14 sm:w-14 object-contain"
-                  />
-                  <div className="flex flex-col leading-tight">
-                    <span className="text-lg sm:text-xl font-bold text-gray-900 leading-tight">
-                      WebOn 
-                      <span className="text-[#01A959] text-xl">Rock</span>
-                    </span>
-                    <span className="text-[10px] sm:text-[11px] text-gray-500">
-                      Design · Dev · Growth
-                    </span>
-                  </div>
-                </Link>
+      <div className="w-full max-w-7xl">
 
-                {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center gap-6" aria-label="Primary">
+        {/* Main Navigation */}
+        <div className="relative rounded-2xl border border-white/10 bg-[#101512]/90 shadow-[0_8px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-all duration-300">
+
+          <div className="flex h-[68px] items-center justify-between px-4 sm:px-6">
+
+            {/* Logo */}
+            <Link
+              href="/"
+              className="group flex shrink-0 items-center gap-2.5"
+              onClick={handleNavClick}
+            >
+              <Image
+                src={logo}
+                alt="WebOnRock logo"
+                className="h-16 w-10 object-contain transition-transform duration-300 group-hover:scale-105 sm:h-11 sm:w-11"
+              />
+
+              <div className="flex flex-col leading-tight">
+                <span className="text-lg font-bold tracking-tight text-white sm:text-xl">
+                  Webon<span className="text-[#B7F36B]">Rock</span>
+                </span>
+
+                <span className="mt-0.5 text-[9px] font-medium tracking-[0.16em] text-white/45 sm:text-[10px]">
+                  Plan · DEV · GROWTH
+                </span>
+              </div>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <nav
+              className="hidden items-center gap-1 md:flex"
+              aria-label="Primary navigation"
+            >
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="rounded-lg px-3 py-2 text-sm font-medium text-white/65 transition-all duration-200 hover:bg-white/[0.05] hover:text-[#B7F36B] lg:px-4"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Right Side */}
+            <div className="flex items-center gap-3">
+
+              {/* Desktop CTA */}
+              <a href="#start-project" className="hidden lg:block">
+                <Button
+                  size="lg"
+                  className="group h-11 rounded-xl bg-[#B7F36B] px-5 text-sm font-semibold text-[#10150C] shadow-[0_0_25px_rgba(183,243,107,0.10)] transition-all duration-300 hover:scale-[1.03] hover:bg-[#A5E65A]"
+                >
+                  Let's talk Growth
+
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </Button>
+              </a>
+
+              {/* Mobile CTA */}
+              <a
+                href="#start-project"
+                className="hidden sm:block lg:hidden"
+              >
+                <Button
+                  size="sm"
+                  className="h-10 rounded-lg bg-[#B7F36B] px-4 text-sm font-semibold text-[#10150C] hover:bg-[#A5E65A]"
+                >
+                  Let's Talk
+                </Button>
+              </a>
+
+              {/* Mobile Menu Toggle */}
+              <button
+                className="rounded-lg p-2.5 text-white transition-colors hover:bg-white/10 hover:text-[#B7F36B] focus:outline-none focus:ring-2 focus:ring-[#B7F36B]/50 md:hidden"
+                onClick={() => setOpen((v) => !v)}
+                aria-expanded={open}
+                aria-label={open ? "Close menu" : "Open menu"}
+              >
+                {open ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
+              </button>
+
+            </div>
+          </div>
+
+          {/* Mobile Menu */}
+          <div
+            className={`grid transition-all duration-300 ease-in-out md:hidden ${
+              open
+                ? "grid-rows-[1fr] opacity-100"
+                : "grid-rows-[0fr] opacity-0"
+            }`}
+            aria-hidden={!open}
+          >
+            <div className="overflow-hidden">
+              <div className="border-t border-white/10 px-4 pb-4 pt-3">
+
+                {/* Mobile Links */}
+                <nav className="flex flex-col gap-1">
                   {navItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="px-2 py-1 text-lg font-medium text-gray-800 rounded-lg transition-all duration-200  hover:text-[#01A959]"
+                      onClick={handleNavClick}
+                      className="rounded-lg px-3 py-3 text-sm font-medium text-white/75 transition-colors hover:bg-white/[0.05] hover:text-[#B7F36B]"
                     >
                       {item.label}
                     </Link>
                   ))}
                 </nav>
 
-                {/* Right side */}
-                <div className="flex items-center gap-4">
+                {/* Contact Details */}
+                <div className="mt-3 space-y-1 border-t border-white/10 pt-3">
 
-                    <a href="#start-project">
-                    <Button
-                      size="lg"
-                      className="hidden lg:inline-flex bg-[#01A959] hover:bg-[#018f4d] text-white px-5 py-6 text-base group shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 lg:mx-4 rounded-2xl"
-                    >
-                      Let's Build
-                      <ArrowRight className="ml-2 w-3 h-5 group-hover:translate-x-1 transition-transform" />
-                    </Button>
+                  <a
+                    href="tel:+919566515735"
+                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-white/55 transition-colors hover:text-[#B7F36B]"
+                    onClick={handleNavClick}
+                  >
+                    <Phone className="h-4 w-4 text-[#B7F36B]" />
+                    (+91) 95665-15735
                   </a>
 
-                  {/* mobile menu toggle */}
-                  <button
-                    className="md:hidden p-4 rounded-lg hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#01A959]"
-                    onClick={() => setOpen((v) => !v)}
-                    aria-expanded={open}
-                    aria-label={open ? "Close menu" : "Open menu"}
+                  <a
+                    href="mailto:buildwithwebonrock@gmail.com"
+                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-white/55 transition-colors hover:text-[#B7F36B]"
+                    onClick={handleNavClick}
                   >
-                    {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                  </button>
+                    <Mail className="h-4 w-4 text-[#B7F36B]" />
+                    buildwithwebonrock@gmail.com
+                  </a>
+
                 </div>
+
               </div>
             </div>
-
-            {/* mobile menu panel */}
-            <div
-              className={`md:hidden overflow-hidden transition-all duration-300 ease-out ${
-                open ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-              }`}
-              aria-hidden={!open}
-            >
-              <div className="px-4 pb-4">
-                <div className="bg-white/95 border border-gray-100 rounded-2xl shadow-lg p-4">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={handleNavClick}
-                      className="block py-3 text-gray-700"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-
-                  <div className="border-t mt-3 pt-3">
-                    <a
-                      href="tel:+919566515735"
-                      className="flex items-center gap-2 py-2 text-gray-700"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Phone className="w-4 h-4" /> (+91) 95665-15735
-                    </a>
-                    <a
-                      href="mailto:buildwithwebonrock@gmail.com"
-                      className="flex items-center gap-2 py-2 text-gray-700"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Mail className="w-4 h-4" /> buildwithwebonrock@gmail.com
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
+
         </div>
       </div>
     </header>

@@ -25,7 +25,7 @@ export default function Page() {
       <Services />
       <WhyWebOnRock />
       
-      <WorkProcess />
+      {/* <WorkProcess /> */}
       <HappyClients/>
       <ContactForm />
       <WhatsAppButton/>
