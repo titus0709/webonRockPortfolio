@@ -2,8 +2,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-// @ts-ignore: CSS module declarations are provided by the Next.js type environment.
-import "./CursorGrid.css";
 
 interface CursorGridProps {
   cellSize?: number;
@@ -131,10 +129,7 @@ export default function CursorGrid({
       desynchronized: true,
     });
 
-    if (!ctx) {
-      console.error("CursorGrid: Canvas 2D is unavailable.");
-      return;
-    }
+    if (!ctx) return;
 
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
@@ -189,9 +184,6 @@ export default function CursorGrid({
 
       canvas.width = Math.round(width * ratio);
       canvas.height = Math.round(height * ratio);
-
-      canvas.style.width = "100%";
-      canvas.style.height = "100%";
 
       draw();
     };
@@ -271,7 +263,8 @@ export default function CursorGrid({
         pointerOpacity =
           elapsed <= s.holdTime
             ? 1
-            : 1 - clamp(
+            : 1 -
+              clamp(
                 (elapsed - s.holdTime) /
                   Math.max(16, s.fadeDuration),
                 0,
@@ -333,8 +326,7 @@ export default function CursorGrid({
                 ? 1
                 : getEase(1 - distance / s.radius);
 
-            const alpha =
-              intensity * pointerOpacity;
+            const alpha = intensity * pointerOpacity;
 
             if (alpha <= 0) continue;
 
@@ -374,10 +366,7 @@ export default function CursorGrid({
             ctx.beginPath();
 
             if (s.cellRadius > 0 || s.cellGap > 0) {
-              const r = Math.min(
-                s.cellRadius,
-                boxSize / 2
-              );
+              const r = Math.min(s.cellRadius, boxSize / 2);
 
               ctx.roundRect(
                 x + inset,
@@ -476,8 +465,7 @@ export default function CursorGrid({
 
       const pointerActive =
         pointer.inside ||
-        now - pointer.lastMove <
-          s.holdTime + s.fadeDuration;
+        now - pointer.lastMove < s.holdTime + s.fadeDuration;
 
       const pulseActive = pulses.length > 0;
 
@@ -596,7 +584,6 @@ export default function CursorGrid({
       pointer.inside = false;
     }
 
-    // Initial render
     draw();
 
     return () => {
@@ -623,17 +610,17 @@ export default function CursorGrid({
   return (
     <div
       ref={containerRef}
-      className={`cursor-grid ${className}`}
+      className={`absolute inset-0 h-full w-full overflow-hidden pointer-events-none ${className}`}
       style={style}
     >
       <canvas
         ref={canvasRef}
-        className="cursor-grid__canvas"
+        className="block h-full w-full"
         aria-hidden="true"
       />
 
       {children && (
-        <div className="cursor-grid__content">
+        <div className="relative z-[1]">
           {children}
         </div>
       )}

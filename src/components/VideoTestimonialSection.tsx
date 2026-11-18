@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ArrowRight, Quote, Play } from "lucide-react";
 
 const testimonials = [
@@ -10,47 +10,26 @@ const testimonials = [
     name: "Abraham Shankar",
     role: "Founder & CEO",
     company: "Reholife",
-    quote:
-      "",
-    video: "https://www.youtube.com/embed/ev3j1n7jXEg",
+    videoId: "ev3j1n7jXEg",
+    quote: "",
   },
   {
     id: "sanjith",
     name: "Sanjith",
     role: "Founder & CEO",
     company: "Velz Flow",
+    videoId: "0WioC-LPgzs",
     quote: "",
-    video: "https://www.youtube.com/embed/0WioC-LPgzs",
   },
 ];
 
 export default function VideoTestimonialsSection() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const section = document.getElementById("video_testimonials");
-
-    if (!section) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.12 }
-    );
-
-    observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
   return (
     <section
       id="video_testimonials"
-      className="relative overflow-hidden bg-[#080D0A] px-5 py-20 sm:px-8 lg:py-24"
+      className="relative isolate overflow-hidden bg-[#080D0A] px-5 py-20 sm:px-8 lg:py-24"
     >
       {/* Background Glow */}
       <div className="pointer-events-none absolute -left-40 top-20 h-80 w-80 rounded-full bg-[#B7F36B]/[0.07] blur-[120px]" />
@@ -60,15 +39,9 @@ export default function VideoTestimonialsSection() {
       <div className="relative mx-auto max-w-5xl">
 
         {/* Section Heading */}
-        <div
-          className={`mx-auto mb-12 max-w-2xl text-center transition-all duration-700 ${
-            visible
-              ? "translate-y-0 opacity-100"
-              : "translate-y-8 opacity-0"
-          }`}
-        >
+        <div className="mx-auto mb-12 max-w-2xl text-center">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#B7F36B]/20 bg-[#B7F36B]/[0.07] px-4 py-2">
-            <span className="h-2 w-2 rounded-full bg-[#B7F36B] animate-pulse" />
+            <span className="h-2 w-2 animate-pulse rounded-full bg-[#B7F36B]" />
 
             <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#B7F36B]">
               Client Testimonials
@@ -86,73 +59,101 @@ export default function VideoTestimonialsSection() {
           </p>
         </div>
 
-        {/* Portrait Video Players */}
+        {/* Video Testimonials */}
         <div className="grid grid-cols-1 justify-items-center gap-8 sm:grid-cols-2 sm:gap-7 lg:gap-10">
-          {testimonials.map((item, index) => (
-            <div
-              key={item.id}
-              style={{ transitionDelay: `${index * 150}ms` }}
-              className={`group w-full max-w-[340px] overflow-hidden rounded-2xl border border-white/[0.09] bg-[#111813] p-3 shadow-xl transition-all duration-700 hover:-translate-y-2 hover:border-[#B7F36B]/40 hover:shadow-[0_20px_60px_rgba(183,243,107,0.08)] ${
-                visible
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-10 opacity-0"
-              }`}
-            >
-              {/* 9:16 Video Player */}
-              <div className="relative aspect-[9/16] overflow-hidden rounded-xl bg-black">
-                <iframe
-                  src={`${item.video}?rel=0`}
-                  title={`${item.name} - Client Testimonial`}
-                  className="absolute inset-0 h-full w-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  loading="lazy"
-                />
-              </div>
 
-              {/* Client Information */}
-              <div className="px-3 pb-3 pt-5">
-                {item.quote && (
-                  <div className="mb-5">
-                    <Quote
-                      size={21}
-                      className="mb-3 text-[#B7F36B]"
+          {testimonials.map((item) => {
+            const isPlaying = activeVideo === item.id;
+
+            return (
+              <div
+                key={item.id}
+                className="group w-full max-w-[340px] overflow-hidden rounded-2xl border border-white/[0.09] bg-[#111813] p-3 shadow-xl transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-2 hover:border-[#B7F36B]/40 hover:shadow-[0_20px_60px_rgba(183,243,107,0.08)]"
+              >
+                {/* Video Player / Thumbnail */}
+                <div className="relative aspect-[9/16] overflow-hidden rounded-xl bg-black">
+
+                  {isPlaying ? (
+                    <iframe
+                      src={`https://www.youtube-nocookie.com/embed/${item.videoId}?autoplay=1&rel=0&playsinline=1`}
+                      title={`${item.name} - Client Testimonial`}
+                      className="absolute inset-0 h-full w-full border-0"
+                      allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                      allowFullScreen
+                      referrerPolicy="strict-origin-when-cross-origin"
                     />
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setActiveVideo(item.id)}
+                      aria-label={`Play ${item.name}'s video testimonial`}
+                      className="absolute inset-0 flex h-full w-full items-center justify-center overflow-hidden bg-[#111813]"
+                    >
+                      {/* YouTube Thumbnail */}
+                      <img
+                        src={`https://i.ytimg.com/vi/${item.videoId}/hqdefault.jpg`}
+                        alt={`${item.name} video testimonial`}
+                        loading="lazy"
+                        decoding="async"
+                        width={480}
+                        height={360}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
 
-                    <p className="text-sm leading-7 text-white/70">
-                      "{item.quote}"
-                    </p>
-                  </div>
-                )}
+                      {/* Overlay */}
+                      <div className="absolute inset-0 bg-black/30 transition-colors duration-300 group-hover:bg-black/45" />
 
-                <div className="flex items-center justify-between gap-3 border-t border-white/[0.08] pt-4">
-                  <div>
-                    <h3 className="font-semibold text-white">
-                      {item.name}
-                    </h3>
+                      {/* Play Button */}
+                      <span className="relative flex h-16 w-16 items-center justify-center rounded-full border border-[#B7F36B]/50 bg-[#B7F36B] text-[#101810] shadow-[0_0_35px_rgba(183,243,107,0.25)] transition-transform duration-300 group-hover:scale-110">
+                        <Play size={24} fill="currentColor" className="ml-1" />
+                      </span>
 
-                    <p className="mt-1 text-xs text-white/45">
-                      {item.role} · {item.company}
-                    </p>
-                  </div>
+                      <span className="sr-only">
+                        Play video
+                      </span>
+                    </button>
+                  )}
+                </div>
 
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#B7F36B]/20 bg-[#B7F36B]/10 text-[#B7F36B] transition-transform duration-300 group-hover:scale-110">
-                    <Play size={14} fill="currentColor" />
+                {/* Client Information */}
+                <div className="px-3 pb-3 pt-5">
+
+                  {item.quote && (
+                    <div className="mb-5">
+                      <Quote
+                        size={21}
+                        className="mb-3 text-[#B7F36B]"
+                      />
+
+                      <p className="text-sm leading-7 text-white/70">
+                        "{item.quote}"
+                      </p>
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-between gap-3 border-t border-white/[0.08] pt-4">
+                    <div>
+                      <h3 className="font-semibold text-white">
+                        {item.name}
+                      </h3>
+
+                      <p className="mt-1 text-xs text-white/45">
+                        {item.role} · {item.company}
+                      </p>
+                    </div>
+
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#B7F36B]/20 bg-[#B7F36B]/10 text-[#B7F36B] transition-transform duration-300 group-hover:scale-110">
+                      <Play size={14} fill="currentColor" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Bottom CTA */}
-        <div
-          className={`mt-14 text-center transition-all delay-300 duration-700 ${
-            visible
-              ? "translate-y-0 opacity-100"
-              : "translate-y-6 opacity-0"
-          }`}
-        >
+        <div className="mt-14 text-center">
           <p className="mb-5 text-sm text-white/50">
             Want results like these for your business?
           </p>
