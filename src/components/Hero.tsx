@@ -12,6 +12,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
+
 // Load CursorGrid separately
 const CursorGrid = dynamic(
   () => import("@/components/CursorGrid"),
@@ -40,22 +41,42 @@ export default function Hero() {
   return (
     <section className="relative isolate min-h-screen overflow-hidden bg-[#090C0B] text-white">
 
-      {/* CURSOR GRID */}
-      <div className="pointer-events-none absolute inset-0 z-0">
-        <CursorGrid
-          cellSize={60}
-          color="#ffffff"
-          highlight="area"
-          gridStyle="lines"
-          radius={140}
-          holdTime={400}
-          fadeDuration={800}
-          fillOpacity={0.06}
-          gridOpacity={0.08}
-          spotlight={0.6}
-          clickPulse
-        />
-      </div>
+     
+     {/* CURSOR GRID - DESKTOP ONLY */}
+<div className="pointer-events-none absolute inset-0 z-[1] hidden overflow-hidden sm:block">
+  <CursorGrid
+    cellSize={60}
+    color="#ffffff"
+    highlight="area"
+    gridStyle="lines"
+    radius={140}
+    holdTime={400}
+    fadeDuration={800}
+    fillOpacity={0.12}
+    gridOpacity={0.15}
+    spotlight={0.8}
+    clickPulse
+  />
+</div>
+
+
+{/* GRID BACKGROUND - MOBILE ONLY */}
+<div
+  aria-hidden="true"
+  className="pointer-events-none absolute inset-0 z-[1] sm:hidden"
+  style={{
+    backgroundImage: `
+      linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px)
+    `,
+    backgroundSize: "40px 40px",
+    maskImage:
+      "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
+    WebkitMaskImage:
+      "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
+  }}
+/>
+
 
       {/* BACKGROUND EFFECTS */}
       <div
@@ -120,12 +141,7 @@ export default function Hero() {
 
             </h1>
 
-            {/* DESCRIPTION */}
-            <p className="mt-7 max-w-2xl text-base leading-7 text-white/55 sm:text-lg sm:leading-8">
-              Turn your online presence into a consistent source
-              of customers with conversion-focused websites,
-              advertising, lead generation and smart automation.
-            </p>
+           
 
             {/* CTA BUTTONS */}
             <div className="mt-9 flex flex-col gap-4 sm:flex-row">

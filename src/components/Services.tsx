@@ -80,30 +80,61 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative overflow-hidden bg-[#090C0B] py-20 sm:py-24 lg:py-28 text-white"
+      className="relative isolate overflow-hidden bg-[#090C0B] py-20 sm:py-24 lg:py-28 text-white"
     >
-      <CursorGrid
-        cellSize={60}
-        color="#ffffff"
-        highlight="area"
-        gridStyle="lines"
-        radius={140}
-        holdTime={400}
-        fadeDuration={800}
-        fillOpacity={0.06}
-        gridOpacity={0.08}
-        spotlight={0.6}
-        clickPulse
+      {/* DESKTOP: INTERACTIVE CURSOR GRID */}
+      <div className="pointer-events-none absolute inset-0 z-0 hidden sm:block">
+        <CursorGrid
+          cellSize={60}
+          color="#ffffff"
+          highlight="area"
+          gridStyle="lines"
+          radius={140}
+          holdTime={400}
+          fadeDuration={800}
+          fillOpacity={0.06}
+          gridOpacity={0.08}
+          spotlight={0.6}
+          clickPulse
+        />
+      </div>
+
+      {/* MOBILE: CSS WHITE GRID */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 sm:hidden"
+        style={{
+          backgroundImage: `
+            linear-gradient(
+              rgba(255,255,255,0.12) 1px,
+              transparent 1px
+            ),
+            linear-gradient(
+              90deg,
+              rgba(255,255,255,0.12) 1px,
+              transparent 1px
+            )
+          `,
+          backgroundSize: "40px 40px",
+          backgroundPosition: "center center",
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)",
+        }}
       />
-      {/* Background effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 opacity-[0.035] bg-[linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)] bg-[size:55px_55px]" />
+
+      {/* BACKGROUND GLOW EFFECTS */}
+      <div className="absolute inset-0 z-[1] pointer-events-none">
         <div className="absolute top-20 left-[-120px] w-[350px] h-[350px] rounded-full bg-[#B7F36B]/[0.07] blur-[130px]" />
+
         <div className="absolute bottom-0 right-[-100px] w-[350px] h-[350px] rounded-full bg-[#B7F36B]/[0.05] blur-[130px]" />
       </div>
 
+      {/* MAIN CONTENT */}
       <div className="relative z-10 container mx-auto px-5 sm:px-6 lg:px-8">
-        {/* Section heading */}
+
+        {/* SECTION HEADING */}
         <motion.div
           initial={{ opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -130,7 +161,7 @@ export default function Services() {
           </p>
         </motion.div>
 
-        {/* Service cards */}
+        {/* SERVICE CARDS */}
         <motion.div
           variants={container}
           initial="hidden"
@@ -154,10 +185,10 @@ export default function Services() {
                   aria-label={`Learn more about ${service.title}`}
                   className="group relative flex flex-col h-full min-h-[250px] sm:min-h-[270px] overflow-hidden rounded-2xl border border-white/[0.09] bg-white/[0.035] p-6 sm:p-7 backdrop-blur-xl transition-all duration-300 hover:border-[#B7F36B]/40 hover:bg-white/[0.065] hover:shadow-[0_15px_50px_rgba(183,243,107,0.07)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7F36B]"
                 >
-                  {/* Hover glow */}
+                  {/* HOVER GLOW */}
                   <div className="absolute -top-20 -right-20 w-48 h-48 rounded-full bg-[#B7F36B]/[0.08] blur-[65px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                  {/* Top row */}
+                  {/* TOP ROW */}
                   <div className="relative flex items-center justify-between mb-8">
                     <div className="w-12 h-12 rounded-xl border border-[#B7F36B]/20 bg-[#B7F36B]/[0.08] flex items-center justify-center transition-all duration-300 group-hover:bg-[#B7F36B] group-hover:scale-105">
                       <Icon className="w-5 h-5 text-[#B7F36B] transition-colors duration-300 group-hover:text-[#090C0B]" />
@@ -168,7 +199,7 @@ export default function Services() {
                     </span>
                   </div>
 
-                  {/* Content */}
+                  {/* CONTENT */}
                   <div className="relative flex-1">
                     <h3 className="text-lg sm:text-xl font-semibold tracking-tight text-white mb-3 group-hover:text-[#B7F36B] transition-colors duration-300">
                       {service.title}
@@ -179,7 +210,7 @@ export default function Services() {
                     </p>
                   </div>
 
-                  {/* Bottom row */}
+                  {/* BOTTOM ROW */}
                   <div className="relative flex items-center justify-between mt-7 pt-5 border-t border-white/[0.08]">
                     <div className="flex flex-wrap gap-2">
                       {service.tags.map((tag) => (
@@ -202,7 +233,7 @@ export default function Services() {
           })}
         </motion.div>
 
-        {/* Bottom CTA */}
+        {/* BOTTOM CTA */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -224,6 +255,7 @@ export default function Services() {
             <ArrowUpRight className="w-4 h-4" />
           </Link>
         </motion.div>
+
       </div>
     </section>
   );
