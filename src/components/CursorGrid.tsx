@@ -3,7 +3,8 @@
 
 import { useEffect, useRef } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
-import '@/components/CursorGrid.css';
+// @ts-ignore - CSS side-effect import is handled by Next.js
+import './CursorGrid.css';
 
 const INTRO_SECONDS = 1.4;
 const MAX_PULSES = 6;
@@ -867,12 +868,12 @@ const CursorGrid = ({
       const fadeStep = dt / (s.fadeDuration / 1000);
       const attack = 1 - Math.exp(-dt / 0.045);
 
-      for (const i of activeCells) {
+      activeCells.forEach((i) => {
         let target = targets[i];
 
         if (target <= 0 && levels[i] <= 0) {
           activeCells.delete(i);
-          continue;
+          return;
         }
 
         if (clock - touched[i] > holdSeconds) {
@@ -899,7 +900,7 @@ const CursorGrid = ({
         } else {
           active = true;
         }
-      }
+      });
 
       // Continue ambient animation only when enabled.
       if (s.ambient > 0 && !reduce) {

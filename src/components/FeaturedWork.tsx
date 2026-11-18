@@ -6,12 +6,10 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ArrowUpRight, ArrowRight, ExternalLink } from "lucide-react";
 
-import nammaOoru from "@/assets/nammaKadai.png";
 import foodDelivery from "@/assets/foodDelivery.jpg";
 import mercy from "@/assets/mercy.png";
 import reholife from "@/assets/reholife.png";
 import vimala from "@/assets/vimala.png";
-import vform from "@/assets/vformwebsite.png";
 import ayyanar from "@/assets/sriayyanar.png";
 import judah from "@/assets/judahwebsite.png";
 
@@ -57,7 +55,7 @@ const projects = [
     description:
       "A professional online presence highlighting coaching services, expertise and client testimonials.",
     image: reholife,
-    tags: ["Website", "convertion-specific"],
+    tags: ["Website", "Conversion-focused"],
     link: "https://www.reholife.org/",
     number: "05",
   },
@@ -70,15 +68,6 @@ const projects = [
     link: "https://www.mercyschool.in/",
     number: "06",
   },
-  // {
-  //   title: "Namma Ooru Tea Kadai",
-  //   description:
-  //     "A simple and convenient food ordering experience for a much-loved local food business.",
-  //   image: nammaOoru,
-  //   tags: ["Website", "Ordering"],
-  //   link: "https://nammaooruteakadai.in/",
-  //   number: "07",
-  // },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -101,14 +90,18 @@ function ProjectCard({
   return (
     <motion.article
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      initial={{ opacity: 0, y: 25 }}
+      animate={
+        isInView
+          ? { opacity: 1, y: 0 }
+          : { opacity: 0, y: 25 }
+      }
       transition={{
-        duration: 0.7,
-        delay: (index % 3) * 0.12,
+        duration: 0.55,
+        delay: (index % 3) * 0.08,
         ease,
       }}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.09] bg-white/[0.035] transition-all duration-500 hover:-translate-y-2 hover:border-[#B7F36B]/40 hover:bg-white/[0.055] hover:shadow-[0_20px_60px_rgba(183,243,107,0.07)]"
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.09] bg-white/[0.035] transition-all duration-500 hover:-translate-y-1 hover:border-[#B7F36B]/40 hover:bg-white/[0.055] hover:shadow-[0_20px_50px_rgba(183,243,107,0.06)]"
     >
       {/* Project Image */}
       <a
@@ -118,26 +111,26 @@ function ProjectCard({
         aria-label={`View ${project.title}`}
         className="block"
       >
-        <div className="relative h-56 sm:h-64 overflow-hidden bg-[#151A17]">
-
+        <div className="relative h-56 overflow-hidden bg-[#151A17] sm:h-64">
           <Image
             src={project.image}
             alt={project.title}
             fill
+            quality={75}
             sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
 
-          {/* Image overlay */}
+          {/* Image Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#090C0B]/80 via-[#090C0B]/10 to-[#090C0B]/10 opacity-80 transition-opacity duration-500 group-hover:opacity-50" />
 
           {/* Project Number */}
-          <div className="absolute top-4 left-4 rounded-full border border-white/15 bg-black/40 px-3 py-1.5 text-[10px] font-semibold tracking-[0.16em] text-white/80 backdrop-blur-md">
+          <div className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/40 px-3 py-1.5 text-[10px] font-semibold tracking-[0.16em] text-white/80 backdrop-blur-md">
             PROJECT {project.number}
           </div>
 
           {/* Arrow */}
-          <div className="absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#B7F36B] text-[#090C0B] opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+          <div className="absolute right-4 top-4 flex h-10 w-10 translate-y-2 items-center justify-center rounded-full bg-[#B7F36B] text-[#090C0B] opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
             <ArrowUpRight size={19} />
           </div>
 
@@ -157,7 +150,6 @@ function ProjectCard({
 
       {/* Content */}
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-
         <div className="flex items-start justify-between gap-3">
           <h3 className="text-lg font-bold leading-snug text-white transition-colors duration-300 group-hover:text-[#B7F36B] sm:text-xl">
             {project.title}
@@ -174,7 +166,6 @@ function ProjectCard({
 
         {/* Footer */}
         <div className="mt-6 flex items-center justify-between border-t border-white/[0.08] pt-5">
-
           <a
             href={project.link}
             target="_blank"
@@ -196,7 +187,7 @@ function ProjectCard({
         </div>
       </div>
 
-      {/* Bottom accent */}
+      {/* Bottom Accent */}
       <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#B7F36B] transition-all duration-500 group-hover:w-full" />
     </motion.article>
   );
@@ -214,14 +205,14 @@ function SectionHeader() {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 25 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, ease }}
+      transition={{ duration: 0.6, ease }}
       className="mb-14 text-center sm:mb-16"
     >
       {/* Eyebrow */}
       <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#B7F36B]/20 bg-[#B7F36B]/[0.07] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#B7F36B]">
-        <span className="h-2 w-2 rounded-full bg-[#B7F36B] animate-pulse" />
+        <span className="h-2 w-2 animate-pulse rounded-full bg-[#B7F36B]" />
         Selected Projects
       </span>
 
@@ -234,7 +225,7 @@ function SectionHeader() {
             className="absolute -bottom-1 left-0 h-[3px] rounded-full bg-[#B7F36B]"
             initial={{ width: 0 }}
             animate={isInView ? { width: "100%" } : {}}
-            transition={{ duration: 0.8, delay: 0.4, ease }}
+            transition={{ duration: 0.7, delay: 0.3, ease }}
           />
         </span>
       </h2>
@@ -244,7 +235,7 @@ function SectionHeader() {
         digital experiences and grow online.
       </p>
 
-      {/* Project count */}
+      {/* Project Count */}
       <div className="mt-7 flex items-center justify-center gap-3">
         <span className="h-px w-10 bg-white/15" />
         <span className="text-[11px] font-medium tracking-[0.2em] text-white/35">
@@ -265,10 +256,9 @@ export default function FeaturedWork() {
     >
       {/* Background Effects */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -right-40 top-0 h-[400px] w-[400px] rounded-full bg-[#B7F36B]/[0.045] blur-[90px]" />
 
-        <div className="absolute -right-40 top-0 h-[500px] w-[500px] rounded-full bg-[#B7F36B]/[0.045] blur-[140px]" />
-
-        <div className="absolute -bottom-40 -left-40 h-[450px] w-[450px] rounded-full bg-[#B7F36B]/[0.035] blur-[130px]" />
+        <div className="absolute -bottom-40 -left-40 h-[350px] w-[350px] rounded-full bg-[#B7F36B]/[0.035] blur-[90px]" />
 
         {/* Grid */}
         <div
@@ -281,8 +271,7 @@ export default function FeaturedWork() {
         />
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader />
 
         {/* Projects Grid */}
@@ -298,10 +287,10 @@ export default function FeaturedWork() {
 
         {/* Bottom CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.15 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
           className="mt-16 text-center"
         >
           <p className="mb-6 text-sm text-white/50 sm:text-base">
@@ -320,7 +309,6 @@ export default function FeaturedWork() {
             />
           </a>
         </motion.div>
-
       </div>
     </section>
   );
