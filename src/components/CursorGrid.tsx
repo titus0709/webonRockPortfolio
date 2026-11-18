@@ -2,11 +2,12 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import type { CSSProperties, ReactNode, PointerEvent as ReactPointerEvent } from 'react';
-// @ts-ignore CSS imports are handled by the build tool.
+import type { CSSProperties, ReactNode } from 'react';
 import '@/components/CursorGrid.css';
 
 const INTRO_SECONDS = 1.4;
+const MAX_PULSES = 6;
+const MAX_DPR = 1.5;
 
 const STYLES: Record<string, number> = {
   lines: 0,
@@ -163,7 +164,7 @@ void main() {
   outColor = vec4(premul, alpha);
 }`;
 
-const clamp = (value: number, min: number, max: number): number =>
+const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
 
 const compile = (
@@ -172,7 +173,6 @@ const compile = (
   source: string
 ): WebGLShader | null => {
   const shader = gl.createShader(type);
-
   if (!shader) return null;
 
   gl.shaderSource(shader, source);
@@ -182,6 +182,7 @@ const compile = (
     return shader;
   }
 
+  console.error('CursorGrid shader error:', gl.getShaderInfoLog(shader));
   gl.deleteShader(shader);
   return null;
 };
@@ -194,9 +195,20 @@ interface ShaderResult {
 const link = (gl: WebGL2RenderingContext): ShaderResult | null => {
   const vertex = compile(gl, gl.VERTEX_SHADER, VERTEX);
   const fragment = compile(gl, gl.FRAGMENT_SHADER, FRAGMENT);
+
+  if (!vertex || !fragment) {
+    if (vertex) gl.deleteShader(vertex);
+    if (fragment) gl.deleteShader(fragment);
+    return null;
+  }
+
   const program = gl.createProgram();
 
-  if (!vertex || !fragment || !program) return null;
+  if (!program) {
+    gl.deleteShader(vertex);
+    gl.deleteShader(fragment);
+    return null;
+  }
 
   gl.attachShader(program, vertex);
   gl.attachShader(program, fragment);
@@ -206,16 +218,19 @@ const link = (gl: WebGL2RenderingContext): ShaderResult | null => {
   gl.deleteShader(fragment);
 
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    console.error('CursorGrid link error:', gl.getProgramInfoLog(program));
     gl.deleteProgram(program);
     return null;
   }
 
   const uniforms: Record<string, WebGLUniformLocation | null> = {};
-  const count = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS) as number;
+  const count = gl.getProgramParameter(
+    program,
+    gl.ACTIVE_UNIFORMS
+  ) as number;
 
   for (let i = 0; i < count; i++) {
     const info = gl.getActiveUniform(program, i);
-
     if (info) {
       uniforms[info.name] = gl.getUniformLocation(program, info.name);
     }
@@ -226,38 +241,29 @@ const link = (gl: WebGL2RenderingContext): ShaderResult | null => {
 
 const colorCache = new Map<string, number[]>();
 
-const parseHex = (hex: string): number[] => {
-  let h = String(hex || '#ffffff').replace('#', '').trim();
+const hexToRgb = (hex: string): number[] => {
+  const key = String(hex || '#ffffff');
+
+  const cached = colorCache.get(key);
+  if (cached) return cached;
+
+  let h = key.replace('#', '').trim();
 
   if (h.length === 3 || h.length === 4) {
-    h = h
-      .slice(0, 3)
-      .split('')
-      .map((c) => c + c)
-      .join('');
+    h = h.slice(0, 3).split('').map((c) => c + c).join('');
   }
 
   const num = parseInt(h.slice(0, 6), 16);
 
-  if (Number.isNaN(num)) return [1, 1, 1];
-
-  return [
-    ((num >> 16) & 255) / 255,
-    ((num >> 8) & 255) / 255,
-    (num & 255) / 255,
-  ];
-};
-
-const hexToRgb = (hex: string): number[] => {
-  const key = String(hex);
-  const cached = colorCache.get(key);
-
-  if (cached) return cached;
-
-  const rgb = parseHex(hex);
+  const rgb = Number.isNaN(num)
+    ? [1, 1, 1]
+    : [
+        ((num >> 16) & 255) / 255,
+        ((num >> 8) & 255) / 255,
+        (num & 255) / 255,
+      ];
 
   if (colorCache.size > 64) colorCache.clear();
-
   colorCache.set(key, rgb);
 
   return rgb;
@@ -317,26 +323,6 @@ interface Settings {
   dpr?: number;
 }
 
-interface GridView {
-  width: number;
-  height: number;
-  ratio: number;
-  cellSize: number;
-}
-
-interface GridData {
-  cols: number;
-  rows: number;
-  offX: number;
-  offY: number;
-}
-
-interface PointerData {
-  x: number;
-  y: number;
-  inside: boolean;
-}
-
 interface Pulse {
   x: number;
   y: number;
@@ -374,14 +360,14 @@ const CursorGrid = ({
 }: CursorGridProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const settingsRef = useRef<Settings | null>(null);
   const wakeRef = useRef<(() => void) | null>(null);
 
-  const ink = lightMode ? '#18181b' : '#ffffff';
-
-  const settings: Settings = {
+  settingsRef.current = {
     cellSize: Math.max(8, cellSize),
-    color: color || ink,
-    gridColor: gridColor || ink,
+    color: color || (lightMode ? '#18181b' : '#ffffff'),
+    gridColor: gridColor || (lightMode ? '#18181b' : '#ffffff'),
     radius: Math.max(1, radius),
     falloff,
     highlight,
@@ -403,35 +389,38 @@ const CursorGrid = ({
     dpr,
   };
 
-  const settingsRef = useRef<Settings>(settings);
-  settingsRef.current = settings;
-
   useEffect(() => {
     const container = containerRef.current;
     const canvas = canvasRef.current;
 
-    const gl = canvas?.getContext('webgl2', {
+    if (!container || !canvas) return;
+
+    const gl = canvas.getContext('webgl2', {
       alpha: true,
       premultipliedAlpha: true,
       antialias: false,
       depth: false,
       stencil: false,
+      powerPreference: 'low-power',
     });
 
-    if (!container || !canvas || !gl) return undefined;
+    if (!gl) return;
 
     const shader = link(gl);
-
-    if (!shader) return undefined;
+    if (!shader) return;
 
     const u = shader.uniforms;
     const vao = gl.createVertexArray();
     const stateTexture = gl.createTexture();
 
     if (!vao || !stateTexture) {
+      if (vao) gl.deleteVertexArray(vao);
+      if (stateTexture) gl.deleteTexture(stateTexture);
       gl.deleteProgram(shader.program);
-      return undefined;
+      return;
     }
+
+    gl.bindVertexArray(vao);
 
     gl.bindTexture(gl.TEXTURE_2D, stateTexture);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
@@ -443,51 +432,71 @@ const CursorGrid = ({
     const reduce =
       window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
-    const view: GridView = {
+    const view = {
       width: 1,
       height: 1,
       ratio: 1,
       cellSize: 0,
     };
 
-    const grid: GridData = {
+    const grid = {
       cols: 0,
       rows: 0,
       offX: 0,
       offY: 0,
     };
 
-    const pointer: PointerData = { x: 0, y: 0, inside: false };
+    const pointer = {
+      x: 0,
+      y: 0,
+      inside: false,
+      pending: false,
+    };
+
     const mouse = { x: 0, y: 0 };
 
     const pulses: Pulse[] = [];
 
     let levels = new Float32Array(0);
-    let waves = new Float32Array(0);
     let targets = new Float32Array(0);
     let touched = new Float32Array(0);
+    let waves = new Float32Array(0);
     let pixels = new Uint8Array(0);
+
+    // Only active cells are processed.
+    const activeCells = new Set<number>();
 
     let presence = 0;
     let clock = 0;
-    let introClock = settingsRef.current.intro && !reduce ? 0 : 1;
+    let introClock = intro && !reduce ? 0 : 1;
+
     let raf = 0;
     let last = 0;
     let visible = true;
-    let dirty = true;
+
+    let textureDirty = true;
+    let visualDirty = true;
+    let waveActive = false;
 
     const rebuild = () => {
-      const s = settingsRef.current;
+      const s = settingsRef.current!;
 
       view.width = Math.max(1, container.clientWidth);
       view.height = Math.max(1, container.clientHeight);
+
+      // Limit GPU pixel workload.
       view.ratio = Math.min(
         s.dpr || window.devicePixelRatio || 1,
-        2
+        MAX_DPR
       );
 
-      canvas.width = Math.max(1, Math.round(view.width * view.ratio));
-      canvas.height = Math.max(1, Math.round(view.height * view.ratio));
+      const width = Math.max(1, Math.round(view.width * view.ratio));
+      const height = Math.max(1, Math.round(view.height * view.ratio));
+
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+      }
 
       const size = s.cellSize;
       const cols = Math.ceil(view.width / size) + 1;
@@ -500,17 +509,22 @@ const CursorGrid = ({
 
       grid.cols = cols;
       grid.rows = rows;
+
       grid.offX = (view.width - cols * size) / 2;
       grid.offY = (view.height - rows * size) / 2;
 
       view.cellSize = size;
 
       if (resized) {
-        levels = new Float32Array(cols * rows);
-        waves = new Float32Array(cols * rows);
-        targets = new Float32Array(cols * rows);
-        touched = new Float32Array(cols * rows).fill(-1e9);
-        pixels = new Uint8Array(cols * rows);
+        const count = cols * rows;
+
+        levels = new Float32Array(count);
+        targets = new Float32Array(count);
+        touched = new Float32Array(count).fill(-1e9);
+        waves = new Float32Array(count);
+        pixels = new Uint8Array(count);
+
+        activeCells.clear();
 
         gl.bindTexture(gl.TEXTURE_2D, stateTexture);
 
@@ -527,16 +541,19 @@ const CursorGrid = ({
         );
       }
 
-      dirty = true;
+      textureDirty = true;
+      visualDirty = true;
     };
 
     const light = (index: number, value: number) => {
       if (value > targets[index]) targets[index] = value;
+
       touched[index] = clock;
+      activeCells.add(index);
     };
 
     const energize = (x: number, y: number) => {
-      const s = settingsRef.current;
+      const s = settingsRef.current!;
       const size = s.cellSize;
 
       if (s.highlight === 'cell') {
@@ -556,7 +573,8 @@ const CursorGrid = ({
       }
 
       const r = s.radius;
-      const ease = FALLOFF_CURVES[s.falloff] ?? FALLOFF_CURVES.linear;
+      const ease =
+        FALLOFF_CURVES[s.falloff] ?? FALLOFF_CURVES.smooth;
 
       const minCol = Math.max(
         0,
@@ -578,15 +596,22 @@ const CursorGrid = ({
         Math.floor((y + r - grid.offY) / size)
       );
 
+      const radiusSquared = r * r;
+
       for (let row = minRow; row <= maxRow; row++) {
         for (let col = minCol; col <= maxCol; col++) {
           const cx = grid.offX + col * size + size / 2;
           const cy = grid.offY + row * size + size / 2;
-          const dist = Math.hypot(cx - x, cy - y);
 
-          if (dist > r) continue;
+          const dx = cx - x;
+          const dy = cy - y;
+          const distanceSquared = dx * dx + dy * dy;
 
-          const value = ease(1 - dist / r);
+          if (distanceSquared > radiusSquared) continue;
+
+          const value = ease(
+            1 - Math.sqrt(distanceSquared) / r
+          );
 
           if (value > 0) {
             light(row * grid.cols + col, value);
@@ -602,6 +627,7 @@ const CursorGrid = ({
       const far = Math.hypot(view.width, view.height);
 
       waves.fill(0);
+      waveActive = false;
 
       for (let k = pulses.length - 1; k >= 0; k--) {
         const pulse = pulses[k];
@@ -613,6 +639,8 @@ const CursorGrid = ({
         }
 
         if (ringR < 0) continue;
+
+        waveActive = true;
 
         const envelope =
           pulse.strength *
@@ -644,11 +672,18 @@ const CursorGrid = ({
           for (let col = minCol; col <= maxCol; col++) {
             const cx = grid.offX + col * size + size / 2;
             const cy = grid.offY + row * size + size / 2;
-            const off = Math.hypot(cx - pulse.x, cy - pulse.y) - ringR;
 
-            if (off > ahead * 2 || off < -behind * 2) continue;
+            const distance = Math.hypot(cx - pulse.x, cy - pulse.y);
+            const offset = distance - ringR;
 
-            const t = off > 0 ? off / ahead : off / behind;
+            if (offset > ahead * 2 || offset < -behind * 2) {
+              continue;
+            }
+
+            const t = offset > 0
+              ? offset / ahead
+              : offset / behind;
+
             const value = envelope * Math.exp(-t * t);
             const index = row * grid.cols + col;
 
@@ -659,23 +694,26 @@ const CursorGrid = ({
         }
       }
 
-      dirty = true;
+      textureDirty = true;
     };
 
     const draw = () => {
-      const s = settingsRef.current;
+      if (!textureDirty && !visualDirty) return;
+
+      const s = settingsRef.current!;
       const ratio = view.ratio;
 
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT);
+
       gl.useProgram(shader.program);
       gl.bindVertexArray(vao);
 
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D, stateTexture);
 
-      if (dirty) {
+      if (textureDirty) {
         for (let i = 0; i < levels.length; i++) {
           pixels[i] = Math.round(
             clamp(Math.max(levels[i], waves[i]), 0, 1) * 255
@@ -694,7 +732,7 @@ const CursorGrid = ({
           pixels
         );
 
-        dirty = false;
+        textureDirty = false;
       }
 
       const lineDevice = s.lineWidth * ratio;
@@ -734,11 +772,15 @@ const CursorGrid = ({
 
       gl.uniform1f(
         u.uReveal,
-        introClock >= 1 ? 1 : 1 - Math.pow(1 - introClock, 2.2)
+        introClock >= 1
+          ? 1
+          : 1 - Math.pow(1 - introClock, 2.2)
       );
 
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       gl.bindVertexArray(null);
+
+      visualDirty = false;
     };
 
     const frame = (now: number) => {
@@ -746,7 +788,8 @@ const CursorGrid = ({
 
       if (!visible || document.hidden) return;
 
-      const s = settingsRef.current;
+      const s = settingsRef.current!;
+
       const dt = last
         ? clamp((now - last) / 1000, 0, 1 / 20)
         : 1 / 60;
@@ -754,21 +797,46 @@ const CursorGrid = ({
       last = now;
       clock += dt;
 
-      if (introClock < 1) {
-        introClock = Math.min(1, introClock + dt / INTRO_SECONDS);
+      let active = false;
+
+      // Process only the latest pointer position.
+      if (pointer.pending) {
+        pointer.pending = false;
+
+        mouse.x = pointer.x;
+        mouse.y = pointer.y;
+
+        energize(pointer.x, pointer.y);
+
+        visualDirty = true;
+        active = true;
       }
 
-      const follow = 1 - Math.exp(-dt / 0.07);
+      // Intro animation.
+      if (introClock < 1) {
+        introClock = Math.min(
+          1,
+          introClock + dt / INTRO_SECONDS
+        );
 
-      mouse.x += (pointer.x - mouse.x) * follow;
-      mouse.y += (pointer.y - mouse.y) * follow;
+        visualDirty = true;
+        active = true;
+      }
 
+      // Mouse spotlight fade.
       const presenceGoal = pointer.inside ? 1 : 0;
+      const previousPresence = presence;
 
       presence +=
         (presenceGoal - presence) *
         (1 - Math.exp(-dt / 0.25));
 
+      if (Math.abs(presence - previousPresence) > 0.001) {
+        visualDirty = true;
+        active = true;
+      }
+
+      // Ambient effect.
       if (s.ambient > 0 && !reduce && levels.length) {
         const chance = s.ambient * dt * levels.length * 0.04;
 
@@ -784,26 +852,28 @@ const CursorGrid = ({
         }
       }
 
+      // Click pulse.
       if (pulses.length) {
         sweepPulses(s);
-      } else if (waves.length && waves.some((value) => value > 0)) {
+        active = true;
+      } else if (waveActive) {
         waves.fill(0);
-        dirty = true;
+        waveActive = false;
+        textureDirty = true;
       }
 
+      // Process only active cells instead of the entire grid.
       const holdSeconds = s.holdTime / 1000;
       const fadeStep = dt / (s.fadeDuration / 1000);
       const attack = 1 - Math.exp(-dt / 0.045);
 
-      let active =
-        pulses.length > 0 ||
-        introClock < 1 ||
-        Math.abs(presence - presenceGoal) > 0.002;
-
-      for (let i = 0; i < levels.length; i++) {
+      for (const i of activeCells) {
         let target = targets[i];
 
-        if (target <= 0 && levels[i] <= 0) continue;
+        if (target <= 0 && levels[i] <= 0) {
+          activeCells.delete(i);
+          continue;
+        }
 
         if (clock - touched[i] > holdSeconds) {
           target = Math.max(0, target - fadeStep);
@@ -820,42 +890,39 @@ const CursorGrid = ({
 
         levels[i] = next < 0.002 ? 0 : next;
 
-        if (levels[i] !== before) dirty = true;
+        if (levels[i] !== before) {
+          textureDirty = true;
+        }
 
-        if (levels[i] > 0 || targets[i] > 0) {
+        if (levels[i] <= 0 && targets[i] <= 0) {
+          activeCells.delete(i);
+        } else {
           active = true;
         }
       }
 
-      if (
-        Math.abs(mouse.x - pointer.x) +
-          Math.abs(mouse.y - pointer.y) >
-          0.05 &&
-        presence > 0.002
-      ) {
-        active = true;
-      }
-
+      // Continue ambient animation only when enabled.
       if (s.ambient > 0 && !reduce) {
         active = true;
       }
 
       draw();
 
-      if (active) {
+      if (active || pointer.pending) {
         raf = requestAnimationFrame(frame);
       }
     };
 
-    function wake() {
+    const wake = () => {
       if (!raf && visible && !document.hidden) {
         last = 0;
         raf = requestAnimationFrame(frame);
       }
-    }
+    };
 
     const locate = (event: PointerEvent) => {
       const rect = container.getBoundingClientRect();
+
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
 
@@ -870,34 +937,54 @@ const CursorGrid = ({
       };
     };
 
+    // Pointer events are coalesced into animation frames.
     const onPointerMove = (event: PointerEvent) => {
       const { x, y, inside } = locate(event);
-      const was = pointer.inside;
 
+      const wasInside = pointer.inside;
       pointer.inside = inside;
 
       if (!inside) {
-        if (was) wake();
+        if (wasInside) {
+          visualDirty = true;
+          wake();
+        }
+        return;
+      }
+
+      if (
+        Math.abs(pointer.x - x) < 0.5 &&
+        Math.abs(pointer.y - y) < 0.5 &&
+        wasInside
+      ) {
         return;
       }
 
       pointer.x = x;
       pointer.y = y;
+      pointer.pending = true;
 
-      if (!was) {
+      if (!wasInside) {
         mouse.x = x;
         mouse.y = y;
       }
 
-      energize(x, y);
       wake();
     };
 
     const onPointerDown = (event: PointerEvent) => {
-      const s = settingsRef.current;
+      const s = settingsRef.current!;
+
+      if (!s.clickPulse || reduce) return;
+
       const { x, y, inside } = locate(event);
 
-      if (!inside || !s.clickPulse || reduce) return;
+      if (!inside) return;
+
+      // Prevent unlimited pulse accumulation.
+      if (pulses.length >= MAX_PULSES) {
+        pulses.shift();
+      }
 
       pulses.push({
         x,
@@ -906,19 +993,30 @@ const CursorGrid = ({
         strength: 1,
       });
 
+      textureDirty = true;
       wake();
     };
 
     const onPointerLeave = () => {
-      pointer.inside = false;
-      wake();
+      if (pointer.inside) {
+        pointer.inside = false;
+        visualDirty = true;
+        wake();
+      }
     };
 
-    const onVisibility = () => wake();
+    const onVisibility = () => {
+      if (document.hidden) {
+        if (raf) cancelAnimationFrame(raf);
+        raf = 0;
+        last = 0;
+      } else {
+        wake();
+      }
+    };
 
     const resizeObserver = new ResizeObserver(() => {
       rebuild();
-      draw();
       wake();
     });
 
@@ -927,7 +1025,14 @@ const CursorGrid = ({
     const intersection = new IntersectionObserver((entries) => {
       visible = entries.some((entry) => entry.isIntersecting);
 
-      if (visible) wake();
+      if (!visible) {
+        if (raf) cancelAnimationFrame(raf);
+        raf = 0;
+        last = 0;
+      } else {
+        rebuild();
+        wake();
+      }
     });
 
     intersection.observe(container);
@@ -940,15 +1045,11 @@ const CursorGrid = ({
       passive: true,
     });
 
-    document.documentElement.addEventListener(
-      'pointerleave',
-      onPointerLeave
-    );
-
     document.addEventListener('visibilitychange', onVisibility);
 
     rebuild();
 
+    // Initial reveal pulse.
     if (introClock < 1) {
       pulses.push({
         x: view.width / 2,
@@ -962,19 +1063,21 @@ const CursorGrid = ({
     wake();
 
     wakeRef.current = () => {
-      const s = settingsRef.current;
+      const s = settingsRef.current!;
 
       if (s.cellSize !== view.cellSize) {
         rebuild();
       }
 
-      dirty = true;
+      textureDirty = true;
+      visualDirty = true;
+
       draw();
       wake();
     };
 
     return () => {
-      cancelAnimationFrame(raf);
+      if (raf) cancelAnimationFrame(raf);
 
       wakeRef.current = null;
 
@@ -984,20 +1087,13 @@ const CursorGrid = ({
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerdown', onPointerDown);
 
-      document.documentElement.removeEventListener(
-        'pointerleave',
-        onPointerLeave
-      );
-
       document.removeEventListener('visibilitychange', onVisibility);
 
       gl.deleteTexture(stateTexture);
       gl.deleteVertexArray(vao);
       gl.deleteProgram(shader.program);
 
-      if (!canvas.isConnected) {
-        gl.getExtension('WEBGL_lose_context')?.loseContext();
-      }
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, []);
 
