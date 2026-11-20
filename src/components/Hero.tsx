@@ -1,7 +1,9 @@
 
 "use client";
 
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+
 import {
   ArrowRight,
   Globe,
@@ -12,9 +14,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-import { useEffect, useState } from "react";
-
-// Load CursorGrid separately
+// Load CursorGrid separately (client-side only)
 const CursorGrid = dynamic(
   () => import("@/components/CursorGrid"),
   {
@@ -22,23 +22,7 @@ const CursorGrid = dynamic(
     loading: () => null,
   }
 );
-const [showCursorGrid, setShowCursorGrid] = useState(false);
 
-useEffect(() => {
-  const media = window.matchMedia("(min-width: 640px)");
-
-  const updateScreen = () => {
-    setShowCursorGrid(media.matches);
-  };
-
-  updateScreen();
-
-  media.addEventListener("change", updateScreen);
-
-  return () => {
-    media.removeEventListener("change", updateScreen);
-  };
-}, []);
 // Services
 const services = [
   { name: "Website Development", icon: Globe },
@@ -49,6 +33,28 @@ const services = [
 ];
 
 export default function Hero() {
+
+  // Desktop-only CursorGrid state
+  const [showCursorGrid, setShowCursorGrid] = useState(false);
+
+  // Detect screen size
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 640px)");
+
+    const updateScreen = () => {
+      setShowCursorGrid(media.matches);
+    };
+
+    updateScreen();
+
+    media.addEventListener("change", updateScreen);
+
+    return () => {
+      media.removeEventListener("change", updateScreen);
+    };
+  }, []);
+
+  // WhatsApp CTA
   const whatsappMessage = encodeURIComponent(
     "Hi! I'm interested in growing my business. I'd like to know how WebOnRock can help me get more customers and generate more sales."
   );
@@ -58,45 +64,41 @@ export default function Hero() {
   return (
     <section className="relative isolate min-h-screen overflow-hidden bg-[#090C0B] text-white">
 
-     
-     {/* CURSOR GRID - DESKTOP ONLY */}
-{/* CURSOR GRID - DESKTOP ONLY */}
-<div className="pointer-events-none absolute inset-0 z-[1] hidden overflow-hidden sm:block">
-  {showCursorGrid && (
-    <CursorGrid
-      cellSize={60}
-      color="#ffffff"
-      highlight="area"
-      gridStyle="lines"
-      radius={140}
-      holdTime={400}
-      fadeDuration={800}
-      fillOpacity={0.12}
-      gridOpacity={0.15}
-      spotlight={0.8}
-      clickPulse
-    />
-  )}
-</div>
+      {/* CURSOR GRID - DESKTOP ONLY */}
+      <div className="pointer-events-none absolute inset-0 z-[1] hidden overflow-hidden sm:block">
+        {showCursorGrid && (
+          <CursorGrid
+            cellSize={60}
+            color="#ffffff"
+            highlight="area"
+            gridStyle="lines"
+            radius={140}
+            holdTime={400}
+            fadeDuration={800}
+            fillOpacity={0.12}
+            gridOpacity={0.15}
+            spotlight={0.8}
+            clickPulse
+          />
+        )}
+      </div>
 
-
-{/* GRID BACKGROUND - MOBILE ONLY */}
-<div
-  aria-hidden="true"
-  className="pointer-events-none absolute inset-0 z-[1] sm:hidden"
-  style={{
-    backgroundImage: `
-      linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px)
-    `,
-    backgroundSize: "40px 40px",
-    maskImage:
-      "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
-    WebkitMaskImage:
-      "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
-  }}
-/>
-
+      {/* GRID BACKGROUND - MOBILE ONLY */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-[1] sm:hidden"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px)
+          `,
+          backgroundSize: "40px 40px",
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
+        }}
+      />
 
       {/* BACKGROUND EFFECTS */}
       <div
@@ -104,12 +106,12 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0 z-[1] overflow-hidden"
       >
 
-        {/* Green glow */}
+        {/* Green Glow - Desktop Only */}
         <div className="absolute -right-40 -top-40 hidden h-[500px] w-[500px] rounded-full bg-[#B7F36B]/[0.08] blur-[120px] sm:block" />
 
-        <div className="absolute -bottom-40 -left-40 h-[450px] w-[450px] rounded-full bg-[#B7F36B]/[0.05] blur-[120px]" />
+        <div className="absolute -bottom-40 -left-40 hidden h-[450px] w-[450px] rounded-full bg-[#B7F36B]/[0.05] blur-[120px] sm:block" />
 
-        {/* Background grid */}
+        {/* Background Grid */}
         <div
           className="absolute inset-0 opacity-[0.035]"
           style={{
@@ -119,7 +121,7 @@ export default function Hero() {
           }}
         />
 
-        {/* Bottom fade */}
+        {/* Bottom Fade */}
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#090C0B] to-transparent" />
 
       </div>
@@ -160,8 +162,6 @@ export default function Hero() {
               </span>
 
             </h1>
-
-           
 
             {/* CTA BUTTONS */}
             <div className="mt-9 flex flex-col gap-4 sm:flex-row">
