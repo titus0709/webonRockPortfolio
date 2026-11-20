@@ -140,3 +140,15 @@
   scrollbar-width: none;
 }
 
+/* Ensure video testimonials remain visible on mobile */
+@media (max-width: 639px) {
+  #video_testimonials {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    min-height: 1px !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+}

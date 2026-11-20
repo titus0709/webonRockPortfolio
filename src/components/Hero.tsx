@@ -12,6 +12,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
+import { useEffect, useState } from "react";
 
 // Load CursorGrid separately
 const CursorGrid = dynamic(
@@ -21,7 +22,23 @@ const CursorGrid = dynamic(
     loading: () => null,
   }
 );
+const [showCursorGrid, setShowCursorGrid] = useState(false);
 
+useEffect(() => {
+  const media = window.matchMedia("(min-width: 640px)");
+
+  const updateScreen = () => {
+    setShowCursorGrid(media.matches);
+  };
+
+  updateScreen();
+
+  media.addEventListener("change", updateScreen);
+
+  return () => {
+    media.removeEventListener("change", updateScreen);
+  };
+}, []);
 // Services
 const services = [
   { name: "Website Development", icon: Globe },
@@ -43,20 +60,23 @@ export default function Hero() {
 
      
      {/* CURSOR GRID - DESKTOP ONLY */}
+{/* CURSOR GRID - DESKTOP ONLY */}
 <div className="pointer-events-none absolute inset-0 z-[1] hidden overflow-hidden sm:block">
-  <CursorGrid
-    cellSize={60}
-    color="#ffffff"
-    highlight="area"
-    gridStyle="lines"
-    radius={140}
-    holdTime={400}
-    fadeDuration={800}
-    fillOpacity={0.12}
-    gridOpacity={0.15}
-    spotlight={0.8}
-    clickPulse
-  />
+  {showCursorGrid && (
+    <CursorGrid
+      cellSize={60}
+      color="#ffffff"
+      highlight="area"
+      gridStyle="lines"
+      radius={140}
+      holdTime={400}
+      fadeDuration={800}
+      fillOpacity={0.12}
+      gridOpacity={0.15}
+      spotlight={0.8}
+      clickPulse
+    />
+  )}
 </div>
 
 
@@ -85,7 +105,7 @@ export default function Hero() {
       >
 
         {/* Green glow */}
-        <div className="absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-[#B7F36B]/[0.08] blur-[120px]" />
+        <div className="absolute -right-40 -top-40 hidden h-[500px] w-[500px] rounded-full bg-[#B7F36B]/[0.08] blur-[120px] sm:block" />
 
         <div className="absolute -bottom-40 -left-40 h-[450px] w-[450px] rounded-full bg-[#B7F36B]/[0.05] blur-[120px]" />
 

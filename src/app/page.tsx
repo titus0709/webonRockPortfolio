@@ -3,9 +3,9 @@ import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import FeaturedWork from "@/components/FeaturedWork";
 import WhyWebOnRock from "@/components/WhyWebOnRock";
-import WorkProcess from "@/components/WorkProcess";
-import Testimonials from "@/components/Testimonials";
-import LeadMagnet from "@/components/LeadMagnet";
+// import WorkProcess from "@/components/WorkProcess";
+// import Testimonials from "@/components/Testimonials";
+// import LeadMagnet from "@/components/LeadMagnet";
 import Footer from "@/components/Footer";
 import HappyClients from "@/components/HappyClients";
 import ContactForm from "@/components/StartProject";
@@ -26,7 +26,7 @@ export default function Page() {
       <WhyWebOnRock />
       
       {/* <WorkProcess /> */}
-      <HappyClients/>
+      {/* <HappyClients/> */}
       <ContactForm />
       <WhatsAppButton/>
       {/* <Testimonials /> */}
