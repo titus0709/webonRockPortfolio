@@ -13,6 +13,7 @@ import vimala from "@/assets/vimala.png";
 import ayyanar from "@/assets/sriayyanar.png";
 import judah from "@/assets/judahwebsite.png";
 
+// PROJECT DATA
 const projects = [
   {
     title: "Sri Ayyanar Temple Architecture Website",
@@ -72,38 +73,38 @@ const projects = [
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-// Project Card
+// PROJECT CARD
 function ProjectCard({
   project,
   index,
 }: {
-  project: (typeof projects)[0];
+  project: (typeof projects)[number];
   index: number;
 }) {
-  const ref = useRef(null);
+  const ref = useRef<HTMLElement>(null);
 
   const isInView = useInView(ref, {
     once: true,
-    margin: "-60px",
+    margin: "-40px",
   });
 
   return (
     <motion.article
       ref={ref}
-      initial={{ opacity: 0, y: 25 }}
+      initial={{ opacity: 0, y: 14 }}
       animate={
         isInView
           ? { opacity: 1, y: 0 }
-          : { opacity: 0, y: 25 }
+          : { opacity: 0, y: 14 }
       }
       transition={{
-        duration: 0.55,
-        delay: (index % 3) * 0.08,
+        duration: 0.4,
+        delay: (index % 3) * 0.05,
         ease,
       }}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.09] bg-white/[0.035] transition-all duration-500 hover:-translate-y-1 hover:border-[#B7F36B]/40 hover:bg-white/[0.055] hover:shadow-[0_20px_50px_rgba(183,243,107,0.06)]"
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.09] bg-white/[0.035] transition-[border-color,background-color,box-shadow] duration-300 sm:hover:-translate-y-1 sm:hover:border-[#B7F36B]/40 sm:hover:bg-white/[0.055] sm:hover:shadow-[0_15px_35px_rgba(183,243,107,0.06)]"
     >
-      {/* Project Image */}
+      {/* PROJECT IMAGE */}
       <a
         href={project.link}
         target="_blank"
@@ -116,30 +117,30 @@ function ProjectCard({
             src={project.image}
             alt={project.title}
             fill
-            quality={75}
+            quality={70}
             sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            className="object-cover transition-transform duration-500 sm:group-hover:scale-105"
           />
 
-          {/* Image Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#090C0B]/80 via-[#090C0B]/10 to-[#090C0B]/10 opacity-80 transition-opacity duration-500 group-hover:opacity-50" />
+          {/* IMAGE OVERLAY */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#090C0B]/80 via-[#090C0B]/10 to-[#090C0B]/10 sm:transition-opacity sm:duration-300 sm:group-hover:opacity-60" />
 
-          {/* Project Number */}
-          <div className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/40 px-3 py-1.5 text-[10px] font-semibold tracking-[0.16em] text-white/80 backdrop-blur-md">
+          {/* PROJECT NUMBER */}
+          <div className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/50 px-3 py-1.5 text-[10px] font-semibold tracking-[0.16em] text-white/80 sm:backdrop-blur-md">
             PROJECT {project.number}
           </div>
 
-          {/* Arrow */}
-          <div className="absolute right-4 top-4 flex h-10 w-10 translate-y-2 items-center justify-center rounded-full bg-[#B7F36B] text-[#090C0B] opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+          {/* ARROW */}
+          <div className="absolute right-4 top-4 hidden h-10 w-10 items-center justify-center rounded-full bg-[#B7F36B] text-[#090C0B] opacity-0 transition-all duration-300 sm:flex sm:translate-y-2 sm:group-hover:translate-y-0 sm:group-hover:opacity-100">
             <ArrowUpRight size={19} />
           </div>
 
-          {/* Tags */}
+          {/* PROJECT TAGS */}
           <div className="absolute bottom-4 left-4 flex flex-wrap gap-2">
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full border border-white/15 bg-[#090C0B]/70 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-[#B7F36B] backdrop-blur-md"
+                className="rounded-full border border-white/15 bg-[#090C0B]/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-[#B7F36B] sm:backdrop-blur-md"
               >
                 {tag}
               </span>
@@ -148,10 +149,10 @@ function ProjectCard({
         </div>
       </a>
 
-      {/* Content */}
+      {/* CONTENT */}
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="text-lg font-bold leading-snug text-white transition-colors duration-300 group-hover:text-[#B7F36B] sm:text-xl">
+          <h3 className="text-lg font-bold leading-snug text-white transition-colors duration-300 sm:text-xl sm:group-hover:text-[#B7F36B]">
             {project.title}
           </h3>
 
@@ -160,63 +161,60 @@ function ProjectCard({
           </span>
         </div>
 
-        <p className="mt-3 flex-1 text-sm leading-relaxed text-white/45">
+        <p className="mt-3 flex-1 text-sm leading-relaxed text-white/50">
           {project.description}
         </p>
 
-        {/* Footer */}
+        {/* FOOTER */}
         <div className="mt-6 flex items-center justify-between border-t border-white/[0.08] pt-5">
           <a
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-[#B7F36B] transition-colors hover:text-white"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-[#B7F36B] transition-colors duration-200 sm:hover:text-white"
           >
             View Project
 
-            <ArrowUpRight
-              size={16}
-              className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-            />
+            <ArrowUpRight size={16} />
           </a>
 
           <ExternalLink
             size={15}
-            className="text-white/25 transition-colors group-hover:text-[#B7F36B]"
+            className="text-white/25 transition-colors sm:group-hover:text-[#B7F36B]"
           />
         </div>
       </div>
 
-      {/* Bottom Accent */}
-      <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#B7F36B] transition-all duration-500 group-hover:w-full" />
+      {/* BOTTOM ACCENT - DESKTOP */}
+      <div className="absolute bottom-0 left-0 hidden h-[2px] w-0 bg-[#B7F36B] transition-all duration-300 sm:block sm:group-hover:w-full" />
     </motion.article>
   );
 }
 
-// Section Header
+// SECTION HEADER
 function SectionHeader() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const isInView = useInView(ref, {
     once: true,
-    margin: "-50px",
+    margin: "-40px",
   });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, ease }}
+      transition={{ duration: 0.45, ease }}
       className="mb-14 text-center sm:mb-16"
     >
-      {/* Eyebrow */}
+      {/* EYEBROW */}
       <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#B7F36B]/20 bg-[#B7F36B]/[0.07] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#B7F36B]">
         <span className="h-2 w-2 animate-pulse rounded-full bg-[#B7F36B]" />
         Selected Projects
       </span>
 
-      {/* Heading */}
+      {/* HEADING */}
       <h2 className="text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
         Work That{" "}
         <span className="relative inline-block text-[#B7F36B]">
@@ -225,7 +223,7 @@ function SectionHeader() {
             className="absolute -bottom-1 left-0 h-[3px] rounded-full bg-[#B7F36B]"
             initial={{ width: 0 }}
             animate={isInView ? { width: "100%" } : {}}
-            transition={{ duration: 0.7, delay: 0.3, ease }}
+            transition={{ duration: 0.6, delay: 0.2, ease }}
           />
         </span>
       </h2>
@@ -235,46 +233,50 @@ function SectionHeader() {
         digital experiences and grow online.
       </p>
 
-      {/* Project Count */}
+      {/* PROJECT COUNT */}
       <div className="mt-7 flex items-center justify-center gap-3">
         <span className="h-px w-10 bg-white/15" />
+
         <span className="text-[11px] font-medium tracking-[0.2em] text-white/35">
           06 PROJECTS
         </span>
+
         <span className="h-px w-10 bg-white/15" />
       </div>
     </motion.div>
   );
 }
 
-// Main Section
+// MAIN SECTION
 export default function FeaturedWork() {
   return (
     <section
       id="work"
       className="relative overflow-hidden bg-[#090C0B] py-20 text-white sm:py-24 lg:py-28"
     >
-      {/* Background Effects */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      {/* BACKGROUND EFFECTS - DESKTOP ONLY */}
+      <div className="pointer-events-none absolute inset-0 hidden overflow-hidden sm:block">
         <div className="absolute -right-40 top-0 h-[400px] w-[400px] rounded-full bg-[#B7F36B]/[0.045] blur-[90px]" />
 
         <div className="absolute -bottom-40 -left-40 h-[350px] w-[350px] rounded-full bg-[#B7F36B]/[0.035] blur-[90px]" />
-
-        {/* Grid */}
-        <div
-          className="absolute inset-0 opacity-[0.025]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
-            backgroundSize: "70px 70px",
-          }}
-        />
       </div>
 
+      {/* LIGHTWEIGHT GRID BACKGROUND */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.025]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+          backgroundSize: "70px 70px",
+        }}
+      />
+
+      {/* CONTENT */}
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader />
 
-        {/* Projects Grid */}
+        {/* PROJECTS GRID */}
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3">
           {projects.map((project, index) => (
             <ProjectCard
@@ -285,12 +287,12 @@ export default function FeaturedWork() {
           ))}
         </div>
 
-        {/* Bottom CTA */}
+        {/* BOTTOM CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.45, delay: 0.05 }}
           className="mt-16 text-center"
         >
           <p className="mb-6 text-sm text-white/50 sm:text-base">
@@ -299,13 +301,13 @@ export default function FeaturedWork() {
 
           <a
             href="/contact"
-            className="group inline-flex items-center gap-3 rounded-md bg-[#B7F36B] px-7 py-4 text-sm font-bold text-[#10150C] shadow-[0_0_35px_rgba(183,243,107,0.10)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#A5E65A] hover:shadow-[0_0_40px_rgba(183,243,107,0.2)]"
+            className="group inline-flex items-center gap-3 rounded-md bg-[#B7F36B] px-7 py-4 text-sm font-bold text-[#10150C] transition-all duration-300 sm:hover:-translate-y-1 sm:hover:bg-[#A5E65A] sm:hover:shadow-[0_0_35px_rgba(183,243,107,0.15)]"
           >
             Start a Project
 
             <ArrowRight
               size={18}
-              className="transition-transform duration-300 group-hover:translate-x-1"
+              className="transition-transform duration-300 sm:group-hover:translate-x-1"
             />
           </a>
         </motion.div>
